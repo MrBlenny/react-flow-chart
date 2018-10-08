@@ -1,7 +1,11 @@
-import { configure } from '@storybook/react'
-import { resolve } from "path"
+import { configure, addDecorator } from '@storybook/react'
+// import { resolve } from "path"
 
-function requireAll(requireContext) {
+// addDecorator(
+// 	withOption
+// )
+
+function requireAll(requireContext: __WebpackModuleApi.RequireContext) {
 	return requireContext.keys().map(requireContext);
 }
 
