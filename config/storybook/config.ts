@@ -1,9 +1,11 @@
-import { configure, addDecorator } from '@storybook/react'
+import { setOptions } from "@storybook/addon-options"
+import { configure } from '@storybook/react'
 // import { resolve } from "path"
 
-// addDecorator(
-// 	withOption
-// )
+setOptions({
+	hierarchySeparator: /\/|\./,
+	hierarchyRootSeparator: /\|/,
+})
 
 function requireAll(requireContext: __WebpackModuleApi.RequireContext) {
 	return requireContext.keys().map(requireContext);

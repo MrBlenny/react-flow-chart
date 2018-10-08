@@ -10,6 +10,7 @@ const StorybookConfig = (base: { [T in keyof webpack.Configuration]-?: webpack.C
 		test: /\.(ts|tsx)$/,
 		loader: require.resolve('ts-loader')
 	})
+	
 	base.resolve.extensions!.push(...[".ts", ".tsx"])
 
 	return base
