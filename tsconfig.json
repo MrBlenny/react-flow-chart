@@ -1,7 +1,12 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"allowSyntheticDefaultImports": true
+		"jsx": "react",
+		"allowSyntheticDefaultImports": true,
+		"lib": [
+			"es6",
+			"dom"
+		],
 	},
 	"exclude": [
 		"node_modules"

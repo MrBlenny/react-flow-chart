@@ -13,9 +13,13 @@ const BaseConfig: webpack.Configuration = {
 			oneOf: [{
 				test: /\.(ts|tsx)$/,
 				include: resolve(__dirname, "..", "src"),
-				loader: [
+				use: [{
+					loader: require.resolve('ts-loader'),
+					options: {
+						configFile: resolve("..", "tsconfig.json")
+					}
+				}
 					// require.resolve('babel-loader'),
-					require.resolve('ts-loader')
 				]
 			}]
 		}]
