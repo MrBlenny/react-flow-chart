@@ -7,10 +7,13 @@
   "author": "Sven Liebig <liebigsv@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@storybook/addon-options": "4.0.0-alpha.24",
     "@storybook/react": "4.0.0-alpha.24",
     "@types/node": "^10.11.4",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.8",
+    "@types/storybook__addon-options": "^3.2.2",
     "@types/storybook__react": "^3.0.9",
     "@types/webpack": "^4.4.14",
     "babel-loader": "^8.0.4",
@@ -25,6 +28,7 @@
     "react-dom": "^16.5.2"
   },
   "scripts": {
-    "storybook": "start-storybook -p 6006 -c config/storybook"
+    "start:storybook": "start-storybook -p 6006 -c config/storybook",
+    "build:storybook": "build-storybook -c config/storybook"
   }
 }

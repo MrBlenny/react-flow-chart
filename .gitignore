@@ -5,6 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Storybook
+storybook-static
+build
+
 # Runtime data
 pids
 *.pid
