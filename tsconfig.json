@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"outDir": "build/lib",
+		"outDir": "dist/lib",
 		"module": "commonjs",
 		"target": "es5",
 		"lib": ["es5", "es6", "es7", "es2017", "dom"],
@@ -22,5 +22,5 @@
 		"experimentalDecorators": true
 	},
 	"include": ["src/**/*", "stories/**/*"],
-	"exclude": ["node_modules", "build", "scripts"]
+	"exclude": ["node_modules", "build", "scripts", "config"]
 }

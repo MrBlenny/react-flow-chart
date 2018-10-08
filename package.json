@@ -10,6 +10,7 @@
     "@babel/core": "^7.1.2",
     "@storybook/addon-a11y": "4.0.0-alpha.24",
     "@storybook/addon-options": "4.0.0-alpha.24",
+    "@storybook/addon-viewport": "4.0.0-alpha.24",
     "@storybook/react": "4.0.0-alpha.24",
     "@types/node": "^10.11.4",
     "@types/react": "^16.4.16",

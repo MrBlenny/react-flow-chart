@@ -5,8 +5,8 @@ import { checkA11y } from "@storybook/addon-a11y"
 
 storiesOf("Addon|a11y.Anchor", module)
 	.addDecorator(checkA11y) // needed for a11y checks
-	.add("No Href", () => <a>Anchor without href</a>)
-	.add("With Alt", () => <img src="https://i.imgur.com/l71RgBd.jpg" alt="This is an image alt text" />)
+	.add("No Href", () => <a href="#">Anchor without href</a>)
+	.add("With Href", () => <a href="http://google.com">Anchor without href</a>)
 
 storiesOf("Addon|a11y.Button", module)
 	.addDecorator(checkA11y)

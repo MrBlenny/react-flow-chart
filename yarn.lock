@@ -734,6 +734,18 @@
     "@storybook/addons" "4.0.0-alpha.24"
     util-deprecate "^1.0.2"
 
+"@storybook/addon-viewport@4.0.0-alpha.24":
+  version "4.0.0-alpha.24"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-4.0.0-alpha.24.tgz#1f961ad6194a0df49acbe8cbd4f16867fcaac964"
+  dependencies:
+    "@emotion/styled" "^0.10.6"
+    "@storybook/addons" "4.0.0-alpha.24"
+    "@storybook/components" "4.0.0-alpha.24"
+    "@storybook/core-events" "4.0.0-alpha.24"
+    global "^4.3.2"
+    prop-types "^15.6.2"
+    util-deprecate "^1.0.2"
+
 "@storybook/addons@4.0.0-alpha.24":
   version "4.0.0-alpha.24"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-4.0.0-alpha.24.tgz#941edc181c13fdefdb2c19edc1a1ce02bb9c2ccb"
