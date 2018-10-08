@@ -55,3 +55,4 @@ The next step is removing the Addon Import in `/config/storybook/addons.ts` and 
 
 - [x] separate tsconfig for webpack
 - [x] tsconfig into the config Folder
+- [ ] add circle ci
