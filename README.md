@@ -18,7 +18,20 @@ npm install
 npm run start:storybook
 ```
 
-## Remove an addon
+## Storybook Addons
+
+Available Addons:
+
+- [x] [a11y](https://github.com/storybooks/storybook/tree/release/3.4/addons/a11y)
+- [x] [options](https://github.com/storybooks/storybook/tree/release/3.4/addons/options)
+- [x] [viewport](https://github.com/storybooks/storybook/tree/release/3.4/addons/viewport)
+- [ ] [actions](https://github.com/storybooks/storybook/tree/release/3.4/addons/actions)
+- [ ] [centered](https://github.com/storybooks/storybook/tree/release/3.4/addons/centered)
+- [ ] [jest](https://github.com/storybooks/storybook/tree/release/3.4/addons/jest)
+- [ ] [knobs](https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs)
+- [ ] [storysource](https://github.com/storybooks/storybook/tree/release/3.4/addons/storysource)
+
+### Remove an addon
 
 To remove an addon you must simple run the `yarn remove <addon to remove>` oder `npm uninstall <addon to remove> --save-dev`
 
@@ -40,6 +53,5 @@ The next step is removing the Addon Import in `/config/storybook/addons.ts` and 
 
 ## TODO
 
-[ ] Separate tsconfig for Storybook
-[ ] Separate (base) tsconfig for Configs
-[ ] tsconfig into the config Folder
+- [x] separate tsconfig for webpack
+- [x] tsconfig into the config Folder
