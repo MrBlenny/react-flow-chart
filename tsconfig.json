@@ -1,11 +1,10 @@
 {
 	"compilerOptions": {
-		"outDir": "build/lib",
+		"outDir": "dist/lib",
 		"module": "commonjs",
 		"target": "es5",
 		"lib": ["es5", "es6", "es7", "es2017", "dom"],
 		"sourceMap": true,
-		"allowJs": false,
 		"jsx": "react",
 		"moduleResolution": "node",
 		"rootDirs": ["src", "stories"],
@@ -17,10 +16,12 @@
 		"strictNullChecks": true,
 		"suppressImplicitAnyIndexErrors": true,
 		"noUnusedLocals": true,
-		"declaration": true,
 		"allowSyntheticDefaultImports": true,
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+		// if you want to build a lib, you need declarations to be true and allow js to be false
+		"allowJs": false,
+		"declaration": true
 	},
 	"include": ["src/**/*", "stories/**/*"],
-	"exclude": ["node_modules", "build", "scripts"]
+	"exclude": ["node_modules", "build", "scripts", "config"]
 }

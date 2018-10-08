@@ -18,8 +18,41 @@ npm install
 npm run start:storybook
 ```
 
+## Storybook Addons
+
+Available Addons:
+
+- [x] [a11y](https://github.com/storybooks/storybook/tree/release/3.4/addons/a11y)
+- [x] [options](https://github.com/storybooks/storybook/tree/release/3.4/addons/options)
+- [x] [viewport](https://github.com/storybooks/storybook/tree/release/3.4/addons/viewport)
+- [ ] [actions](https://github.com/storybooks/storybook/tree/release/3.4/addons/actions)
+- [ ] [centered](https://github.com/storybooks/storybook/tree/release/3.4/addons/centered)
+- [ ] [jest](https://github.com/storybooks/storybook/tree/release/3.4/addons/jest)
+- [ ] [knobs](https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs)
+- [ ] [storysource](https://github.com/storybooks/storybook/tree/release/3.4/addons/storysource)
+
+### Remove an addon
+
+To remove an addon you must simple run the `yarn remove <addon to remove>` oder `npm uninstall <addon to remove> --save-dev`
+
+For example if you want to remove the `@storybook__addon-a11y`, you can run:
+
+```bash
+yarn remove @storybook/addon-a11y @types/storybook__addon-a11y
+```
+
+or
+
+```bash
+npm uninstall @storybook/addon-a11y @types/storybook__addon-a11y --save-dev
+```
+
+The types of the addon are no necessary anymore if you want to remove an addon.
+
+The next step is removing the Addon Import in `/config/storybook/addons.ts` and remove the stories from `/stories` that includes this addon.
+
 ## TODO
 
-[ ] Separate tsconfig for Storybook
-[ ] Separate (base) tsconfig for Configs
-[ ] tsconfig into the config Folder
+- [x] separate tsconfig for webpack
+- [x] tsconfig into the config Folder
+- [ ] add circle ci
