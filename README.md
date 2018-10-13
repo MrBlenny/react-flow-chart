@@ -2,6 +2,8 @@
 
 A boilerplate project for using TypeScript 3, React 16 and Storybook together with Webpack 4.
 
+[![CircleCI](https://circleci.com/gh/Sly321/typescript-react-storybook-boilerplate.svg?style=svg)](https://circleci.com/gh/Sly321/typescript-react-storybook-boilerplate)
+
 ## Quickstart
 
 With yarn
