@@ -823,6 +823,14 @@
     global "^4.3.2"
     prop-types "^15.6.2"
 
+"@storybook/addon-centered@^3.4.11":
+  version "3.4.11"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-centered/-/addon-centered-3.4.11.tgz#6bb7abacfea60cee1238b0656148faa6b29b64fb"
+  integrity sha512-4e83kh6MzNrE3Cg15kOPyLly4yGc6Y4sAhLGNVnAC+SS8wrq5QX7eDw4Pl7+FGnqhtpQ3Irx+hAAxr+33q73UQ==
+  dependencies:
+    babel-runtime "^6.26.0"
+    global "^4.3.2"
+
 "@storybook/addon-options@4.0.0-alpha.24":
   version "4.0.0-alpha.24"
   resolved "https://registry.yarnpkg.com/@storybook/addon-options/-/addon-options-4.0.0-alpha.24.tgz#a2ace4b2c02c235d216273b9f90204eb5dc2533b"
@@ -1097,6 +1105,13 @@
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/storybook__addon-a11y/-/storybook__addon-a11y-3.3.1.tgz#7b22a8d6636aba9e4f0e158aea410ed4f8090716"
   integrity sha512-pmRviAq4uXuE9wIGuiG7fHsS82KN+CVHG670SsSwefc2Sbvi3G3rNov+KRd0/A2ppAgO40SRiecZ6UK3kgrhsA==
+
+"@types/storybook__addon-centered@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/storybook__addon-centered/-/storybook__addon-centered-3.3.1.tgz#3ba6deb76da8742a9452e588956cf16a306fa752"
+  integrity sha512-7tqMf2oO0k9zg6bk3nGirrfaojQRogpAuh4U3uqg+7KRUy/Nh6jUOXkq5tAEEwQ7hPYDU04HyRxriZA4eC88Bg==
+  dependencies:
+    "@types/react" "*"
 
 "@types/storybook__addon-options@^3.2.2":
   version "3.2.2"

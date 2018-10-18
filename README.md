@@ -28,7 +28,7 @@ Available Addons:
 - [x] [options](https://github.com/storybooks/storybook/tree/release/3.4/addons/options)
 - [x] [viewport](https://github.com/storybooks/storybook/tree/release/3.4/addons/viewport)
 - [ ] [actions](https://github.com/storybooks/storybook/tree/release/3.4/addons/actions)
-- [ ] [centered](https://github.com/storybooks/storybook/tree/release/3.4/addons/centered)
+- [x] [centered](https://github.com/storybooks/storybook/tree/release/3.4/addons/centered)
 - [ ] [jest](https://github.com/storybooks/storybook/tree/release/3.4/addons/jest)
 - [ ] [knobs](https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs)
 - [ ] [storysource](https://github.com/storybooks/storybook/tree/release/3.4/addons/storysource)

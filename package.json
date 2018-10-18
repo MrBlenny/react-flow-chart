@@ -9,6 +9,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@storybook/addon-a11y": "4.0.0-alpha.24",
+    "@storybook/addon-centered": "^3.4.11",
     "@storybook/addon-options": "4.0.0-alpha.24",
     "@storybook/addon-viewport": "4.0.0-alpha.24",
     "@storybook/react": "4.0.0-alpha.24",
@@ -16,6 +17,7 @@
     "@types/react": "16.4.18",
     "@types/react-dom": "16.0.9",
     "@types/storybook__addon-a11y": "^3.3.1",
+    "@types/storybook__addon-centered": "^3.3.1",
     "@types/storybook__addon-options": "^3.2.2",
     "@types/storybook__react": "^3.0.9",
     "@types/webpack": "4.4.17",
