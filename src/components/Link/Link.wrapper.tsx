@@ -1,16 +1,19 @@
 import * as React from 'react'
 import { ILink, IChart } from 'types'
 import { getLinkPosition } from './utils'
+import { ILinkDefaultProps, LinkDefault } from './Link.default';
 
-export interface ILinkProps {
+export interface ILinkWrapperProps {
   link: ILink
   chart: IChart
+  Component?: (props: ILinkDefaultProps) => JSX.Element
 }
 
-export const Link = ({ 
+export const LinkWrapper = ({ 
+  Component = LinkDefault,
   link,
-  chart
-}: ILinkProps) => {
+  chart,
+}: ILinkWrapperProps) => {
   const startPos = getLinkPosition(chart, link.from.nodeId, link.from.portId)
 
   const endPos = link.to.nodeId && link.to.portId 
@@ -23,22 +26,7 @@ export const Link = ({
     return null
   }
 
-  const points = `${startPos.x},${startPos.y} ${endPos.x},${endPos.y}`
-
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute' }}>
-      <polyline
-        points={ points }  
-        stroke="red" 
-        strokeWidth="3"
-        fill="none" 
-      />
-      <circle
-        r="4"
-        cx={ endPos.x }
-        cy={ endPos.y }
-        fill="red"
-      />
-    </svg>
+    <Component startPos={ startPos } endPos={ endPos }/>
   )
 }

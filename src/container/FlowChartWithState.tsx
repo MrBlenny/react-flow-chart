@@ -1,5 +1,5 @@
 import * as React from "react"
-import { IOnDragNode, Canvas, Node, IOnDragCanvas, Port, Link, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, IOnLinkMove, IOnLinkComplete } from '../'
+import { IOnDragNode, CanvasWrapper, NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, IOnLinkMove, IOnLinkComplete } from '../'
 import { map } from 'lodash'
 
 export interface IFlowChartWithStateProps {
@@ -12,25 +12,21 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     super(props)
     this.state = props.initialValue
   }
-	onDragNode: IOnDragNode = (event, data, id) => {
-		this.setState((state) => {
-			const nodeState = state.nodes[id]
-			if (nodeState) {
-				nodeState.position = {
-					x: data.x,
-					y: data.y
-				}
+	onDragNode: IOnDragNode = (event, data, id) => this.setState((state) => {
+		const nodeState = state.nodes[id]
+		if (nodeState) {
+			nodeState.position = {
+				x: data.x,
+				y: data.y
 			}
-			return state
-		})
-	}
-	onDragCanvas: IOnDragCanvas = (event, data) => {
-		this.setState((state) => {
-			state.offset.x = data.x
-			state.offset.y = data.y
-			return state
-		})
-	}
+		}
+		return state
+	})
+	onDragCanvas: IOnDragCanvas = (event, data) => this.setState((state) => {
+		state.offset.x = data.x
+		state.offset.y = data.y
+		return state
+	})
 	onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) => this.setState(state => {
 		state.links[linkId] = {
 			id: linkId,
@@ -71,48 +67,48 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 	render() {
 		const { nodes, offset, links } = this.state
 		return (
-			<Canvas 
+			<CanvasWrapper 
 				position={ offset } 
 				onDrag={ this.onDragCanvas }
 			>
 				{ map(links, link => (
-					<Link 
+					<LinkWrapper 
 						key={ link.id } 
 						link={ link } 
 						chart={ this.state } 
 					/>
 				))}
 				{ map(nodes, node => (
-					<Node
+					<NodeWrapper
 						id={ node.id }
 						key={ node.id } 
 						position={ node.position }
 						onDrag={ this.onDragNode }
 					>
-						<Port 
+						<PortWrapper 
 							node={ node }
 							port={ node.ports.port1 }
-							updatePortPositionState={ this.updatePortPositionState }
 							style={{ position: 'absolute', left: '50%', top: '-5px', marginLeft: '-5px' }}
+							updatePortPositionState={ this.updatePortPositionState }
 							onLinkStart={ this.onLinkStart }
 							onLinkMove={ this.onLinkMove }
 							onLinkComplete={ this.onLinkComplete }
 							onLinkCancel={ this.onLinkCancel }
 						/>
 						{ node.type }
-						<Port 
+						<PortWrapper 
 							node={ node }
 							port={ node.ports.port2 }
-							updatePortPositionState={ this.updatePortPositionState }
 							style={{ position: 'absolute', left: '50%', bottom: '-5px', marginLeft: '-5px' }}
+							updatePortPositionState={ this.updatePortPositionState }
 							onLinkStart={ this.onLinkStart }
 							onLinkMove={ this.onLinkMove }
 							onLinkComplete={ this.onLinkComplete }
 							onLinkCancel={ this.onLinkCancel }
 						/>
-					</Node>
+					</NodeWrapper>
 				))}
-			</Canvas>
+			</CanvasWrapper>
 		)
 	}
 }

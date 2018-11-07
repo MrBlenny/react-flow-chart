@@ -18,7 +18,6 @@
 		"noUnusedLocals": true,
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
-		// if you want to build a lib, you need declarations to be true and allow js to be false
 		"allowJs": false,
 		"declaration": true
 	},

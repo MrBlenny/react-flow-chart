@@ -30,9 +30,11 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "@types/styled-components": "^4.0.3",
     "@types/uuid": "^3.4.4",
     "lodash": "^4.17.11",
     "react-draggable": "^3.0.5",
+    "styled-components": "^4.0.3",
     "uui": "^1.0.3",
     "uuid": "^3.3.2"
   },
@@ -42,6 +44,7 @@
   },
   "scripts": {
     "start:storybook": "start-storybook -p 6006 -c config/storybook",
-    "build:storybook": "build-storybook -c config/storybook"
+    "build:storybook": "build-storybook -c config/storybook",
+    "build": "tsc"
   }
 }

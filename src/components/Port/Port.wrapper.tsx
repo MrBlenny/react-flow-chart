@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { IPort, INode, IUpdatePortPositionState, IOnLinkStart, IOnLinkMove, IOnLinkCancel, IOnLinkComplete } from 'types'
 import { v4 } from 'uuid'
+import { IPortDefaultProps, PortDefault } from './Port.default';
 
-export interface IPortProps {
+export interface IPortWrapperProps {
   style?: object
   port: IPort
   node: INode
   updatePortPositionState: IUpdatePortPositionState
+  Component?: (props: IPortDefaultProps) => JSX.Element
 
   // Link handlers
   onLinkStart: IOnLinkStart
@@ -15,25 +17,15 @@ export interface IPortProps {
   onLinkComplete: IOnLinkComplete
 }
 
-const height = 12
-const width = 12
-
-const baseStyle = { 
-  width: `${width}px`, 
-  height: `${height}px`, 
-  borderRadius: '50%', 
-  background: 'grey' 
-}
-
-export class Port extends React.Component<IPortProps> {
+export class PortWrapper extends React.Component<IPortWrapperProps> {
   nodeRef?: HTMLDivElement 
   getNodRef = (el: HTMLDivElement) => {
     if (el) {
       const { node, port, updatePortPositionState } = this.props
       this.nodeRef = el
       const position = {
-        x: el.offsetLeft + width / 2,
-        y: el.offsetTop + height / 2,
+        x: el.offsetLeft + el.offsetWidth / 2,
+        y: el.offsetTop + el.offsetHeight / 2,
       }
       updatePortPositionState(node, port, position)
     }
@@ -87,15 +79,22 @@ export class Port extends React.Component<IPortProps> {
     startEvent.stopPropagation()
   }
   render() {
-    const { style, port, node } = this.props
+    const { 
+      style, 
+      port, 
+      node,
+      Component = PortDefault
+    } = this.props
     return (
       <div
         data-port-id={ port.id }
         data-node-id={ node.id }
         onMouseDown={ this.onMouseDown }
         ref={ this.getNodRef } 
-        style={ { ...baseStyle, ...style } }
-      />
+        style={ style }
+      >
+        <Component />
+      </div>
     )
   }
 }
