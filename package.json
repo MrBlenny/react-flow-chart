@@ -30,8 +30,11 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "@types/uuid": "^3.4.4",
     "lodash": "^4.17.11",
-    "react-draggable": "^3.0.5"
+    "react-draggable": "^3.0.5",
+    "uui": "^1.0.3",
+    "uuid": "^3.3.2"
   },
   "peerDependencies": {
     "react": "^16.5.2",

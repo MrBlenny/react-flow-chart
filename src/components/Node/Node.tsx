@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IStopDraggingNode } from 'types';
+import { IOnDragNode } from 'types';
 
 export interface INodeProps {
   id: string,
@@ -9,14 +9,14 @@ export interface INodeProps {
     x: number,
     y: number
   },
-  onStopDraggingNode: IStopDraggingNode,
+  onDrag: IOnDragNode,
 }
 
 export const Node = ({ 
   id, 
   children, 
   position,
-  onStopDraggingNode 
+  onDrag 
 }: INodeProps) => {
   return (
     <Draggable
@@ -27,7 +27,7 @@ export const Node = ({
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
-      onStop={ (e, dragData) => onStopDraggingNode(e, dragData, id) }
+      onDrag={ (e, dragData) => onDrag(e, dragData, id) }
     >
     <div style={{ padding: '20px 30px', background: 'white', position: 'absolute', borderRadius: '4px'}}>
       { children }
