@@ -23,6 +23,7 @@ export const NodeWrapper = ({
 }: INodeWrapperProps) => {
   return (
     <Draggable
+      bounds="parent"
       axis="both"
       position={position}
       grid={[1,1]}

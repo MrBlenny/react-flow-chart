@@ -10,7 +10,7 @@ export const LinkDefault = ({ startPos, endPos }: ILinkDefaultProps) => {
   const points = `${startPos.x},${startPos.y} ${endPos.x},${endPos.y}`
 
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute' }}>
+    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer' }}>
       <polyline
         points={ points }  
         stroke="cornflowerblue" 

@@ -8,4 +8,5 @@ export const PortDefault = styled.div<IPortDefaultProps>`
   height: 12px;
   border-radius: 50%;
   background: grey;
+  cursor: pointer;
 ` as any

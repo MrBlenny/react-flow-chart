@@ -1,7 +1,8 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
 import { IOnDragCanvas } from 'types'
-import { CanvasDefault, ICanvasDefaultProps } from './Canvas.default'
+import { ICanvasInnerDefaultProps, CanvasInnerDefault } from './CanvasInner.default';
+import { ICanvasOuterDefaultProps, CanvasOuterDefault } from './CanvasOuter.default';
 
 export interface ICanvasWrapperProps {
   position: {
@@ -9,28 +10,32 @@ export interface ICanvasWrapperProps {
     y: number
   }
   onDrag: IOnDragCanvas
-  Component?: (props: ICanvasDefaultProps) => JSX.Element
+  ComponentInner?: (props: ICanvasInnerDefaultProps) => JSX.Element
+  ComponentOuter?: (props: ICanvasOuterDefaultProps) => JSX.Element
   children: any
 }
 
 export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
   render() {
     const { 
-      Component = CanvasDefault, 
+      ComponentInner = CanvasInnerDefault, 
+      ComponentOuter = CanvasOuterDefault, 
       position, 
       onDrag,
       children
     } = this.props
 
     return (
-      <Draggable
-        axis="both"
-        position={position}
-        grid={[1, 1]}
-        onDrag={ (e, dragData) => onDrag(e, dragData) }
-      >
-        <Component children={ children } />
-      </Draggable>
+      <ComponentOuter>
+        <Draggable
+          axis="both"
+          position={position}
+          grid={[1, 1]}
+          onDrag={ (e, dragData) => onDrag(e, dragData) }
+        >
+          <ComponentInner children={ children } />
+        </Draggable>
+      </ComponentOuter>
     )
   }
 }
