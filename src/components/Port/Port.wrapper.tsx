@@ -50,13 +50,20 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
     // Create and bind the mouse up handler
     // This is used to check if the link is complete or cancelled
-    const mouseUpHandler = (e: MouseEvent) => {
-      const toPortId = e.toElement.getAttribute('data-port-id')
-      const toNodeId = e.toElement.getAttribute('data-node-id')
+    const mouseUpHandler = (e: MouseEvent & { path: HTMLElement[] }) => {
+      // We traverse up the event path until we find an element with 'data-port-id' and data-node-id'
+      // e.toElement cannot be used because it may be a child element of the port
+      const portEl = e.path.find((el) => {
+        const toPortId = el.getAttribute && el.getAttribute('data-port-id')
+        const toNodeId = el.getAttribute && el.getAttribute('data-node-id')
+        return !!(toPortId && toNodeId)
+      })
 
       // If both node-id and port-id are defined as data attributes, we are mouse-upping
       // on another port. Run the success handler
-      if (toNodeId && toPortId) {
+      if (portEl) {
+        const toPortId = portEl.getAttribute('data-port-id') as string
+        const toNodeId = portEl.getAttribute('data-node-id') as string
         onLinkComplete({ linkId, startEvent, fromNodeId, fromPortId, toNodeId, toPortId })
       } else {
         onLinkCancel({ linkId, startEvent, fromNodeId, fromPortId })

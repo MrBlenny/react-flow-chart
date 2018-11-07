@@ -1,6 +1,6 @@
 import { DraggableData } from "react-draggable";
 
-export type IOnDragNode = (event: MouseEvent, dragData: DraggableData, id: string,) => void
+export type IOnDragNode = (event: MouseEvent, dragData: DraggableData, id: string) => void
 
 export type IOnDragCanvas = (event: MouseEvent, dragData: DraggableData) => void
 

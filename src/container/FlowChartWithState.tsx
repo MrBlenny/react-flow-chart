@@ -1,6 +1,7 @@
 import * as React from "react"
 import { IOnDragNode, CanvasWrapper, NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, IOnLinkMove, IOnLinkComplete } from '../'
 import { map } from 'lodash'
+import * as actions from './actions'
 
 export interface IFlowChartWithStateProps {
   initialValue: IChart
@@ -11,59 +12,15 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
   constructor(props: IFlowChartWithStateProps) {
     super(props)
     this.state = props.initialValue
-  }
-	onDragNode: IOnDragNode = (event, data, id) => this.setState((state) => {
-		const nodeState = state.nodes[id]
-		if (nodeState) {
-			nodeState.position = {
-				x: data.x,
-				y: data.y
-			}
-		}
-		return state
-	})
-	onDragCanvas: IOnDragCanvas = (event, data) => this.setState((state) => {
-		state.offset.x = data.x
-		state.offset.y = data.y
-		return state
-	})
-	onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) => this.setState(state => {
-		state.links[linkId] = {
-			id: linkId,
-			from: {
-				nodeId: fromNodeId,
-				portId: fromPortId
-			},
-			to: {}
-		}
-		return state
-	})
-	onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => this.setState(state => {
-		state.links[linkId].to.position = toPosition
-		return state
-	})
-	onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, toNodeId, toPortId }) => this.setState(state => {
-		if (fromNodeId !== toPortId) {
-			state.links[linkId].to = {
-				nodeId: toNodeId,
-				portId: toPortId
-			}
-		}
-		return state
-	})
-	onLinkCancel: IOnLinkCancel = ({ linkId }) => this.setState(state => {
-		delete state.links[linkId]
-		return state
-	})
-	updatePortPositionState: IUpdatePortPositionState = (nodeToUpdate, port, position) => {
-		this.setState((state) => {
-			state.nodes[nodeToUpdate.id].ports[port.id].position = {
-				x: position.x,
-				y: position.y
-			}
-			return state
-		})
 	}
+	// Bind the demo actions to this.setState
+	onDragNode: IOnDragNode = (...args) => this.setState(actions.onDragNode(...args) as any)
+	onDragCanvas: IOnDragCanvas = (...args) => this.setState(actions.onDragCanvas(...args) as any)
+	onLinkStart: IOnLinkStart = (...args) => this.setState(actions.onLinkStart(...args) as any)
+	onLinkMove: IOnLinkMove = (...args) => this.setState(actions.onLinkMove(...args) as any)
+	onLinkComplete: IOnLinkComplete = (...args) => this.setState(actions.onLinkComplete(...args) as any)
+	onLinkCancel: IOnLinkCancel = (...args) => this.setState(actions.onLinkCancel(...args) as any)
+	updatePortPositionState: IUpdatePortPositionState = (...args) => this.setState(actions.updatePortPositionState(...args) as any)
 	render() {
 		const { nodes, offset, links } = this.state
 		return (
