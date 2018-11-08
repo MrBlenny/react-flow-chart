@@ -1,5 +1,5 @@
 {
-  "name": "react-flow-chart",
+  "name": "@mrblenny/react-flow-chart",
   "version": "0.0.1",
   "description": "A boilerplate project for using TypeScript 3, React 16 and Storybook together with Webpack 4",
   "main": "src/index.tsx",
@@ -20,6 +20,8 @@
     "@types/storybook__addon-options": "^3.2.2",
     "@types/storybook__react": "^3.0.9",
     "@types/webpack": "4.4.17",
+    "@types/uuid": "^3.4.4",
+    "@types/styled-components": "^4.0.3",
     "babel-loader": "^8.0.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -30,12 +32,9 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@types/styled-components": "^4.0.3",
-    "@types/uuid": "^3.4.4",
     "lodash": "^4.17.11",
     "react-draggable": "^3.0.5",
     "styled-components": "^4.0.3",
-    "uui": "^1.0.3",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {

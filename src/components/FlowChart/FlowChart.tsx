@@ -2,7 +2,9 @@ import * as React from "react"
 import { 
   IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, CanvasWrapper, 
   NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, 
-  IOnLinkMove, IOnLinkComplete, PortsDefault , IOnDragNode, IOnCanvasDrop
+  IOnLinkMove, IOnLinkComplete, PortsDefault , IOnDragNode, IOnCanvasDrop, NodeInnerDefault,
+  NodeDefault, INodeDefaultProps, PortDefault, IPortDefaultProps, LinkDefault, ILinkDefaultProps, INodeInnerDefaultProps, 
+  IPortsDefaultProps,
 } from '../../'
 import { map, filter } from 'lodash'
 
@@ -21,7 +23,14 @@ export interface IFlowChartProps {
 	onLinkClick: IOnLinkClick
 	onCanvasClick: IOnCanvasClick
 	onDeleteKey: IOnDeleteKey
-	onNodeClick: IOnNodeClick
+  onNodeClick: IOnNodeClick
+  Components?: {
+    NodeInner?: (props: INodeInnerDefaultProps) => JSX.Element
+    Ports?: (props: IPortsDefaultProps) => JSX.Element
+    Port?: (props: IPortDefaultProps) => JSX.Element
+    Node?: (props: INodeDefaultProps) => JSX.Element
+    Link?: (props: ILinkDefaultProps) => JSX.Element
+  }
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -41,6 +50,13 @@ export const FlowChart = (props: IFlowChartProps) => {
     onCanvasClick,
     onDeleteKey,
     onNodeClick,
+    Components: {
+      NodeInner = NodeInnerDefault,
+      Ports = PortsDefault,
+      Port = PortDefault,
+      Node = NodeDefault,
+      Link = LinkDefault,
+    } = {}
   } = props
   const { links, nodes, selected } = chart
 
@@ -59,6 +75,7 @@ export const FlowChart = (props: IFlowChartProps) => {
           chart={ chart }
           key={ link.id } 
           link={ link } 
+          Component={ Link }
           { ...linkCallbacks }
         />
       ))}
@@ -67,31 +84,34 @@ export const FlowChart = (props: IFlowChartProps) => {
           key={ node.id } 
           node={ node }
           selected={ selected }
+          Component={ Node }
           { ...nodeCallbacks }
         >
-          <PortsDefault side="top">
+          <Ports side="top">
             { filter(node.ports, ['type', 'input']).map(port => (
               <PortWrapper
                 key={ port.id }
                 chart={ chart }
                 node={ node }
                 port={ port }
+                Component={ Port }
                 { ...portCallbacks }
               />
             )) }
-          </PortsDefault>
-          { node.type }
-          <PortsDefault side="bottom">
+          </Ports>
+          <NodeInner node={ node }/>
+          <Ports side="bottom">
             { filter(node.ports, ['type', 'output']).map(port => (
               <PortWrapper
                 key={ port.id }
                 chart={ chart }
                 node={ node }
                 port={ port }
+                Component={ Port }
                 { ...portCallbacks }
               />
             )) }
-          </PortsDefault>
+          </Ports>
         </NodeWrapper>
       ))}
     </CanvasWrapper>

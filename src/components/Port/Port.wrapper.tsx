@@ -9,7 +9,7 @@ export interface IPortWrapperProps {
   port: IPort
   node: INode
   updatePortPositionState: IUpdatePortPositionState
-  Component?: (props: IPortDefaultProps) => JSX.Element
+  Component: (props: IPortDefaultProps) => JSX.Element
 
   // Link handlers
   onLinkStart: IOnLinkStart
