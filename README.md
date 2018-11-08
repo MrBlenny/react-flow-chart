@@ -1,4 +1,4 @@
-# React Draggable Flowchart
+# React Flow Chart
 
 A work in progress. This project aims to build a highly customisable, stateless flow chart UI lib.
 
