@@ -12,16 +12,16 @@ storiesOf("Flow Chart With State", module)
 			nodes: {
 				'node1': {
 					id: 'node1',
-					type: 'type-1-lets-make-this-a-bit-bigger',
+					type: 'output-only',
 					position: {
 						x: 200,
 						y: 100
 					},
 					ports: {
-						port1:{
+						port1: {
 							id: 'port1',
-							type: 'input'
-						}, 
+							type: 'output'
+						},
 						port2: {
 							id: 'port2',
 							type: 'output'
@@ -30,7 +30,7 @@ storiesOf("Flow Chart With State", module)
 				}, 
 				'node2': {
 					id: 'node2',
-					type: 'type-2-lets-make-this-a-bit-bigger',
+					type: 'input-output',
 					position: {
 						x: 200,
 						y: 300
@@ -59,17 +59,6 @@ storiesOf("Flow Chart With State", module)
 						portId: 'port1',
 					}
 				},
-				link2: {
-					id: 'link2',
-					from: {
-						nodeId: 'node2',
-						portId: 'port2',
-					},
-					to: {
-						nodeId: 'node1',
-						portId: 'port2',
-					}
-				}
 			}
 		}
 

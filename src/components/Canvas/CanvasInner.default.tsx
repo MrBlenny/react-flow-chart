@@ -1,7 +1,11 @@
 import styled from 'styled-components'
+import { IOnCanvasClick } from 'types';
 
 export interface ICanvasInnerDefaultProps {
   children: any
+  onClick: IOnCanvasClick
+  tabIndex: number
+  onKeyDown: any
 }
 
 export const CanvasInnerDefault = styled.div<ICanvasInnerDefaultProps>`

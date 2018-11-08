@@ -1,4 +1,5 @@
-import { IOnDragNode, IOnDragCanvas, IOnLinkStart, IOnLinkMove, IOnLinkComplete, IChart, IOnLinkCancel, IUpdatePortPositionState } from '../types'
+import { IOnDragNode, IOnDragCanvas, IOnLinkStart, IOnLinkMove, IOnLinkComplete, IChart, IOnLinkCancel, IUpdatePortPositionState, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnCanvasClick, IOnDeleteKey } from '../types'
+import { forEach } from 'lodash'
 
 export const onDragNode: IOnDragNode = (event, data, id) => (state: IChart) => {
   const nodeState = state.nodes[id]
@@ -46,6 +47,60 @@ export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, toNodeId, 
 
 export const onLinkCancel: IOnLinkCancel = ({ linkId }) => (state: IChart) => {
   delete state.links[linkId]
+  return state
+}
+
+export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (state: IChart) => {
+  // Set the link to hover
+  const link = state.links[linkId]
+  // Set the connected ports to hover
+  if (link.to.nodeId && link.to.portId) {
+    link.hover = true
+    state.nodes[link.from.nodeId].ports[link.from.portId].linkHovered = true
+    state.nodes[link.to.nodeId].ports[link.to.portId].linkHovered = true
+  }
+  return state
+}
+
+export const onLinkMouseLeave: IOnLinkMouseLeave = ({ linkId }) => (state: IChart) => {
+  const link = state.links[linkId]
+  // Set the connected ports to hover
+  if (link.to.nodeId && link.to.portId) {
+    link.hover = false
+    state.nodes[link.from.nodeId].ports[link.from.portId].linkHovered = false
+    state.nodes[link.to.nodeId].ports[link.to.portId].linkHovered = false
+  }
+  return state
+}
+
+export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (state: IChart) => {
+  forEach(state.links, (link) => link.selected = false)
+  state.links[linkId].selected = !state.links[linkId].selected
+  return state
+}
+
+export const onCanvasClick: IOnCanvasClick = () => (state: IChart) => {
+  forEach(state.links, (link) => {
+    link.selected = false
+  })
+  return state
+}
+
+export const onDeleteKey: IOnDeleteKey = () => (state: IChart) => {
+  forEach(state.links, link => {
+    if (link.selected) {
+      delete state.links[link.id]
+    }
+  })
+  forEach(state.nodes, node => {
+    if (node.selected) {
+      delete state.nodes[node.id]
+    }
+    forEach(node.ports, (port) => {
+      port.linkSelected = false
+      port.linkHovered = false
+    })
+  })
   return state
 }
 

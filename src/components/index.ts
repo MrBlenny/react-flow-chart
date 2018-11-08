@@ -1,4 +1,5 @@
 export * from './Canvas'
 export * from './Node'
 export * from './Port'
+export * from './Ports'
 export * from './Link'

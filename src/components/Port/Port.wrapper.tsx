@@ -23,9 +23,13 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     if (el) {
       const { node, port, updatePortPositionState } = this.props
       this.nodeRef = el
+      const nodesEl = (el.parentElement && el.parentElement.offsetLeft !== undefined && el.parentElement.offsetTop !== undefined)
+        ? el.parentElement
+        : { offsetLeft: 0, offsetTop: 0 }
+
       const position = {
-        x: el.offsetLeft + el.offsetWidth / 2,
-        y: el.offsetTop + el.offsetHeight / 2,
+        x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2,
+        y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2,
       }
       updatePortPositionState(node, port, position)
     }
@@ -100,7 +104,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         ref={ this.getNodRef } 
         style={ style }
       >
-        <Component />
+        <Component port={ port } />
       </div>
     )
   }

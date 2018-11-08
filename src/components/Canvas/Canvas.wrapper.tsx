@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnDragCanvas } from 'types'
+import { IOnDragCanvas, IOnCanvasClick, IOnDeleteKey } from 'types'
 import { ICanvasInnerDefaultProps, CanvasInnerDefault } from './CanvasInner.default';
 import { ICanvasOuterDefaultProps, CanvasOuterDefault } from './CanvasOuter.default';
 
@@ -10,6 +10,8 @@ export interface ICanvasWrapperProps {
     y: number
   }
   onDrag: IOnDragCanvas
+  onDeleteKey: IOnDeleteKey
+  onCanvasClick: IOnCanvasClick
   ComponentInner?: (props: ICanvasInnerDefaultProps) => JSX.Element
   ComponentOuter?: (props: ICanvasOuterDefaultProps) => JSX.Element
   children: any
@@ -22,7 +24,9 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
       ComponentOuter = CanvasOuterDefault, 
       position, 
       onDrag,
-      children
+      children,
+      onCanvasClick,
+      onDeleteKey,
     } = this.props
 
     return (
@@ -33,7 +37,16 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
           grid={[1, 1]}
           onDrag={ (e, dragData) => onDrag(e, dragData) }
         >
-          <ComponentInner children={ children } />
+          <ComponentInner 
+            children={ children } 
+            onClick={ onCanvasClick }
+            tabIndex={ 0 }
+            onKeyDown={ (e: React.KeyboardEvent) => {
+              if (e.keyCode === 46) {
+                onDeleteKey()
+              }
+            }}
+          />
         </Draggable>
       </ComponentOuter>
     )

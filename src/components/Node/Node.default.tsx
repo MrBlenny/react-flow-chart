@@ -5,8 +5,9 @@ export interface INodeDefaultProps {
 }
 
 export const NodeDefault = styled.div<INodeDefaultProps>`
-  padding: 20px 30px;
+  padding: 40px 30px;
   background: white;
   position: absolute;
   border-radius: 4px;
+  width: 300px;
 ` as any
