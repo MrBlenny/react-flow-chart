@@ -14,8 +14,8 @@ export interface ICanvasWrapperProps {
   onDeleteKey: IOnDeleteKey
   onCanvasClick: IOnCanvasClick
   onCanvasDrop: IOnCanvasDrop
-  ComponentInner?: (props: ICanvasInnerDefaultProps) => JSX.Element
-  ComponentOuter?: (props: ICanvasOuterDefaultProps) => JSX.Element
+  ComponentInner?: React.SFC<ICanvasInnerDefaultProps>
+  ComponentOuter?: React.SFC<ICanvasOuterDefaultProps>
   children: any
 }
 

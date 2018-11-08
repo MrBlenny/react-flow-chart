@@ -1,55 +1,69 @@
 import * as React from "react"
 import { 
   IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, CanvasWrapper, 
-  NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, 
+  NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IOnPortPositionChange, IOnLinkCancel, IOnLinkStart, 
   IOnLinkMove, IOnLinkComplete, PortsDefault , IOnDragNode, IOnCanvasDrop, NodeInnerDefault,
   NodeDefault, INodeDefaultProps, PortDefault, IPortDefaultProps, LinkDefault, ILinkDefaultProps, INodeInnerDefaultProps, 
   IPortsDefaultProps,
 } from '../../'
-import { map, filter } from 'lodash'
+import { map } from 'lodash'
 
 export interface IFlowChartProps {
+  /** 
+   * The current chart state
+   */
   chart: IChart
-  onDragNode: IOnDragNode
-	onDragCanvas: IOnDragCanvas
-	onCanvasDrop: IOnCanvasDrop
-	onLinkStart: IOnLinkStart
-	onLinkMove: IOnLinkMove
-	onLinkComplete: IOnLinkComplete
-	onLinkCancel: IOnLinkCancel
-	updatePortPositionState: IUpdatePortPositionState
-	onLinkMouseEnter: IOnLinkMouseEnter
-	onLinkMouseLeave: IOnLinkMouseLeave
-	onLinkClick: IOnLinkClick
-	onCanvasClick: IOnCanvasClick
-	onDeleteKey: IOnDeleteKey
-  onNodeClick: IOnNodeClick
+  /** 
+   * Callbacks for updating chart state.
+   * See container/actions.ts for example state mutations
+   */
+  callbacks: {
+    onDragNode: IOnDragNode
+    onDragCanvas: IOnDragCanvas
+    onCanvasDrop: IOnCanvasDrop
+    onLinkStart: IOnLinkStart
+    onLinkMove: IOnLinkMove
+    onLinkComplete: IOnLinkComplete
+    onLinkCancel: IOnLinkCancel
+    onPortPositionChange: IOnPortPositionChange
+    onLinkMouseEnter: IOnLinkMouseEnter
+    onLinkMouseLeave: IOnLinkMouseLeave
+    onLinkClick: IOnLinkClick
+    onCanvasClick: IOnCanvasClick
+    onDeleteKey: IOnDeleteKey
+    onNodeClick: IOnNodeClick
+  }
+  /**
+   * Custom components
+   */
   Components?: {
-    NodeInner?: (props: INodeInnerDefaultProps) => JSX.Element
-    Ports?: (props: IPortsDefaultProps) => JSX.Element
-    Port?: (props: IPortDefaultProps) => JSX.Element
-    Node?: (props: INodeDefaultProps) => JSX.Element
-    Link?: (props: ILinkDefaultProps) => JSX.Element
+    NodeInner?: React.SFC<INodeInnerDefaultProps>
+    Ports?: React.SFC<IPortsDefaultProps>
+    Port?: React.SFC<IPortDefaultProps>
+    Node?: React.SFC<INodeDefaultProps>
+    Link?: React.SFC<ILinkDefaultProps>
   }
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
   const {
     chart,
-    onDragNode,
-    onDragCanvas,
-    onCanvasDrop,
-    onLinkStart,
-    onLinkMove,
-    onLinkComplete,
-    onLinkCancel,
-    updatePortPositionState,
-    onLinkMouseEnter,
-    onLinkMouseLeave,
-    onLinkClick,
-    onCanvasClick,
-    onDeleteKey,
-    onNodeClick,
+    callbacks: {
+      onDragNode,
+      onDragCanvas,
+      onCanvasDrop,
+      onLinkStart,
+      onLinkMove,
+      onLinkComplete,
+      onLinkCancel,
+      onPortPositionChange,
+      onLinkMouseEnter,
+      onLinkMouseLeave,
+      onLinkClick,
+      onCanvasClick,
+      onDeleteKey,
+      onNodeClick,
+    },
     Components: {
       NodeInner = NodeInnerDefault,
       Ports = PortsDefault,
@@ -63,7 +77,7 @@ export const FlowChart = (props: IFlowChartProps) => {
   const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
   const nodeCallbacks = { onDragNode, onNodeClick }
-  const portCallbacks = { updatePortPositionState, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
+  const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
 
   return (
     <CanvasWrapper 
@@ -87,21 +101,9 @@ export const FlowChart = (props: IFlowChartProps) => {
           Component={ Node }
           { ...nodeCallbacks }
         >
-          <Ports side="top">
-            { filter(node.ports, ['type', 'input']).map(port => (
-              <PortWrapper
-                key={ port.id }
-                chart={ chart }
-                node={ node }
-                port={ port }
-                Component={ Port }
-                { ...portCallbacks }
-              />
-            )) }
-          </Ports>
           <NodeInner node={ node }/>
-          <Ports side="bottom">
-            { filter(node.ports, ['type', 'output']).map(port => (
+          <Ports>
+            { map(node.ports, port => (
               <PortWrapper
                 key={ port.id }
                 chart={ chart }

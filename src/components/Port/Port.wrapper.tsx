@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { IPort, INode, IUpdatePortPositionState, IOnLinkStart, IOnLinkMove, IOnLinkCancel, IOnLinkComplete, IChart } from 'types'
+import { IPort, INode, IOnPortPositionChange, IOnLinkStart, IOnLinkMove, IOnLinkCancel, IOnLinkComplete, IChart } from 'types'
 import { v4 } from 'uuid'
 import { IPortDefaultProps, PortDefault } from './Port.default';
 
@@ -8,8 +8,8 @@ export interface IPortWrapperProps {
   chart: IChart
   port: IPort
   node: INode
-  updatePortPositionState: IUpdatePortPositionState
-  Component: (props: IPortDefaultProps) => JSX.Element
+  onPortPositionChange: IOnPortPositionChange
+  Component: React.SFC<IPortDefaultProps>
 
   // Link handlers
   onLinkStart: IOnLinkStart
@@ -22,7 +22,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   nodeRef?: HTMLDivElement 
   getNodRef = (el: HTMLDivElement) => {
     if (el) {
-      const { node, port, updatePortPositionState } = this.props
+      const { node, port, onPortPositionChange } = this.props
       this.nodeRef = el
       const nodesEl = (el.parentElement && el.parentElement.offsetLeft !== undefined && el.parentElement.offsetTop !== undefined)
         ? el.parentElement
@@ -32,7 +32,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2,
         y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2,
       }
-      updatePortPositionState(node, port, position)
+      onPortPositionChange(node, port, position)
     }
   }
   onMouseDown = (startEvent: any) => {

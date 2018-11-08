@@ -1,66 +1,20 @@
-import styled, { css } from 'styled-components'
+import * as React from 'react'
+import { filter } from 'lodash'
+import { PortsGroupDefault } from '../../'
 
 export interface IPortsDefaultProps {
-  side: 'top' | 'bottom' | 'left'
+  children: any
 }
 
-export const PortsDefault = styled.div<IPortsDefaultProps>`
-  position: absolute;
-
-  ${props => {
-    if (props.side === 'top') {
-      return css`
-        width: 100%;
-        left: 0;
-        top: -12px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        > div {
-          margin: 0 3px;
-        }
-      `
-    } else if (props.side === 'bottom') {
-      return css`
-        width: 100%;
-        left: 0;
-        
-        bottom: -12px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        > div {
-          margin: 0 3px;
-        }
-      `
-    } else if (props.side === 'left') {
-      return css`
-        height: 100%;
-        top: 0;
-        left: -12px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        > div {
-          margin: 3px 0;
-        }
-      `
-    } else {
-      return css`
-        height: 100%;
-        top: 0;
-        right: -12px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        > div {
-          margin: 3px 0;
-        }
-      `
-    }
-  }}
-`
+export const PortsDefault = ({ children }: IPortsDefaultProps) => {
+  return (
+    <div>
+      <PortsGroupDefault side="top">
+        { filter(children, ['props.port.type', 'input']) }
+      </PortsGroupDefault>
+      <PortsGroupDefault side="bottom">
+        { filter(children, ['props.port.type', 'output']) }
+      </PortsGroupDefault>
+    </div>
+  )
+}

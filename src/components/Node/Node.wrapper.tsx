@@ -9,7 +9,7 @@ export interface INodeWrapperProps {
   onNodeClick: IOnNodeClick
   children: any
   selected: ISelectedOrHovered
-  Component?: (props: INodeDefaultProps) => JSX.Element
+  Component?: React.SFC<INodeDefaultProps>
 }
 
 export const NodeWrapper = ({ 

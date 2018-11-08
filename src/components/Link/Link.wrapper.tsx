@@ -9,7 +9,7 @@ export interface ILinkWrapperProps {
   onLinkMouseEnter: IOnLinkMouseEnter
   onLinkMouseLeave: IOnLinkMouseLeave
   onLinkClick: IOnLinkMouseLeave
-  Component?: (props: ILinkDefaultProps) => JSX.Element
+  Component?: React.SFC<ILinkDefaultProps>
 }
 
 export const LinkWrapper = ({ 

@@ -1,6 +1,6 @@
 import { 
   IOnDragNode, IOnDragCanvas, IOnLinkStart, IOnLinkMove, IOnLinkComplete, IChart, IOnLinkCancel, 
-  IUpdatePortPositionState, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, IOnCanvasDrop 
+  IOnPortPositionChange, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, IOnCanvasDrop 
 } from '../types'
 import { forEach } from 'lodash'
 import { v4 } from 'uuid'
@@ -119,7 +119,7 @@ export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
   return chart
 }
 
-export const updatePortPositionState: IUpdatePortPositionState = (nodeToUpdate, port, position) => (chart: IChart): IChart => {
+export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, position) => (chart: IChart): IChart => {
   chart.nodes[nodeToUpdate.id].ports[port.id].position = {
     x: position.x,
     y: position.y
