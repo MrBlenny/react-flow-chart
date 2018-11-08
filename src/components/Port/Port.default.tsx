@@ -4,6 +4,10 @@ import { IPort } from 'types'
 
 export interface IPortDefaultProps {
   port: IPort
+  isSelected: boolean
+  isHovered: boolean
+  isLinkSelected: boolean
+  isLinkHovered: boolean
 }
 
 const PortDefaultOuter = styled.div`
@@ -28,8 +32,10 @@ const PortDefaultInner = styled.div<{ active: boolean }>`
   cursor: pointer;
 `
 
-export const PortDefault = ({ port }: IPortDefaultProps) => (
+export const PortDefault = ({ isLinkSelected, isLinkHovered }: IPortDefaultProps) => (
   <PortDefaultOuter>
-    <PortDefaultInner active={ !!(port.linkHovered || port.linkSelected) } />
+    <PortDefaultInner 
+      active={ isLinkSelected || isLinkHovered } 
+    />
   </PortDefaultOuter>
 )

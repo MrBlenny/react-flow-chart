@@ -40,6 +40,8 @@ export const LinkWrapper = ({
       onLinkMouseEnter={ onLinkMouseEnter }
       onLinkMouseLeave={ onLinkMouseLeave }
       onLinkClick={ onLinkClick }
+      isSelected={ chart.selected.type === 'link' && chart.selected.id === link.id }
+      isHovered={ chart.hovered.type === 'link' && chart.hovered.id === link.id }
     />
   )
 }

@@ -8,6 +8,8 @@ export interface ILinkDefaultProps {
   onLinkMouseEnter: IOnLinkMouseEnter
   onLinkMouseLeave: IOnLinkMouseLeave
   onLinkClick: IOnLinkClick
+  isHovered: boolean
+  isSelected: boolean
 }
 
 export const LinkDefault = ({
@@ -17,6 +19,8 @@ export const LinkDefault = ({
   onLinkMouseEnter,
   onLinkMouseLeave,
   onLinkClick,
+  isHovered,
+  isSelected,
 }: ILinkDefaultProps) => {
   const points = `${startPos.x},${startPos.y} ${endPos.x},${endPos.y}`
 
@@ -42,7 +46,7 @@ export const LinkDefault = ({
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
-        strokeOpacity={ (link.hover || link.selected) ? 0.1 : 0 }
+        strokeOpacity={ (isHovered || isSelected) ? 0.1 : 0 }
         onMouseEnter={() => onLinkMouseEnter({ linkId: link.id }) }
         onMouseLeave={() => onLinkMouseLeave({ linkId: link.id }) }
         onClick={(e) => {

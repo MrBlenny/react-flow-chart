@@ -42,3 +42,5 @@ export type IOnLinkClick = ({ linkId }: { linkId: string }) => void
 export type IOnCanvasClick = () => void
 
 export type IOnDeleteKey = () => void
+
+export type IOnNodeClick = ({ nodeId }: { nodeId: string }) => void

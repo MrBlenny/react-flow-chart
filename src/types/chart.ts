@@ -9,6 +9,15 @@ export interface IChart {
     [id: string]: ILink
   }
   properties?: any
+
+  /** System Temp */
+  selected: ISelectedOrHovered
+  hovered: ISelectedOrHovered
+}
+
+export interface ISelectedOrHovered {
+  type?: 'link' | 'node' | 'port',
+  id?: string
 }
 
 export interface INode {
@@ -19,9 +28,6 @@ export interface INode {
     [id: string]: IPort
   }
   properties?: any
-  /** Temp */
-  hover?: boolean
-  selected?: boolean
 }
 
 export interface IPort {
@@ -31,8 +37,6 @@ export interface IPort {
   properties?: any
   /** System Temp */
   position?: IPosition
-  linkHovered?: boolean
-  linkSelected?: boolean
 }
 
 export interface ILink {
@@ -48,7 +52,5 @@ export interface ILink {
     position?: IPosition
   }
   properties?: any
-  /** System Temp */
-  hover?: boolean
-  selected?: boolean
 }
+

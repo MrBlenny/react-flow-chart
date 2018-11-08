@@ -59,7 +59,9 @@ storiesOf("Flow Chart With State", module)
 						portId: 'port1',
 					}
 				},
-			}
+			},
+			selected:{},
+			hovered:{},
 		}
 
 		return <FlowChartWithState initialValue={ chart } />
@@ -108,7 +110,9 @@ storiesOf("Flow Chart With State", module)
 					}
 				}
 			},
-			links: {}
+			links: {},
+			selected:{},
+			hovered:{},
 		}
 		
 		return <FlowChartWithState initialValue={ chart } />

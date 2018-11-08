@@ -1,10 +1,11 @@
 import * as React from 'react'
-import { IPort, INode, IUpdatePortPositionState, IOnLinkStart, IOnLinkMove, IOnLinkCancel, IOnLinkComplete } from 'types'
+import { IPort, INode, IUpdatePortPositionState, IOnLinkStart, IOnLinkMove, IOnLinkCancel, IOnLinkComplete, IChart } from 'types'
 import { v4 } from 'uuid'
 import { IPortDefaultProps, PortDefault } from './Port.default';
 
 export interface IPortWrapperProps {
   style?: object
+  chart: IChart
   port: IPort
   node: INode
   updatePortPositionState: IUpdatePortPositionState
@@ -91,11 +92,16 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   }
   render() {
     const { 
+      chart,
       style, 
       port, 
       node,
       Component = PortDefault
     } = this.props
+
+    const selectedLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id]
+    const hoveredLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id]
+
     return (
       <div
         data-port-id={ port.id }
@@ -104,7 +110,21 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         ref={ this.getNodRef } 
         style={ style }
       >
-        <Component port={ port } />
+        <Component 
+          port={ port }
+          isSelected={ chart.selected.type === 'port' && chart.selected.id === port.id }
+          isHovered={ chart.hovered.type === 'port' && chart.hovered.id === port.id }
+          isLinkSelected={ selectedLink 
+            ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) || 
+               (selectedLink.to.portId === port.id && selectedLink.to.nodeId === node.id))
+            : false 
+          }
+          isLinkHovered={ hoveredLink 
+            ? ((hoveredLink.from.portId === port.id && hoveredLink.from.nodeId === node.id) || 
+               (hoveredLink.to.portId === port.id && hoveredLink.to.nodeId === node.id))
+            : false 
+          }
+        />
       </div>
     )
   }

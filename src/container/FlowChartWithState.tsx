@@ -2,7 +2,7 @@ import * as React from "react"
 import { IOnDragNode, CanvasWrapper, NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, IOnLinkMove, IOnLinkComplete, PortsDefault } from '../'
 import { map, filter } from 'lodash'
 import * as actions from './actions'
-import { IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey } from "types";
+import { IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey, IOnNodeClick } from "types";
 
 export interface IFlowChartWithStateProps {
   initialValue: IChart
@@ -27,8 +27,10 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 	onLinkClick: IOnLinkClick = (...args) => this.setState(actions.onLinkClick(...args) as any)
 	onCanvasClick: IOnCanvasClick = (...args) => this.setState(actions.onCanvasClick(...args) as any)
 	onDeleteKey: IOnDeleteKey = (...args) => this.setState(actions.onDeleteKey(...args) as any)
+	onNodeClick: IOnNodeClick = (...args) => this.setState(actions.onNodeClick(...args) as any)
 	render() {
-		const { nodes, offset, links } = this.state
+		const { nodes, offset, links, selected } = this.state
+		const chart = this.state
 		return (
 			<CanvasWrapper 
 				position={ offset } 
@@ -38,9 +40,9 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 			>
 				{ map(links, link => (
 					<LinkWrapper 
+						chart={ chart }
 						key={ link.id } 
 						link={ link } 
-						chart={ this.state }
 						onLinkMouseEnter={ this.onLinkMouseEnter }
 						onLinkMouseLeave={ this.onLinkMouseLeave }
 						onLinkClick={ this.onLinkClick }
@@ -48,14 +50,16 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 				))}
 				{ map(nodes, node => (
 					<NodeWrapper
-						id={ node.id }
 						key={ node.id } 
-						position={ node.position }
+						node={ node }
 						onDrag={ this.onDragNode }
+						onNodeClick={ this.onNodeClick }
+						selected={ selected }
 					>
 						<PortsDefault side="top">
 							{ filter(node.ports, ['type', 'input']).map(port => (
 								<PortWrapper
+									chart={ chart }
 									key={ port.id }
 									node={ node }
 									port={ port }
@@ -71,6 +75,8 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 						<PortsDefault side="bottom">
 							{ filter(node.ports, ['type', 'output']).map(port => (
 								<PortWrapper
+									chart={ chart }
+
 									key={ port.id }
 									node={ node }
 									port={ port }
