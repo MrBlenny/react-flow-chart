@@ -1,9 +1,9 @@
 {
-  "name": "react-draggable-flow-chart",
-  "version": "1.0.0",
+  "name": "react-flow-chart",
+  "version": "0.0.1",
   "description": "A boilerplate project for using TypeScript 3, React 16 and Storybook together with Webpack 4",
   "main": "src/index.tsx",
-  "repository": "git@github.com:MrBlenny/react-draggable-flow-chart.git",
+  "repository": "git@github.com:MrBlenny/react-flow-chart.git",
   "author": "David Revay <daverevay@gmail.com>",
   "license": "MIT",
   "devDependencies": {
