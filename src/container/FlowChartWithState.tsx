@@ -1,20 +1,23 @@
 import * as React from "react"
-import { IOnDragNode, CanvasWrapper, NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, IOnLinkMove, IOnLinkComplete, PortsDefault } from '../'
-import { map, filter } from 'lodash'
+import { 
+	FlowChart, IOnDragNode, IOnDragCanvas, IChart, IUpdatePortPositionState, IOnLinkCancel, IOnLinkStart, IOnLinkMove, 
+	IOnLinkComplete, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, IOnLinkMouseEnter, IOnCanvasDrop
+} from '../'
 import * as actions from './actions'
-import { IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey, IOnNodeClick } from "types";
 
 export interface IFlowChartWithStateProps {
-  initialValue: IChart
+	initialValue: IChart
 }
 
+/**
+ * Flow Chart With State
+ */
 export class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
   state: IChart
   constructor(props: IFlowChartWithStateProps) {
     super(props)
     this.state = props.initialValue
 	}
-	// Bind the demo actions to this.setState
 	onDragNode: IOnDragNode = (...args) => this.setState(actions.onDragNode(...args) as any)
 	onDragCanvas: IOnDragCanvas = (...args) => this.setState(actions.onDragCanvas(...args) as any)
 	onLinkStart: IOnLinkStart = (...args) => this.setState(actions.onLinkStart(...args) as any)
@@ -28,69 +31,26 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
 	onCanvasClick: IOnCanvasClick = (...args) => this.setState(actions.onCanvasClick(...args) as any)
 	onDeleteKey: IOnDeleteKey = (...args) => this.setState(actions.onDeleteKey(...args) as any)
 	onNodeClick: IOnNodeClick = (...args) => this.setState(actions.onNodeClick(...args) as any)
+	onCanvasDrop: IOnCanvasDrop = (...args) => this.setState(actions.onCanvasDrop(...args) as any)
 	render() {
-		const { nodes, offset, links, selected } = this.state
-		const chart = this.state
 		return (
-			<CanvasWrapper 
-				position={ offset } 
-				onDrag={ this.onDragCanvas }
+			<FlowChart
+				chart={ this.state }
+				onDragNode={ this.onDragNode }
+				onDragCanvas={ this.onDragCanvas }
+				onLinkStart={ this.onLinkStart }
+				onLinkMove={ this.onLinkMove }
+				onLinkComplete={ this.onLinkComplete }
+				onLinkCancel={ this.onLinkCancel }
+				updatePortPositionState={ this.updatePortPositionState }
+				onLinkMouseEnter={ this.onLinkMouseEnter }
+				onLinkMouseLeave={ this.onLinkMouseLeave }
+				onLinkClick={ this.onLinkClick }
 				onCanvasClick={ this.onCanvasClick }
 				onDeleteKey={ this.onDeleteKey }
-			>
-				{ map(links, link => (
-					<LinkWrapper 
-						chart={ chart }
-						key={ link.id } 
-						link={ link } 
-						onLinkMouseEnter={ this.onLinkMouseEnter }
-						onLinkMouseLeave={ this.onLinkMouseLeave }
-						onLinkClick={ this.onLinkClick }
-					/>
-				))}
-				{ map(nodes, node => (
-					<NodeWrapper
-						key={ node.id } 
-						node={ node }
-						onDrag={ this.onDragNode }
-						onNodeClick={ this.onNodeClick }
-						selected={ selected }
-					>
-						<PortsDefault side="top">
-							{ filter(node.ports, ['type', 'input']).map(port => (
-								<PortWrapper
-									chart={ chart }
-									key={ port.id }
-									node={ node }
-									port={ port }
-									updatePortPositionState={ this.updatePortPositionState }
-									onLinkStart={ this.onLinkStart }
-									onLinkMove={ this.onLinkMove }
-									onLinkComplete={ this.onLinkComplete }
-									onLinkCancel={ this.onLinkCancel }
-								/>
-							)) }
-						</PortsDefault>
-						{ node.type }
-						<PortsDefault side="bottom">
-							{ filter(node.ports, ['type', 'output']).map(port => (
-								<PortWrapper
-									chart={ chart }
-
-									key={ port.id }
-									node={ node }
-									port={ port }
-									updatePortPositionState={ this.updatePortPositionState }
-									onLinkStart={ this.onLinkStart }
-									onLinkMove={ this.onLinkMove }
-									onLinkComplete={ this.onLinkComplete }
-									onLinkCancel={ this.onLinkCancel }
-								/>
-							)) }
-						</PortsDefault>
-					</NodeWrapper>
-				))}
-			</CanvasWrapper>
+				onNodeClick={ this.onNodeClick }
+				onCanvasDrop={ this.onCanvasDrop }
+			/>
 		)
 	}
 }

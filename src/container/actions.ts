@@ -1,24 +1,34 @@
-import { IOnDragNode, IOnDragCanvas, IOnLinkStart, IOnLinkMove, IOnLinkComplete, IChart, IOnLinkCancel, IUpdatePortPositionState, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnCanvasClick, IOnDeleteKey, IOnNodeClick } from '../types'
+import { 
+  IOnDragNode, IOnDragCanvas, IOnLinkStart, IOnLinkMove, IOnLinkComplete, IChart, IOnLinkCancel, 
+  IUpdatePortPositionState, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, IOnCanvasDrop 
+} from '../types'
+import { forEach } from 'lodash'
+import { v4 } from 'uuid'
 
-export const onDragNode: IOnDragNode = (event, data, id) => (state: IChart) => {
-  const nodeState = state.nodes[id]
-  if (nodeState) {
-    nodeState.position = {
+
+/**
+ * This file contains actions for updating state after each of the required callbacks
+ */
+
+export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
+  const nodechart = chart.nodes[id]
+  if (nodechart) {
+    nodechart.position = {
       x: data.x,
       y: data.y
     }
   }
-  return state
+  return chart
 }
 
-export const onDragCanvas: IOnDragCanvas = (event, data) => (state: IChart): IChart => {
-  state.offset.x = data.x
-  state.offset.y = data.y
-  return state
+export const onDragCanvas: IOnDragCanvas = (event, data) => (chart: IChart): IChart => {
+  chart.offset.x = data.x
+  chart.offset.y = data.y
+  return chart
 }
 
-export const onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) => (state: IChart): IChart => {
-  state.links[linkId] = {
+export const onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) => (chart: IChart): IChart => {
+  chart.links[linkId] = {
     id: linkId,
     from: {
       nodeId: fromNodeId,
@@ -26,81 +36,104 @@ export const onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) =>
     },
     to: {}
   }
-  return state
+  return chart
 }
 
-export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) =>(state: IChart): IChart => {
-  state.links[linkId].to.position = toPosition
-  return state
+export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) =>(chart: IChart): IChart => {
+  chart.links[linkId].to.position = toPosition
+  return chart
 }
 
-export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, toNodeId, toPortId }) =>(state: IChart): IChart => {
+export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, toNodeId, toPortId }) =>(chart: IChart): IChart => {
   if (fromNodeId !== toPortId) {
-    state.links[linkId].to = {
+    chart.links[linkId].to = {
       nodeId: toNodeId,
       portId: toPortId
     }
   }
-  return state
+  return chart
 }
 
-export const onLinkCancel: IOnLinkCancel = ({ linkId }) => (state: IChart) => {
-  delete state.links[linkId]
-  return state
+export const onLinkCancel: IOnLinkCancel = ({ linkId }) => (chart: IChart) => {
+  delete chart.links[linkId]
+  return chart
 }
 
-export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (state: IChart) => {
+export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (chart: IChart) => {
   // Set the link to hover
-  const link = state.links[linkId]
+  const link = chart.links[linkId]
   // Set the connected ports to hover
   if (link.to.nodeId && link.to.portId) {
-    state.hovered = {
+    chart.hovered = {
       type: 'link',
       id: linkId
     }
   }
-  return state
+  return chart
 }
 
-export const onLinkMouseLeave: IOnLinkMouseLeave = ({ linkId }) => (state: IChart) => {
-  const link = state.links[linkId]
+export const onLinkMouseLeave: IOnLinkMouseLeave = ({ linkId }) => (chart: IChart) => {
+  const link = chart.links[linkId]
   // Set the connected ports to hover
   if (link.to.nodeId && link.to.portId) {
-    state.hovered = {}
+    chart.hovered = {}
   }
-  return state
+  return chart
 }
 
-export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (state: IChart) => {
-  state.selected = {
+export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (chart: IChart) => {
+  chart.selected = {
     type: 'link',
     id: linkId
   }
-  return state
+  return chart
 }
 
-export const onCanvasClick: IOnCanvasClick = () => (state: IChart) => {
-  state.selected = {}
-  return state
+export const onCanvasClick: IOnCanvasClick = () => (chart: IChart) => {
+  chart.selected = {}
+  return chart
 }
 
-export const onDeleteKey: IOnDeleteKey = () => (state: IChart) => {
-  console.log('delete', state.selected)
-  return state
+export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
+  if (chart.selected.type === 'node' && chart.selected.id) {
+    const node = chart.nodes[chart.selected.id]
+    // Delete the connected links
+    forEach(chart.links, link => { 
+      if (link.from.nodeId === node.id || link.to.nodeId === node.id) {
+        delete chart.links[link.id]
+      }
+    })
+    // Delete the node
+    delete chart.nodes[chart.selected.id]
+  } else if (chart.selected.type === 'link' && chart.selected.id) {
+    delete chart.links[chart.selected.id]
+  }
+  return chart
 }
 
-export const onNodeClick: IOnNodeClick = ({ nodeId }) => (state: IChart) => {
-  state.selected = {
+export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
+  chart.selected = {
     type: 'node',
     id: nodeId
   }
-  return state
+  return chart
 }
 
-export const updatePortPositionState: IUpdatePortPositionState = (nodeToUpdate, port, position) => (state: IChart): IChart => {
-  state.nodes[nodeToUpdate.id].ports[port.id].position = {
+export const updatePortPositionState: IUpdatePortPositionState = (nodeToUpdate, port, position) => (chart: IChart): IChart => {
+  chart.nodes[nodeToUpdate.id].ports[port.id].position = {
     x: position.x,
     y: position.y
   }
-  return state
+  return chart
+}
+
+export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChart): IChart => {
+  const id = v4()
+  chart.nodes[id] = {
+    id,
+    type: data.type,
+    position,
+    ports: {}
+  }
+  return chart
 }

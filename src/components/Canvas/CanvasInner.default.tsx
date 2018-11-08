@@ -5,7 +5,9 @@ export interface ICanvasInnerDefaultProps {
   children: any
   onClick: IOnCanvasClick
   tabIndex: number
-  onKeyDown: any
+  onKeyDown: (e: React.KeyboardEvent) => void
+  onDrop: (e: React.DragEvent<HTMLDivElement>) => void
+  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void
 }
 
 export const CanvasInnerDefault = styled.div<ICanvasInnerDefaultProps>`

@@ -5,7 +5,7 @@ import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
   node: INode
-  onDrag: IOnDragNode
+  onDragNode: IOnDragNode
   onNodeClick: IOnNodeClick
   children: any
   selected: ISelectedOrHovered
@@ -14,7 +14,7 @@ export interface INodeWrapperProps {
 
 export const NodeWrapper = ({ 
   node, 
-  onDrag,
+  onDragNode,
   children,
   onNodeClick,
   selected,
@@ -30,7 +30,7 @@ export const NodeWrapper = ({
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
-      onDrag={ (e, dragData) => onDrag(e, dragData, node.id) }
+      onDrag={ (e, dragData) => onDragNode(e, dragData, node.id) }
     >
       <Component 
         children={ children } 

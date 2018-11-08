@@ -44,3 +44,5 @@ export type IOnCanvasClick = () => void
 export type IOnDeleteKey = () => void
 
 export type IOnNodeClick = ({ nodeId }: { nodeId: string }) => void
+
+export type IOnCanvasDrop = ({ data, position }: { data: any, position: IPosition }) => void
