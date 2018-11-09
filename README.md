@@ -14,7 +14,7 @@ For example:
 
 If you're interested in helping out, let me know. 
 
-In particular, would be great to get a hand making redux and mobx integrations.
+In particular, would be great to get a hand with docs and redux / mobx integrations.
 
 ## Install
 
