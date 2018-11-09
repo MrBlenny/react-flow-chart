@@ -2,7 +2,7 @@
   "name": "@mrblenny/react-flow-chart",
   "version": "0.0.2",
   "description": "A flexible, stateless flow chart library for react.",
-  "main": "src/index.ts",
+  "main": "src/index",
   "repository": "git@github.com:MrBlenny/react-flow-chart.git",
   "author": "David Revay <daverevay@gmail.com>",
   "license": "MIT",
