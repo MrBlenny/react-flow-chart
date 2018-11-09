@@ -8,6 +8,31 @@ import {
 } from '../../'
 import { map } from 'lodash'
 
+export interface IFlowChartCallbacks {
+  onDragNode: IOnDragNode
+  onDragCanvas: IOnDragCanvas
+  onCanvasDrop: IOnCanvasDrop
+  onLinkStart: IOnLinkStart
+  onLinkMove: IOnLinkMove
+  onLinkComplete: IOnLinkComplete
+  onLinkCancel: IOnLinkCancel
+  onPortPositionChange: IOnPortPositionChange
+  onLinkMouseEnter: IOnLinkMouseEnter
+  onLinkMouseLeave: IOnLinkMouseLeave
+  onLinkClick: IOnLinkClick
+  onCanvasClick: IOnCanvasClick
+  onDeleteKey: IOnDeleteKey
+  onNodeClick: IOnNodeClick
+}
+
+export interface IFlowChartComponents {
+  NodeInner?: React.SFC<INodeInnerDefaultProps>
+  Ports?: React.SFC<IPortsDefaultProps>
+  Port?: React.SFC<IPortDefaultProps>
+  Node?: React.SFC<INodeDefaultProps>
+  Link?: React.SFC<ILinkDefaultProps>
+}
+
 export interface IFlowChartProps {
   /** 
    * The current chart state
@@ -17,32 +42,11 @@ export interface IFlowChartProps {
    * Callbacks for updating chart state.
    * See container/actions.ts for example state mutations
    */
-  callbacks: {
-    onDragNode: IOnDragNode
-    onDragCanvas: IOnDragCanvas
-    onCanvasDrop: IOnCanvasDrop
-    onLinkStart: IOnLinkStart
-    onLinkMove: IOnLinkMove
-    onLinkComplete: IOnLinkComplete
-    onLinkCancel: IOnLinkCancel
-    onPortPositionChange: IOnPortPositionChange
-    onLinkMouseEnter: IOnLinkMouseEnter
-    onLinkMouseLeave: IOnLinkMouseLeave
-    onLinkClick: IOnLinkClick
-    onCanvasClick: IOnCanvasClick
-    onDeleteKey: IOnDeleteKey
-    onNodeClick: IOnNodeClick
-  }
+  callbacks: IFlowChartCallbacks
   /**
    * Custom components
    */
-  Components?: {
-    NodeInner?: React.SFC<INodeInnerDefaultProps>
-    Ports?: React.SFC<IPortsDefaultProps>
-    Port?: React.SFC<IPortDefaultProps>
-    Node?: React.SFC<INodeDefaultProps>
-    Link?: React.SFC<ILinkDefaultProps>
-  }
+  Components?: IFlowChartComponents
 }
 
 export const FlowChart = (props: IFlowChartProps) => {

@@ -1,4 +1,6 @@
-export const chartSimple = {
+import { IChart } from "types";
+
+export const chartSimple: IChart = {
   offset: {
     x: 0,
     y: 0
@@ -57,3 +59,4 @@ export const chartSimple = {
   selected:{},
   hovered:{},
 }
+

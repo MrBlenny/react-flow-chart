@@ -410,7 +410,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var styled_components_1 = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var Outer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background: white;\n  border-radius: 4px;\n  width: 300px;\n  padding: 40px 30px;\n"], ["\n  background: white;\n  border-radius: 4px;\n  width: 300px;\n  padding: 40px 30px;\n"])));
+var Outer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background: white;\n  border-radius: 4px;\n  min-width: 200px;\n  padding: 40px 30px;\n"], ["\n  background: white;\n  border-radius: 4px;\n  min-width: 200px;\n  padding: 40px 30px;\n"])));
 exports.NodeInnerDefault = function (_a) {
     var node = _a.node;
     return (React.createElement(Outer, null,
@@ -619,8 +619,10 @@ var __1 = __webpack_require__(/*! ../../ */ "./src/index.ts");
 exports.PortsDefault = function (_a) {
     var children = _a.children;
     return (React.createElement("div", null,
-        React.createElement(__1.PortsGroupDefault, { side: "top" }, lodash_1.filter(children, ['props.port.type', 'input'])),
-        React.createElement(__1.PortsGroupDefault, { side: "bottom" }, lodash_1.filter(children, ['props.port.type', 'output']))));
+        React.createElement(__1.PortsGroupDefault, { side: "top" }, lodash_1.filter(children, function (child) { return ['input', 'top'].includes(child.props.port.type); })),
+        React.createElement(__1.PortsGroupDefault, { side: "bottom" }, lodash_1.filter(children, function (child) { return ['output', 'bottom'].includes(child.props.port.type); })),
+        React.createElement(__1.PortsGroupDefault, { side: "right" }, lodash_1.filter(children, function (child) { return ['right'].includes(child.props.port.type); })),
+        React.createElement(__1.PortsGroupDefault, { side: "left" }, lodash_1.filter(children, function (child) { return ['left'].includes(child.props.port.type); }))));
 };
 
 
@@ -776,6 +778,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
     }
     FlowChartWithState.prototype.render = function () {
         var _this = this;
+        var Components = this.props.Components;
         var stateActions = lodash_1.mapValues(actions, function (func) { return function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -783,7 +786,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
             }
             return _this.setState(func.apply(void 0, args));
         }; });
-        return (React.createElement(__1.FlowChart, { chart: this.state, callbacks: stateActions }));
+        return (React.createElement(__1.FlowChart, { chart: this.state, callbacks: stateActions, Components: Components }));
     };
     return FlowChartWithState;
 }(React.Component));
@@ -999,6 +1002,8 @@ __export(__webpack_require__(/*! ./constants */ "./src/constants.ts"));
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./CustomComponents.tsx": "./stories/CustomComponents.tsx",
+	"./StressTest.tsx": "./stories/StressTest.tsx",
 	"./WithSidebar.tsx": "./stories/WithSidebar.tsx",
 	"./WithState.story.tsx": "./stories/WithState.story.tsx",
 	"./components/Content.tsx": "./stories/components/Content.tsx",
@@ -1006,8 +1011,8 @@ var map = {
 	"./components/Sidebar.tsx": "./stories/components/Sidebar.tsx",
 	"./components/SidebarItem.tsx": "./stories/components/SidebarItem.tsx",
 	"./components/index.ts": "./stories/components/index.ts",
-	"./exampleChartState.ts": "./stories/exampleChartState.ts",
-	"./index.tsx": "./stories/index.tsx"
+	"./index.tsx": "./stories/index.tsx",
+	"./misc/exampleChartState.ts": "./stories/misc/exampleChartState.ts"
 };
 
 
@@ -1033,6 +1038,144 @@ webpackContext.id = "./stories sync recursive \\.tsx?$";
 
 /***/ }),
 
+/***/ "./stories/CustomComponents.tsx":
+/*!**************************************!*\
+  !*** ./stories/CustomComponents.tsx ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var react_1 = __webpack_require__(/*! @storybook/react */ "./node_modules/@storybook/react/dist/client/index.js");
+var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
+var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
+var styled_components_1 = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var Outer = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding: 30px;\n  background: #3e3e3e;\n  color: white;\n  border-radius: 10px;\n"], ["\n  padding: 30px;\n  background: #3e3e3e;\n  color: white;\n  border-radius: 10px;\n"
+    /**
+     * Create the custom component,
+     * Make sure it has the same prop signature
+     */
+])));
+/**
+ * Create the custom component,
+ * Make sure it has the same prop signature
+ */
+var NodeInnerCustom = function (_a) {
+    var node = _a.node;
+    return (React.createElement(Outer, null,
+        React.createElement("p", null,
+            "Custom Inner Node of type: ",
+            React.createElement("b", null, node.type))));
+};
+react_1.storiesOf("Custom Components", module)
+    .add("Node Inner", function () {
+    return (React.createElement(components_1.Page, null,
+        React.createElement(src_1.FlowChartWithState, { initialValue: exampleChartState_1.chartSimple, Components: {
+                NodeInner: NodeInnerCustom
+            } })));
+});
+var templateObject_1;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./stories/StressTest.tsx":
+/*!********************************!*\
+  !*** ./stories/StressTest.tsx ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var react_1 = __webpack_require__(/*! @storybook/react */ "./node_modules/@storybook/react/dist/client/index.js");
+var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
+var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+react_1.storiesOf("Stress Test", module)
+    .add("default", function () {
+    var xyGrid = lodash_1.flatten(lodash_1.range(0, 1500, 300).map(function (x) { return lodash_1.range(0, 1000, 150).map(function (y) { return ({ x: x, y: y }); }); }));
+    var chart = {
+        offset: {
+            x: 0,
+            y: 0
+        },
+        nodes: lodash_1.keyBy(xyGrid.map(function (_a) {
+            var x = _a.x, y = _a.y;
+            return ({
+                id: "node-" + x + "-" + y,
+                type: 'default',
+                position: { x: x + 100, y: y + 100 },
+                ports: {
+                    port1: {
+                        id: 'port1',
+                        type: 'top'
+                    },
+                    port2: {
+                        id: 'port2',
+                        type: 'bottom'
+                    },
+                    port3: {
+                        id: 'port3',
+                        type: 'right'
+                    },
+                    port4: {
+                        id: 'port4',
+                        type: 'left'
+                    }
+                }
+            });
+        }), 'id'),
+        links: lodash_1.keyBy(lodash_1.compact(lodash_1.flatMap(xyGrid, function (_a, idx) {
+            var x = _a.x, y = _a.y;
+            var next = xyGrid[idx + 1];
+            if (next) {
+                return [{
+                        id: "link-" + x + "-" + y + "-a",
+                        from: {
+                            nodeId: "node-" + x + "-" + y,
+                            portId: 'port2',
+                        },
+                        to: {
+                            nodeId: "node-" + next.x + "-" + next.y,
+                            portId: 'port3',
+                        }
+                    }, {
+                        id: "link-" + x + "-" + y + "-b",
+                        from: {
+                            nodeId: "node-" + x + "-" + y,
+                            portId: 'port2',
+                        },
+                        to: {
+                            nodeId: "node-" + next.x + "-" + next.y,
+                            portId: 'port4',
+                        }
+                    }];
+            }
+            return undefined;
+        })), 'id'),
+        selected: {},
+        hovered: {},
+    };
+    return (React.createElement(components_1.Page, null,
+        React.createElement(src_1.FlowChartWithState, { initialValue: chart })));
+});
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
 /***/ "./stories/WithSidebar.tsx":
 /*!*********************************!*\
   !*** ./stories/WithSidebar.tsx ***!
@@ -1046,7 +1189,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
 var react_1 = __webpack_require__(/*! @storybook/react */ "./node_modules/@storybook/react/dist/client/index.js");
-var exampleChartState_1 = __webpack_require__(/*! ./exampleChartState */ "./stories/exampleChartState.ts");
+var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
 var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
 react_1.storiesOf("With Sidebar", module)
     .add("default", function () {
@@ -1075,7 +1218,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
 var react_1 = __webpack_require__(/*! @storybook/react */ "./node_modules/@storybook/react/dist/client/index.js");
-var exampleChartState_1 = __webpack_require__(/*! ./exampleChartState */ "./stories/exampleChartState.ts");
+var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
 var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
 react_1.storiesOf("With State", module)
     .add("default", function () {
@@ -1208,10 +1351,21 @@ __export(__webpack_require__(/*! ./SidebarItem */ "./stories/components/SidebarI
 
 /***/ }),
 
-/***/ "./stories/exampleChartState.ts":
-/*!**************************************!*\
-  !*** ./stories/exampleChartState.ts ***!
-  \**************************************/
+/***/ "./stories/index.tsx":
+/*!***************************!*\
+  !*** ./stories/index.tsx ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./stories/misc/exampleChartState.ts":
+/*!*******************************************!*\
+  !*** ./stories/misc/exampleChartState.ts ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1281,17 +1435,6 @@ exports.chartSimple = {
 
 /***/ }),
 
-/***/ "./stories/index.tsx":
-/*!***************************!*\
-  !*** ./stories/index.tsx ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
 /***/ 0:
 /*!**********************************************************************************************************************************************************************!*\
   !*** multi ./node_modules/@storybook/core/dist/server/config/polyfills.js ./node_modules/@storybook/core/dist/server/config/globals.js ./config/storybook/config.js ***!
@@ -1307,4 +1450,4 @@ module.exports = __webpack_require__(/*! /mnt/c/Users/david/Documents/Repositori
 /***/ })
 
 },[[0,"runtime~iframe","vendors~iframe"]]]);
-//# sourceMappingURL=iframe.58c1f4fd8e5b544500b0.bundle.js.map
+//# sourceMappingURL=iframe.53909ef8d1dd17525deb.bundle.js.map

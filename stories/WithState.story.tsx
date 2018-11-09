@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { FlowChartWithState } from '../src'
 import { storiesOf } from '@storybook/react'
-import { chartSimple } from './exampleChartState'
+import { chartSimple } from './misc/exampleChartState'
 import { Page } from './components'
 
 storiesOf("With State", module)
