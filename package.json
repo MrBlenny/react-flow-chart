@@ -1,8 +1,8 @@
 {
   "name": "@mrblenny/react-flow-chart",
-  "version": "0.0.1",
-  "description": "A boilerplate project for using TypeScript 3, React 16 and Storybook together with Webpack 4",
-  "main": "src/index.tsx",
+  "version": "0.0.2",
+  "description": "A flexible, stateless flow chart library for react.",
+  "main": "src/index.ts",
   "repository": "git@github.com:MrBlenny/react-flow-chart.git",
   "author": "David Revay <daverevay@gmail.com>",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "@types/uuid": "^3.4.4",
     "@types/webpack": "4.4.17",
     "babel-loader": "^8.0.4",
+    "np": "^3.0.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "ts-loader": "^5.2.2",
@@ -47,7 +48,8 @@
   "scripts": {
     "start:storybook": "start-storybook -p 6006 -c config/storybook",
     "build:storybook": "build-storybook -c config/storybook -o docs",
-    "build": "tsc",
+    "build": "tsc && cp package.json dist/ && cp README.md ./dist",
+    "test": "npm run lint",
     "lint": "tslint -p tsconfig.json -c tslint.json"
   }
 }
