@@ -10,6 +10,10 @@ For example:
 
 ![demo](./images/demo.gif)
 
+## Data Stucture
+
+The flow chart is designed as a collection of Nodes, Ports and Links. You can specify your own custom properties, making this format quite flexible. See [https://github.com/MrBlenny/react-flow-chart/blob/master/src/types/chart.ts](types/chart.ts)
+
 ## Contributing
 
 If you're interested in helping out, let me know. 
