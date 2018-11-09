@@ -90,19 +90,36 @@ This will produce a simple 2 noded chart which looks like:
 
 ![Demo](./images/demo.png)
 
-## Contributing
-
-If you're interested in helping out, let me know. 
-
-In particular, would be great to get a hand with docs and redux / mobx integrations.
-
-## Install
+## Basic Usage
 
 Probably best not to use npm at this point. Things will be changing wildly.
 
 ```bash
 npm i @mrblenny/react-flow-chart
 ```
+
+Most components/types are available as a root level export. For example:
+
+```ts
+import { FlowChartWithState } from '@mrblenny/react-flow-chart'
+```
+
+### With Internal State
+[stories/InternalReactState.tsx](./stories/InternalReactState.tsx)
+
+### With External State
+[stories/ExternalReactState.tsx](./stories/InternalReactState.tsx)
+
+### Other Demos
+[stories/ExternalReactState.tsx](./stories)
+
+
+## Contributing
+
+If you're interested in helping out, let me know. 
+
+In particular, would be great to get a hand with docs and redux / mobx integrations.
+
 
 ## Development
 
