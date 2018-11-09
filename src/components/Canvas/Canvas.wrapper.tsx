@@ -1,14 +1,14 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnDragCanvas, IOnCanvasClick, IOnDeleteKey, IOnCanvasDrop } from 'types'
-import { ICanvasInnerDefaultProps, CanvasInnerDefault } from './CanvasInner.default';
-import { ICanvasOuterDefaultProps, CanvasOuterDefault } from './CanvasOuter.default';
+import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas } from 'types'
 import { REACT_FLOW_CHART } from '../../'
+import { CanvasInnerDefault, ICanvasInnerDefaultProps } from './CanvasInner.default'
+import { CanvasOuterDefault, ICanvasOuterDefaultProps } from './CanvasOuter.default'
 
 export interface ICanvasWrapperProps {
   position: {
     x: number
-    y: number
+    y: number,
   }
   onDragCanvas: IOnDragCanvas
   onDeleteKey: IOnDeleteKey
@@ -20,7 +20,7 @@ export interface ICanvasWrapperProps {
 }
 
 export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
-  render() {
+  public render() {
     const { 
       ComponentInner = CanvasInnerDefault, 
       ComponentOuter = CanvasOuterDefault, 
@@ -53,7 +53,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
               const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
               onCanvasDrop({ data, position: {
                 x: 300, 
-                y: 300
+                y: 300,
               }})
               // const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
               // const node = new CustomNodeModel(data.nodeType)

@@ -1,8 +1,8 @@
+import { storiesOf } from '@storybook/react'
 import * as React from 'react'
 import { FlowChartWithState } from '../src'
-import { storiesOf } from '@storybook/react'
-import { chartSimple } from './misc/exampleChartState'
 import { Page } from './components'
+import { chartSimple } from './misc/exampleChartState'
 
 storiesOf("With State", module)
 	.add("default", () => {

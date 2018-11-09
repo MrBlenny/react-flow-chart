@@ -1,9 +1,9 @@
-import { IChart } from "types";
+import { IChart } from "types"
 
 export const chartSimple: IChart = {
   offset: {
     x: 0,
-    y: 0
+    y: 0,
   },
   nodes: {
     'node1': {
@@ -11,37 +11,37 @@ export const chartSimple: IChart = {
       type: 'output-only',
       position: {
         x: 200,
-        y: 100
+        y: 100,
       },
       ports: {
         port1: {
           id: 'port1',
-          type: 'output'
+          type: 'output',
         },
         port2: {
           id: 'port2',
-          type: 'output'
-        }
-      }
+          type: 'output',
+        },
+      },
     }, 
     'node2': {
       id: 'node2',
       type: 'input-output',
       position: {
         x: 200,
-        y: 300
+        y: 300,
       },
       ports: {
         port1:{
           id: 'port1',
-          type: 'input'
+          type: 'input',
         }, 
         port2: {
           id: 'port2',
-          type: 'output'
-        }
-      }
-    }
+          type: 'output',
+        },
+      },
+    },
   },
   links: {
     link1: {
@@ -53,7 +53,7 @@ export const chartSimple: IChart = {
       to: {
         nodeId: 'node2',
         portId: 'port1',
-      }
+      },
     },
   },
   selected:{},

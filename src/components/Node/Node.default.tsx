@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { INode } from 'types';
+import { INode } from 'types'
 
 export interface INodeDefaultProps {
   node: INode

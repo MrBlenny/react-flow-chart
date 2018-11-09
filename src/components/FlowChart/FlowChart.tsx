@@ -1,12 +1,12 @@
+import { map } from 'lodash'
 import * as React from "react"
 import { 
-  IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, CanvasWrapper, 
-  NodeWrapper, IOnDragCanvas, PortWrapper, LinkWrapper, IChart, IOnPortPositionChange, IOnLinkCancel, IOnLinkStart, 
-  IOnLinkMove, IOnLinkComplete, PortsDefault , IOnDragNode, IOnCanvasDrop, NodeInnerDefault,
-  NodeDefault, INodeDefaultProps, PortDefault, IPortDefaultProps, LinkDefault, ILinkDefaultProps, INodeInnerDefaultProps, 
-  IPortsDefaultProps,
+  CanvasWrapper, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, 
+  IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, 
+  IOnLinkMove, IOnLinkStart, IOnNodeClick , IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps,
+  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, 
+  PortWrapper,
 } from '../../'
-import { map } from 'lodash'
 
 export interface IFlowChartCallbacks {
   onDragNode: IOnDragNode
@@ -74,7 +74,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Port = PortDefault,
       Node = NodeDefault,
       Link = LinkDefault,
-    } = {}
+    } = {},
   } = props
   const { links, nodes, selected } = chart
 

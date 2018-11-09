@@ -12,7 +12,7 @@ const Outer = styled.div`
 export const SidebarItem = ({ type }: { type: string }) => {
   return (
     <Outer 
-      draggable
+      draggable={true}
       onDragStart={ (event) => {
         event.dataTransfer.setData(REACT_FLOW_CHART, JSON.stringify({ type }))
       } }

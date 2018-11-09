@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { ILink, IChart, IOnLinkMouseEnter, IOnLinkMouseLeave } from 'types'
-import { getLinkPosition } from './utils'
+import { IChart, ILink, IOnLinkMouseEnter, IOnLinkMouseLeave } from 'types'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
+import { getLinkPosition } from './utils'
 
 export interface ILinkWrapperProps {
   link: ILink
@@ -18,7 +18,7 @@ export const LinkWrapper = ({
   chart,
   onLinkMouseEnter,
   onLinkMouseLeave,
-  onLinkClick
+  onLinkClick,
 }: ILinkWrapperProps) => {
   const startPos = getLinkPosition(chart, link.from.nodeId, link.from.portId)
 

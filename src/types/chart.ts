@@ -3,10 +3,10 @@ import { IPosition } from "./generics"
 export interface IChart {
 	offset: IPosition
 	nodes: {
-    [id: string]: INode
+    [id: string]: INode,
   }
 	links: {
-    [id: string]: ILink
+    [id: string]: ILink,
   }
   properties?: any
 
@@ -25,7 +25,7 @@ export interface INode {
   type: string
   position: IPosition
   ports: {
-    [id: string]: IPort
+    [id: string]: IPort,
   }
   properties?: any
 }
@@ -43,13 +43,13 @@ export interface ILink {
   id: string
   from: {
     nodeId: string
-    portId: string
+    portId: string,
   }
   to: {
     nodeId?: string
     portId?: string
     /** System Temp */
-    position?: IPosition
+    position?: IPosition,
   }
   properties?: any
 }

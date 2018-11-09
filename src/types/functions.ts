@@ -20,7 +20,7 @@ export type IOnLinkStart = (input: IOnLinkBaseEvent) => void
 export interface IOnLinkMoveInput extends IOnLinkBaseEvent {
   toPosition: {
     x: number,
-    y: number
+    y: number,
   }
 }
 export type IOnLinkMove = (input: IOnLinkMoveInput) => void

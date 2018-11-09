@@ -1,8 +1,8 @@
+import { IFlowChartComponents } from "components"
+import { mapValues } from 'lodash'
 import * as React from "react"
 import { FlowChart, IChart } from '../'
 import * as actions from './actions'
-import { mapValues } from 'lodash'
-import { IFlowChartComponents } from "components";
 
 export interface IFlowChartWithStateProps {
 	initialValue: IChart
@@ -13,12 +13,12 @@ export interface IFlowChartWithStateProps {
  * Flow Chart With State
  */
 export class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
-  state: IChart
+  public state: IChart
   constructor(props: IFlowChartWithStateProps) {
     super(props)
     this.state = props.initialValue
 	}
-	render() {
+	public render() {
 		const { Components } = this.props
 		const stateActions = mapValues(actions, (func: any) => (...args: any) => this.setState(func(...args))) as typeof actions
 		return (

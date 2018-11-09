@@ -6,7 +6,7 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    // override tslint-react rules here
-    "jsx-wrap-multiline": false
+    "semicolon": [true, "never"],
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
   }
 }

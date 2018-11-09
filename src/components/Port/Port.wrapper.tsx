@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { IPort, INode, IOnPortPositionChange, IOnLinkStart, IOnLinkMove, IOnLinkCancel, IOnLinkComplete, IChart } from 'types'
+import { IChart, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort } from 'types'
 import { v4 } from 'uuid'
-import { IPortDefaultProps, PortDefault } from './Port.default';
+import { IPortDefaultProps, PortDefault } from './Port.default'
 
 export interface IPortWrapperProps {
   style?: object
@@ -19,8 +19,8 @@ export interface IPortWrapperProps {
 }
 
 export class PortWrapper extends React.Component<IPortWrapperProps> {
-  nodeRef?: HTMLDivElement 
-  getNodRef = (el: HTMLDivElement) => {
+  public nodeRef?: HTMLDivElement 
+  public getNodRef = (el: HTMLDivElement) => {
     if (el) {
       const { node, port, onPortPositionChange } = this.props
       this.nodeRef = el
@@ -35,7 +35,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       onPortPositionChange(node, port, position)
     }
   }
-  onMouseDown = (startEvent: any) => {
+  public onMouseDown = (startEvent: any) => {
     const { node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
     const linkId = v4()
     const fromNodeId = node.id 
@@ -49,7 +49,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         toPosition: { 
           x: e.clientX,
           y: e.clientY,
-        } 
+        }, 
       })
     }
 
@@ -75,13 +75,13 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       }
 
       // Remove the listeners if the link is complete or canceled
-      window.removeEventListener('mouseup', mouseUpHandler, false);
-      window.removeEventListener('mousemove', mouseMoveHandler, false);
+      window.removeEventListener('mouseup', mouseUpHandler, false)
+      window.removeEventListener('mousemove', mouseMoveHandler, false)
     }
 
     // Add listeners
-    window.addEventListener('mouseup', mouseUpHandler, false);
-    window.addEventListener('mousemove', mouseMoveHandler, false);
+    window.addEventListener('mouseup', mouseUpHandler, false)
+    window.addEventListener('mousemove', mouseMoveHandler, false)
 
     // Notify state of link start
     onLinkStart({ linkId, startEvent, fromNodeId, fromPortId })
@@ -90,13 +90,13 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     startEvent.preventDefault()
     startEvent.stopPropagation()
   }
-  render() {
+  public render() {
     const { 
       chart,
       style, 
       port, 
       node,
-      Component = PortDefault
+      Component = PortDefault,
     } = this.props
 
     const selectedLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id]

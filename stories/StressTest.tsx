@@ -1,8 +1,8 @@
+import { storiesOf } from '@storybook/react'
+import { compact, flatMap, flatten, keyBy, range } from 'lodash'
 import * as React from 'react'
 import { FlowChartWithState } from '../src'
-import { storiesOf } from '@storybook/react'
 import { Page } from './components'
-import { range, keyBy, flatten, compact, flatMap } from 'lodash'
 
 storiesOf("Stress Test", module)
 	.add("default", () => {
@@ -12,7 +12,7 @@ storiesOf("Stress Test", module)
     const chart = {
       offset: {
         x: 0,
-        y: 0
+        y: 0,
       },
       nodes: keyBy(xyGrid.map(({ x, y }) => ({
         id: `node-${x}-${y}`,
@@ -21,21 +21,21 @@ storiesOf("Stress Test", module)
         ports: {
           port1: {
             id: 'port1',
-            type: 'top'
+            type: 'top',
           },
           port2: {
             id: 'port2',
-            type: 'bottom'
+            type: 'bottom',
           },
           port3: {
             id: 'port3',
-            type: 'right'
+            type: 'right',
           },
           port4: {
             id: 'port4',
-            type: 'left'
-          }
-        }
+            type: 'left',
+          },
+        },
       })), 'id'),
       links: keyBy(compact(flatMap(xyGrid, ({ x, y }, idx) => {
         const next = xyGrid[idx + 1]
@@ -49,7 +49,7 @@ storiesOf("Stress Test", module)
             to: {
               nodeId: `node-${next.x}-${next.y}`,
               portId: 'port3',
-            }
+            },
           }, {
             id: `link-${x}-${y}-b`,
             from: {
@@ -59,7 +59,7 @@ storiesOf("Stress Test", module)
             to: {
               nodeId: `node-${next.x}-${next.y}`,
               portId: 'port4',
-            }
+            },
           }]
         }
         return undefined

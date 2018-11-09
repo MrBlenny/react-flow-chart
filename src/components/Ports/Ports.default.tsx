@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { filter } from 'lodash'
+import * as React from 'react'
 import { PortsGroupDefault } from '../../'
 
 export interface IPortsDefaultProps {

@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { FlowChartWithState, INodeInnerDefaultProps } from '../src'
 import { storiesOf } from '@storybook/react'
-import { chartSimple } from './misc/exampleChartState'
-import { Page } from './components'
+import * as React from 'react'
 import styled from 'styled-components'
+import { FlowChartWithState, INodeInnerDefaultProps } from '../src'
+import { Page } from './components'
+import { chartSimple } from './misc/exampleChartState'
 
 
 const Outer = styled.div`
@@ -32,7 +32,7 @@ storiesOf("Custom Components", module)
         <FlowChartWithState 
           initialValue={ chartSimple }
           Components= { {
-            NodeInner: NodeInnerCustom
+            NodeInner: NodeInnerCustom,
           }}
         />
       </Page>

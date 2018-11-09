@@ -1,9 +1,9 @@
-import { 
-  IOnDragNode, IOnDragCanvas, IOnLinkStart, IOnLinkMove, IOnLinkComplete, IChart, IOnLinkCancel, 
-  IOnPortPositionChange, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnCanvasClick, IOnDeleteKey, IOnNodeClick, IOnCanvasDrop 
-} from '../types'
 import { forEach } from 'lodash'
 import { v4 } from 'uuid'
+import { 
+  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, 
+  IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnPortPositionChange, 
+} from '../types'
 
 
 /**
@@ -15,7 +15,7 @@ export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
   if (nodechart) {
     nodechart.position = {
       x: data.x,
-      y: data.y
+      y: data.y,
     }
   }
   return chart
@@ -32,9 +32,9 @@ export const onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) =>
     id: linkId,
     from: {
       nodeId: fromNodeId,
-      portId: fromPortId
+      portId: fromPortId,
     },
-    to: {}
+    to: {},
   }
   return chart
 }
@@ -48,7 +48,7 @@ export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, toNodeId, 
   if (fromNodeId !== toPortId) {
     chart.links[linkId].to = {
       nodeId: toNodeId,
-      portId: toPortId
+      portId: toPortId,
     }
   }
   return chart
@@ -66,7 +66,7 @@ export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (chart: IChar
   if (link.to.nodeId && link.to.portId) {
     chart.hovered = {
       type: 'link',
-      id: linkId
+      id: linkId,
     }
   }
   return chart
@@ -84,7 +84,7 @@ export const onLinkMouseLeave: IOnLinkMouseLeave = ({ linkId }) => (chart: IChar
 export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (chart: IChart) => {
   chart.selected = {
     type: 'link',
-    id: linkId
+    id: linkId,
   }
   return chart
 }
@@ -114,7 +114,7 @@ export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
 export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
   chart.selected = {
     type: 'node',
-    id: nodeId
+    id: nodeId,
   }
   return chart
 }
@@ -122,7 +122,7 @@ export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
 export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, position) => (chart: IChart): IChart => {
   chart.nodes[nodeToUpdate.id].ports[port.id].position = {
     x: position.x,
-    y: position.y
+    y: position.y,
   }
   return chart
 }
@@ -133,7 +133,7 @@ export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChar
     id,
     type: data.type,
     position,
-    ports: {}
+    ports: {},
   }
   return chart
 }
