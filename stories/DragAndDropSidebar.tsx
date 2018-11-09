@@ -10,7 +10,7 @@ padding: 10px;
 background: rgba(0,0,0,0.05);
 `
 
-export const WithSidebarDemo = () => (
+export const DragAndDropSidebar = () => (
   <Page>
     <Content>
       <FlowChartWithState initialValue={chartSimple} />

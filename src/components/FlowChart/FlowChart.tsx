@@ -3,7 +3,7 @@ import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps,
   INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
-  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter , IOnLinkMouseLeave, IOnLinkMove,
+  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
   IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, LinkDefault, LinkWrapper,
   NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, PortWrapper,
 } from '../../'

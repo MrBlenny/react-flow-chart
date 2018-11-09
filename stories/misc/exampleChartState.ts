@@ -10,7 +10,7 @@ export const chartSimple: IChart = {
       id: 'node1',
       type: 'output-only',
       position: {
-        x: 200,
+        x: 300,
         y: 100,
       },
       ports: {
@@ -34,8 +34,44 @@ export const chartSimple: IChart = {
       id: 'node2',
       type: 'input-output',
       position: {
-        x: 200,
+        x: 300,
         y: 300,
+      },
+      ports: {
+        port1: {
+          id: 'port1',
+          type: 'input',
+        },
+        port2: {
+          id: 'port2',
+          type: 'output',
+        },
+      },
+    },
+    node3: {
+      id: 'node3',
+      type: 'input-output',
+      position: {
+        x: 100,
+        y: 600,
+      },
+      ports: {
+        port1: {
+          id: 'port1',
+          type: 'input',
+        },
+        port2: {
+          id: 'port2',
+          type: 'output',
+        },
+      },
+    },
+    node4: {
+      id: 'node4',
+      type: 'input-output',
+      position: {
+        x: 500,
+        y: 600,
       },
       ports: {
         port1: {
@@ -58,6 +94,28 @@ export const chartSimple: IChart = {
       },
       to: {
         nodeId: 'node2',
+        portId: 'port1',
+      },
+    },
+    link2: {
+      id: 'link2',
+      from: {
+        nodeId: 'node2',
+        portId: 'port2',
+      },
+      to: {
+        nodeId: 'node3',
+        portId: 'port1',
+      },
+    },
+    link3: {
+      id: 'link3',
+      from: {
+        nodeId: 'node2',
+        portId: 'port2',
+      },
+      to: {
+        nodeId: 'node4',
         portId: 'port1',
       },
     },
