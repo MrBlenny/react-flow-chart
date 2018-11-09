@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { IChart, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort } from 'types'
 import { v4 } from 'uuid'
+import { IChart, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort } from '../../'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
 export interface IPortWrapperProps {
@@ -24,7 +24,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     if (el) {
       const { node, port, onPortPositionChange } = this.props
       this.nodeRef = el
-      const nodesEl = (el.parentElement && el.parentElement.offsetLeft !== undefined && el.parentElement.offsetTop !== undefined)
+      const nodesEl = el.parentElement
         ? el.parentElement
         : { offsetLeft: 0, offsetTop: 0 }
 

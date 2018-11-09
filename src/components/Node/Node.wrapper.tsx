@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { INode, IOnDragNode, IOnNodeClick, ISelectedOrHovered } from 'types'
+import { INode, IOnDragNode, IOnNodeClick, ISelectedOrHovered } from '../../'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {

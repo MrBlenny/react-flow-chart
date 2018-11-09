@@ -1,7 +1,6 @@
-import { IFlowChartComponents } from "components"
 import { mapValues } from 'lodash'
-import * as React from "react"
-import { FlowChart, IChart } from '../'
+import * as React from 'react'
+import { FlowChart, IChart, IFlowChartComponents } from '../'
 import * as actions from './actions'
 
 export interface IFlowChartWithStateProps {

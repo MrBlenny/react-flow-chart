@@ -7,6 +7,10 @@
   ],
   "rules": {
     "semicolon": [true, "never"],
-    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
+    "object-literal-sort-keys": false,
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "jsx-no-lambda": false,
+    "quotemark": [true, "single", "jsx-double"],
+    "no-implicit-dependencies": [true, "dev"]
   }
 }

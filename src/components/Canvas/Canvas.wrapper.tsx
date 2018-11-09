@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas } from 'types'
-import { REACT_FLOW_CHART } from '../../'
+import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
 import { CanvasInnerDefault, ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { CanvasOuterDefault, ICanvasOuterDefaultProps } from './CanvasOuter.default'
 

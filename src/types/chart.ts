@@ -1,4 +1,4 @@
-import { IPosition } from "./generics"
+import { IPosition } from './generics'
 
 export interface IChart {
 	offset: IPosition

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { IChart, ILink, IOnLinkMouseEnter, IOnLinkMouseLeave } from 'types'
+import { IChart, ILink, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
 import { getLinkPosition } from './utils'
 

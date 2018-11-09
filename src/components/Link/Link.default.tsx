@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from 'types'
+import { ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
 
 export interface ILinkDefaultProps {
   link: ILink

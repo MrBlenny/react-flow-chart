@@ -1,4 +1,4 @@
-import { IChart, IPosition } from "types"
+import { IChart, IPosition } from '../../../'
 
 export const getLinkPosition = (chart: IChart, nodeId: string, portId: string): IPosition => {
   const node = chart.nodes[nodeId]

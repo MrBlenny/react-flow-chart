@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { IPort } from 'types'
+import { IPort } from '../../'
 
 export interface IPortDefaultProps {
   port: IPort

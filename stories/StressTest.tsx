@@ -4,8 +4,8 @@ import * as React from 'react'
 import { FlowChartWithState } from '../src'
 import { Page } from './components'
 
-storiesOf("Stress Test", module)
-	.add("default", () => {
+storiesOf('Stress Test', module)
+	.add('default', () => {
 
     const xyGrid = flatten(range(0, 1500, 300).map(x => range(0, 1000, 150).map(y => ({x, y}))))
 

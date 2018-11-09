@@ -25,8 +25,8 @@ const NodeInnerCustom = ({ node }: INodeInnerDefaultProps) => {
   )
 }
 
-storiesOf("Custom Components", module)
-	.add("Node Inner", () => {
+storiesOf('Custom Components', module)
+	.add('Node Inner', () => {
 		return (
       <Page>
         <FlowChartWithState 

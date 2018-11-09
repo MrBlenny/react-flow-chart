@@ -3,7 +3,7 @@ import { v4 } from 'uuid'
 import { 
   IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, 
   IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnPortPositionChange, 
-} from '../types'
+} from '../'
 
 
 /**

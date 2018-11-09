@@ -4,8 +4,8 @@ import { FlowChartWithState } from '../src'
 import { Content, Page, Sidebar, SidebarItem } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
-storiesOf("With Sidebar", module)
-	.add("default", () => {
+storiesOf('With Sidebar', module)
+	.add('default', () => {
 		return (
       <Page>
         <Content>

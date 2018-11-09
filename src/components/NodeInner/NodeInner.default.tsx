@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { INode } from 'types'
+import { INode } from '../../'
 
 export interface INodeInnerDefaultProps {
   node: INode

@@ -1,5 +1,5 @@
 import { map } from 'lodash'
-import * as React from "react"
+import * as React from 'react'
 import { 
   CanvasWrapper, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, 
   IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, 
