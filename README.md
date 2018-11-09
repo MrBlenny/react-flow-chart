@@ -13,7 +13,8 @@ For example:
 ## Contributing
 
 If you're interested in helping out, let me know. 
-In particulat, would be great to get a hand making redux and mobx integrations.
+
+In particular, would be great to get a hand making redux and mobx integrations.
 
 ## Install
 
