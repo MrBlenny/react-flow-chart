@@ -2,6 +2,18 @@
 
 ## WORK IN PROGRESS
 
+- [X] Dragabble Nodes and Canvas
+- [x] Create curved links between ports
+- [x] Custom components for Canvas, Links, Ports, Nodes
+- [X] React state container
+- [X] Update state on Select/Hover nodes, ports and links
+- [x] Base functionality complete
+- [ ] Stable NPM version + changelog
+- [ ] Scroll/Pinch canvas to zoom
+- [ ] Redux state container
+- [ ] Arrow heads on links
+- [ ] Docs
+
 ### [Demo](https://mrblenny.github.io/react-flow-chart/index.html?selectedKind=With%20Sidebar&selectedStory=default&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook-addon-viewport%2Faddon-panel)
 
 This project aims to build a highly customisable, declarative flow chart library. Critically, your control the state. Pick from Redux, MobX, React or any other state managment library - simply pass in the current state and hook up the callbacks.
