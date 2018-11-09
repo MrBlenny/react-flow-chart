@@ -212,13 +212,14 @@ __export(__webpack_require__(/*! ./FlowChart */ "./src/components/FlowChart/Flow
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var __1 = __webpack_require__(/*! ../../ */ "./src/index.ts");
 exports.LinkDefault = function (_a) {
     var link = _a.link, startPos = _a.startPos, endPos = _a.endPos, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick, isHovered = _a.isHovered, isSelected = _a.isSelected;
-    var points = startPos.x + "," + startPos.y + " " + endPos.x + "," + endPos.y;
+    var points = __1.generateCurvePath(startPos, endPos);
     return (React.createElement("svg", { style: { overflow: 'visible', position: 'absolute', cursor: 'pointer' } },
         React.createElement("circle", { r: "4", cx: startPos.x, cy: startPos.y, fill: "cornflowerblue" }),
-        React.createElement("polyline", { points: points, stroke: "cornflowerblue", strokeWidth: "3", fill: "none" }),
-        React.createElement("polyline", { points: points, stroke: "cornflowerblue", strokeWidth: "20", fill: "none", strokeLinecap: "round", strokeOpacity: (isHovered || isSelected) ? 0.1 : 0, onMouseEnter: function () { return onLinkMouseEnter({ linkId: link.id }); }, onMouseLeave: function () { return onLinkMouseLeave({ linkId: link.id }); }, onClick: function (e) {
+        React.createElement("path", { d: points, stroke: "cornflowerblue", strokeWidth: "3", fill: "none" }),
+        React.createElement("path", { d: points, stroke: "cornflowerblue", strokeWidth: "20", fill: "none", strokeLinecap: "round", strokeOpacity: (isHovered || isSelected) ? 0.1 : 0, onMouseEnter: function () { return onLinkMouseEnter({ linkId: link.id }); }, onMouseLeave: function () { return onLinkMouseLeave({ linkId: link.id }); }, onClick: function (e) {
                 onLinkClick({ linkId: link.id });
                 e.stopPropagation();
             } }),
@@ -278,6 +279,41 @@ __export(__webpack_require__(/*! ./utils */ "./src/components/Link/utils/index.t
 
 /***/ }),
 
+/***/ "./src/components/Link/utils/generateCurvePath.ts":
+/*!********************************************************!*\
+  !*** ./src/components/Link/utils/generateCurvePath.ts ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateCurvePath = function (startPos, endPos) {
+    var width = Math.abs(startPos.x - endPos.x);
+    var height = Math.abs(startPos.y - endPos.y);
+    var leftToRight = startPos.x < endPos.x;
+    var topToBottom = startPos.y < endPos.y;
+    var isHorizontal = width > height;
+    var start;
+    var end;
+    if (isHorizontal) {
+        start = leftToRight ? startPos : endPos;
+        end = leftToRight ? endPos : startPos;
+    }
+    else {
+        start = topToBottom ? startPos : endPos;
+        end = topToBottom ? endPos : startPos;
+    }
+    var curve = isHorizontal ? width / 3 : height / 3;
+    var curveX = isHorizontal ? curve : 0;
+    var curveY = isHorizontal ? 0 : curve;
+    return "M" + start.x + "," + start.y + " C " + (start.x + curveX) + "," + (start.y + curveY) + " " + (end.x - curveX) + "," + (end.y - curveY) + " " + end.x + "," + end.y;
+};
+
+
+/***/ }),
+
 /***/ "./src/components/Link/utils/getLinkPosition.ts":
 /*!******************************************************!*\
   !*** ./src/components/Link/utils/getLinkPosition.ts ***!
@@ -314,6 +350,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(/*! ./getLinkPosition */ "./src/components/Link/utils/getLinkPosition.ts"));
+__export(__webpack_require__(/*! ./generateCurvePath */ "./src/components/Link/utils/generateCurvePath.ts"));
 
 
 /***/ }),
@@ -918,6 +955,7 @@ exports.onDeleteKey = function () { return function (chart) {
     else if (chart.selected.type === 'link' && chart.selected.id) {
         delete chart.links[chart.selected.id];
     }
+    chart.selected = {};
     return chart;
 }; };
 exports.onNodeClick = function (_a) {
@@ -1007,8 +1045,11 @@ var map = {
 	"./CustomNode.tsx": "./stories/CustomNode.tsx",
 	"./CustomNodeInner.tsx": "./stories/CustomNodeInner.tsx",
 	"./CustomPort.tsx": "./stories/CustomPort.tsx",
+	"./DragAndDropSidebar.tsx": "./stories/DragAndDropSidebar.tsx",
+	"./ExternalReactState.tsx": "./stories/ExternalReactState.tsx",
+	"./InternalReactState.tsx": "./stories/InternalReactState.tsx",
+	"./SelectedSidebar.tsx": "./stories/SelectedSidebar.tsx",
 	"./StressTest.tsx": "./stories/StressTest.tsx",
-	"./WithSidebar.tsx": "./stories/WithSidebar.tsx",
 	"./components/Content.tsx": "./stories/components/Content.tsx",
 	"./components/Page.tsx": "./stories/components/Page.tsx",
 	"./components/Sidebar.tsx": "./stories/components/Sidebar.tsx",
@@ -1237,95 +1278,10 @@ var templateObject_1;
 
 /***/ }),
 
-/***/ "./stories/StressTest.tsx":
-/*!********************************!*\
-  !*** ./stories/StressTest.tsx ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
-var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
-exports.StressTestDemo = function () {
-    var xyGrid = lodash_1.flatten(lodash_1.range(0, 1500, 300).map(function (x) { return lodash_1.range(0, 1000, 150).map(function (y) { return ({ x: x, y: y }); }); }));
-    var chart = {
-        offset: {
-            x: 0,
-            y: 0,
-        },
-        nodes: lodash_1.keyBy(xyGrid.map(function (_a) {
-            var x = _a.x, y = _a.y;
-            return ({
-                id: "node-" + x + "-" + y,
-                type: 'default',
-                position: { x: x + 100, y: y + 100 },
-                ports: {
-                    port1: {
-                        id: 'port1',
-                        type: 'top',
-                    },
-                    port2: {
-                        id: 'port2',
-                        type: 'bottom',
-                    },
-                    port3: {
-                        id: 'port3',
-                        type: 'right',
-                    },
-                    port4: {
-                        id: 'port4',
-                        type: 'left',
-                    },
-                },
-            });
-        }), 'id'),
-        links: lodash_1.keyBy(lodash_1.compact(lodash_1.flatMap(xyGrid, function (_a, idx) {
-            var x = _a.x, y = _a.y;
-            var next = xyGrid[idx + 1];
-            if (next) {
-                return [{
-                        id: "link-" + x + "-" + y + "-a",
-                        from: {
-                            nodeId: "node-" + x + "-" + y,
-                            portId: 'port2',
-                        },
-                        to: {
-                            nodeId: "node-" + next.x + "-" + next.y,
-                            portId: 'port3',
-                        },
-                    }, {
-                        id: "link-" + x + "-" + y + "-b",
-                        from: {
-                            nodeId: "node-" + x + "-" + y,
-                            portId: 'port2',
-                        },
-                        to: {
-                            nodeId: "node-" + next.x + "-" + next.y,
-                            portId: 'port4',
-                        },
-                    }];
-            }
-            return undefined;
-        })), 'id'),
-        selected: {},
-        hovered: {},
-    };
-    return (React.createElement(components_1.Page, null,
-        React.createElement(src_1.FlowChartWithState, { initialValue: chart })));
-};
-
-
-/***/ }),
-
-/***/ "./stories/WithSidebar.tsx":
-/*!*********************************!*\
-  !*** ./stories/WithSidebar.tsx ***!
-  \*********************************/
+/***/ "./stories/DragAndDropSidebar.tsx":
+/*!****************************************!*\
+  !*** ./stories/DragAndDropSidebar.tsx ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1342,7 +1298,7 @@ var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
 var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
 var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
 var Message = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nmargin: 10px;\npadding: 10px;\nbackground: rgba(0,0,0,0.05);\n"], ["\nmargin: 10px;\npadding: 10px;\nbackground: rgba(0,0,0,0.05);\n"])));
-exports.WithSidebarDemo = function () { return (React.createElement(components_1.Page, null,
+exports.DragAndDropSidebar = function () { return (React.createElement(components_1.Page, null,
     React.createElement(components_1.Content, null,
         React.createElement(src_1.FlowChartWithState, { initialValue: exampleChartState_1.chartSimple })),
     React.createElement(components_1.Sidebar, null,
@@ -1459,6 +1415,254 @@ exports.WithSidebarDemo = function () { return (React.createElement(components_1
                 },
             } })))); };
 var templateObject_1;
+
+
+/***/ }),
+
+/***/ "./stories/ExternalReactState.tsx":
+/*!****************************************!*\
+  !*** ./stories/ExternalReactState.tsx ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var actions = __webpack_require__(/*! ../src/container/actions */ "./src/container/actions.ts");
+var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
+var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
+/**
+ * State is external to the <FlowChart> Element
+ *
+ * You could easily move this state it Redux or similar by creating your own callback actions
+ */
+var ExternalReactState = /** @class */ (function (_super) {
+    __extends(ExternalReactState, _super);
+    function ExternalReactState() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = lodash_1.cloneDeep(exampleChartState_1.chartSimple);
+        return _this;
+    }
+    ExternalReactState.prototype.render = function () {
+        var _this = this;
+        var chart = this.state;
+        var stateActions = lodash_1.mapValues(actions, function (func) {
+            return function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return _this.setState(func.apply(void 0, args));
+            };
+        });
+        return (React.createElement(components_1.Page, null,
+            React.createElement(src_1.FlowChart, { chart: chart, callbacks: stateActions })));
+    };
+    return ExternalReactState;
+}(React.Component));
+exports.ExternalReactState = ExternalReactState;
+
+
+/***/ }),
+
+/***/ "./stories/InternalReactState.tsx":
+/*!****************************************!*\
+  !*** ./stories/InternalReactState.tsx ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
+var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
+exports.InternalReactState = function () {
+    return (React.createElement(components_1.Page, null,
+        React.createElement(src_1.FlowChartWithState, { initialValue: exampleChartState_1.chartSimple })));
+};
+
+
+/***/ }),
+
+/***/ "./stories/SelectedSidebar.tsx":
+/*!*************************************!*\
+  !*** ./stories/SelectedSidebar.tsx ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var styled_components_1 = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var actions = __webpack_require__(/*! ../src/container/actions */ "./src/container/actions.ts");
+var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
+var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ "./stories/misc/exampleChartState.ts");
+var Message = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  margin: 10px;\n  padding: 10px;\n  line-height: 1.4em;\n"], ["\n  margin: 10px;\n  padding: 10px;\n  line-height: 1.4em;\n"])));
+var Button = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  padding: 10px 15px;\n  background: cornflowerblue;\n  color: white;\n  border-radius: 3px;\n  text-align: center;\n  transition: 0.3s ease all;\n  cursor: pointer;\n  &:hover {\n    box-shadow: 0 10px 20px rgba(0,0,0,.1);\n  }\n  &:active {\n    background: #5682d2;\n  }\n"], ["\n  padding: 10px 15px;\n  background: cornflowerblue;\n  color: white;\n  border-radius: 3px;\n  text-align: center;\n  transition: 0.3s ease all;\n  cursor: pointer;\n  &:hover {\n    box-shadow: 0 10px 20px rgba(0,0,0,.1);\n  }\n  &:active {\n    background: #5682d2;\n  }\n"])));
+var SelectedSidebar = /** @class */ (function (_super) {
+    __extends(SelectedSidebar, _super);
+    function SelectedSidebar() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = lodash_1.cloneDeep(exampleChartState_1.chartSimple);
+        return _this;
+    }
+    SelectedSidebar.prototype.render = function () {
+        var _this = this;
+        var chart = this.state;
+        var stateActions = lodash_1.mapValues(actions, function (func) {
+            return function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return _this.setState(func.apply(void 0, args));
+            };
+        });
+        return (React.createElement(components_1.Page, null,
+            React.createElement(components_1.Content, null,
+                React.createElement(src_1.FlowChart, { chart: chart, callbacks: stateActions })),
+            React.createElement(components_1.Sidebar, null, chart.selected.type
+                ? React.createElement(Message, null,
+                    React.createElement("div", null,
+                        "Type: ",
+                        chart.selected.type),
+                    React.createElement("div", null,
+                        "ID: ",
+                        chart.selected.id),
+                    React.createElement("br", null),
+                    React.createElement(Button, { onClick: function () { return stateActions.onDeleteKey(); } }, "Delete"))
+                : React.createElement(Message, null, "Click on a Node, Port or Link"))));
+    };
+    return SelectedSidebar;
+}(React.Component));
+exports.SelectedSidebar = SelectedSidebar;
+var templateObject_1, templateObject_2;
+
+
+/***/ }),
+
+/***/ "./stories/StressTest.tsx":
+/*!********************************!*\
+  !*** ./stories/StressTest.tsx ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
+exports.StressTestDemo = function () {
+    var xyGrid = lodash_1.flatten(lodash_1.range(0, 1500, 300).map(function (x) { return lodash_1.range(0, 1000, 150).map(function (y) { return ({ x: x, y: y }); }); }));
+    var chart = {
+        offset: {
+            x: 0,
+            y: 0,
+        },
+        nodes: lodash_1.keyBy(xyGrid.map(function (_a) {
+            var x = _a.x, y = _a.y;
+            return ({
+                id: "node-" + x + "-" + y,
+                type: 'default',
+                position: { x: x + 100, y: y + 100 },
+                ports: {
+                    port1: {
+                        id: 'port1',
+                        type: 'top',
+                    },
+                    port2: {
+                        id: 'port2',
+                        type: 'bottom',
+                    },
+                    port3: {
+                        id: 'port3',
+                        type: 'right',
+                    },
+                    port4: {
+                        id: 'port4',
+                        type: 'left',
+                    },
+                },
+            });
+        }), 'id'),
+        links: lodash_1.keyBy(lodash_1.compact(lodash_1.flatMap(xyGrid, function (_a, idx) {
+            var x = _a.x, y = _a.y;
+            var next = xyGrid[idx + 1];
+            if (next) {
+                return [{
+                        id: "link-" + x + "-" + y + "-a",
+                        from: {
+                            nodeId: "node-" + x + "-" + y,
+                            portId: 'port2',
+                        },
+                        to: {
+                            nodeId: "node-" + next.x + "-" + next.y,
+                            portId: 'port3',
+                        },
+                    }, {
+                        id: "link-" + x + "-" + y + "-b",
+                        from: {
+                            nodeId: "node-" + x + "-" + y,
+                            portId: 'port2',
+                        },
+                        to: {
+                            nodeId: "node-" + next.x + "-" + next.y,
+                            portId: 'port4',
+                        },
+                    }];
+            }
+            return undefined;
+        })), 'id'),
+        selected: {},
+        hovered: {},
+    };
+    return (React.createElement(components_1.Page, null,
+        React.createElement(src_1.FlowChartWithState, { initialValue: chart })));
+};
 
 
 /***/ }),
@@ -1595,12 +1799,19 @@ __export(__webpack_require__(/*! ./SidebarItem */ "./stories/components/SidebarI
 /* WEBPACK VAR INJECTION */(function(module) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __webpack_require__(/*! @storybook/react */ "./node_modules/@storybook/react/dist/client/index.js");
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var CustomCanvasOuter_1 = __webpack_require__(/*! ./CustomCanvasOuter */ "./stories/CustomCanvasOuter.tsx");
 var CustomNode_1 = __webpack_require__(/*! ./CustomNode */ "./stories/CustomNode.tsx");
 var CustomNodeInner_1 = __webpack_require__(/*! ./CustomNodeInner */ "./stories/CustomNodeInner.tsx");
 var CustomPort_1 = __webpack_require__(/*! ./CustomPort */ "./stories/CustomPort.tsx");
+var DragAndDropSidebar_1 = __webpack_require__(/*! ./DragAndDropSidebar */ "./stories/DragAndDropSidebar.tsx");
+var ExternalReactState_1 = __webpack_require__(/*! ./ExternalReactState */ "./stories/ExternalReactState.tsx");
+var InternalReactState_1 = __webpack_require__(/*! ./InternalReactState */ "./stories/InternalReactState.tsx");
+var SelectedSidebar_1 = __webpack_require__(/*! ./SelectedSidebar */ "./stories/SelectedSidebar.tsx");
 var StressTest_1 = __webpack_require__(/*! ./StressTest */ "./stories/StressTest.tsx");
-var WithSidebar_1 = __webpack_require__(/*! ./WithSidebar */ "./stories/WithSidebar.tsx");
+react_1.storiesOf('State', module)
+    .add('Internal React State', InternalReactState_1.InternalReactState)
+    .add('External React State', function () { return React.createElement(ExternalReactState_1.ExternalReactState, null); });
 react_1.storiesOf('Custom Components', module)
     .add('Node', CustomNode_1.CustomNodeDemo)
     .add('Node Inner', CustomNodeInner_1.CustomNodeInnerDemo)
@@ -1608,8 +1819,9 @@ react_1.storiesOf('Custom Components', module)
     .add('Canvas Outer', CustomCanvasOuter_1.CustomCanvasOuterDemo);
 react_1.storiesOf('Stress Testing', module)
     .add('default', StressTest_1.StressTestDemo);
-react_1.storiesOf('Drag and Drop Sidebar', module)
-    .add('default', WithSidebar_1.WithSidebarDemo);
+react_1.storiesOf('Sidebar', module)
+    .add('Drag and Drop', DragAndDropSidebar_1.DragAndDropSidebar)
+    .add('Selected Sidebar', function () { return React.createElement(SelectedSidebar_1.SelectedSidebar, null); });
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
@@ -1635,7 +1847,7 @@ exports.chartSimple = {
             id: 'node1',
             type: 'output-only',
             position: {
-                x: 200,
+                x: 300,
                 y: 100,
             },
             ports: {
@@ -1659,8 +1871,44 @@ exports.chartSimple = {
             id: 'node2',
             type: 'input-output',
             position: {
-                x: 200,
+                x: 300,
                 y: 300,
+            },
+            ports: {
+                port1: {
+                    id: 'port1',
+                    type: 'input',
+                },
+                port2: {
+                    id: 'port2',
+                    type: 'output',
+                },
+            },
+        },
+        node3: {
+            id: 'node3',
+            type: 'input-output',
+            position: {
+                x: 100,
+                y: 600,
+            },
+            ports: {
+                port1: {
+                    id: 'port1',
+                    type: 'input',
+                },
+                port2: {
+                    id: 'port2',
+                    type: 'output',
+                },
+            },
+        },
+        node4: {
+            id: 'node4',
+            type: 'input-output',
+            position: {
+                x: 500,
+                y: 600,
             },
             ports: {
                 port1: {
@@ -1683,6 +1931,28 @@ exports.chartSimple = {
             },
             to: {
                 nodeId: 'node2',
+                portId: 'port1',
+            },
+        },
+        link2: {
+            id: 'link2',
+            from: {
+                nodeId: 'node2',
+                portId: 'port2',
+            },
+            to: {
+                nodeId: 'node3',
+                portId: 'port1',
+            },
+        },
+        link3: {
+            id: 'link3',
+            from: {
+                nodeId: 'node2',
+                portId: 'port2',
+            },
+            to: {
+                nodeId: 'node4',
                 portId: 'port1',
             },
         },
@@ -1709,4 +1979,4 @@ module.exports = __webpack_require__(/*! /mnt/c/Users/david/Documents/Repositori
 /***/ })
 
 },[[0,"runtime~iframe","vendors~iframe"]]]);
-//# sourceMappingURL=iframe.cfb7a1477e12792b5340.bundle.js.map
+//# sourceMappingURL=iframe.a10d8efc6bdd7a17f28d.bundle.js.map

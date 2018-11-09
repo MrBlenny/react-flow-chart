@@ -64703,4 +64703,4 @@ module.exports = __webpack_require__(/*! /mnt/c/Users/david/Documents/Repositori
 /***/ })
 
 },[[1,"runtime~manager"]]]);
-//# sourceMappingURL=manager.1c038aae9c2709b17528.bundle.js.map
+//# sourceMappingURL=manager.a9b64899fd055418e5c9.bundle.js.map
