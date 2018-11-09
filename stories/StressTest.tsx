@@ -37,7 +37,7 @@ storiesOf("Stress Test", module)
           }
         }
       })), 'id'),
-      links: keyBy(compact(flatMap(xyGrid ,({ x, y }, idx) => {
+      links: keyBy(compact(flatMap(xyGrid, ({ x, y }, idx) => {
         const next = xyGrid[idx + 1]
         if (next) {
           return [{
