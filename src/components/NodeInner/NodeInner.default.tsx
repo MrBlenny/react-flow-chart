@@ -7,9 +7,6 @@ export interface INodeInnerDefaultProps {
 }
 
 const Outer = styled.div`
-  background: white;
-  border-radius: 4px;
-  min-width: 200px;
   padding: 40px 30px;
 `
 

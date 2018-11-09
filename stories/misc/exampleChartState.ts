@@ -17,10 +17,16 @@ export const chartSimple: IChart = {
         port1: {
           id: 'port1',
           type: 'output',
+          properties: {
+            value: 'yes',
+          },
         },
         port2: {
           id: 'port2',
           type: 'output',
+          properties: {
+            value: 'no',
+          },
         },
       },
     },

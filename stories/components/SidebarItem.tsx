@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { REACT_FLOW_CHART } from '../../src'
+import { INode, REACT_FLOW_CHART } from '../../src'
 
 const Outer = styled.div`
   padding: 20px 30px;
@@ -9,12 +9,18 @@ const Outer = styled.div`
   cursor: move;
 `
 
-export const SidebarItem = ({ type }: { type: string }) => {
+export interface ISidebarItemProps {
+  type: string,
+  ports: INode['ports'],
+  properties?: any,
+}
+
+export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
   return (
     <Outer
       draggable={true}
       onDragStart={ (event) => {
-        event.dataTransfer.setData(REACT_FLOW_CHART, JSON.stringify({ type }))
+        event.dataTransfer.setData(REACT_FLOW_CHART, JSON.stringify({ type, ports, properties }))
       } }
     >
       {type}

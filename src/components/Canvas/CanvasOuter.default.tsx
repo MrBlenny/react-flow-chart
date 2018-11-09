@@ -15,4 +15,4 @@ export const CanvasOuterDefault = styled.div<ICanvasOuterDefaultProps>`
   height: 100%;
   overflow: hidden;
   cursor: not-allowed;
-`
+` as any

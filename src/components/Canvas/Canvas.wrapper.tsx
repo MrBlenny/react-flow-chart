@@ -1,8 +1,8 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
 import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
-import { CanvasInnerDefault, ICanvasInnerDefaultProps } from './CanvasInner.default'
-import { CanvasOuterDefault, ICanvasOuterDefaultProps } from './CanvasOuter.default'
+import { ICanvasInnerDefaultProps } from './CanvasInner.default'
+import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
 
 export interface ICanvasWrapperProps {
   position: {
@@ -13,16 +13,16 @@ export interface ICanvasWrapperProps {
   onDeleteKey: IOnDeleteKey
   onCanvasClick: IOnCanvasClick
   onCanvasDrop: IOnCanvasDrop
-  ComponentInner?: React.SFC<ICanvasInnerDefaultProps>
-  ComponentOuter?: React.SFC<ICanvasOuterDefaultProps>
+  ComponentInner: React.SFC<ICanvasInnerDefaultProps>
+  ComponentOuter: React.SFC<ICanvasOuterDefaultProps>
   children: any
 }
 
 export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
   public render () {
     const {
-      ComponentInner = CanvasInnerDefault,
-      ComponentOuter = CanvasOuterDefault,
+      ComponentInner,
+      ComponentOuter,
       position,
       onDragCanvas,
       children,
@@ -51,15 +51,9 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
             onDrop={ (e) => {
               const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
               onCanvasDrop({ data, position: {
-                x: 300,
-                y: 300,
+                x: e.clientX - position.x,
+                y: e.clientY - position.y,
               }})
-              // const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
-              // const node = new CustomNodeModel(data.nodeType)
-              // const points = diagramEngine.getRelativeMousePoint(event)
-              // node.x = points.x
-              // node.y = points.y
-              // addNode(node)
             } }
             onDragOver={ (e) => {
               e.preventDefault()

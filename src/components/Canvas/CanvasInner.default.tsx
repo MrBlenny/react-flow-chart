@@ -16,4 +16,4 @@ export const CanvasInnerDefault = styled.div<ICanvasInnerDefaultProps>`
   width: 10000px;
   height: 10000px;
   cursor: move;
-`
+` as any

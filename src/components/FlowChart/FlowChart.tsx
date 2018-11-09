@@ -1,11 +1,11 @@
 import { map } from 'lodash'
 import * as React from 'react'
 import {
-  CanvasWrapper, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop,
-  IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
-  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick , IOnPortPositionChange, IPortDefaultProps,
-  IPortsDefaultProps, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault,
-  PortsDefault, PortWrapper,
+  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps,
+  INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
+  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter , IOnLinkMouseLeave, IOnLinkMove,
+  IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, LinkDefault, LinkWrapper,
+  NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, PortWrapper,
 } from '../../'
 
 export interface IFlowChartCallbacks {
@@ -26,6 +26,8 @@ export interface IFlowChartCallbacks {
 }
 
 export interface IFlowChartComponents {
+  CanvasOuter?: React.SFC<ICanvasOuterDefaultProps>
+  CanvasInner?: React.SFC<ICanvasInnerDefaultProps>
   NodeInner?: React.SFC<INodeInnerDefaultProps>
   Ports?: React.SFC<IPortsDefaultProps>
   Port?: React.SFC<IPortDefaultProps>
@@ -69,6 +71,8 @@ export const FlowChart = (props: IFlowChartProps) => {
       onNodeClick,
     },
     Components: {
+      CanvasOuter = CanvasOuterDefault,
+      CanvasInner = CanvasInnerDefault,
       NodeInner = NodeInnerDefault,
       Ports = PortsDefault,
       Port = PortDefault,
@@ -86,6 +90,8 @@ export const FlowChart = (props: IFlowChartProps) => {
   return (
     <CanvasWrapper
       position={chart.offset}
+      ComponentInner={CanvasInner}
+      ComponentOuter={CanvasOuter}
       {...canvasCallbacks}
     >
       { map(links, (link) => (

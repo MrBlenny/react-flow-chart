@@ -132,9 +132,10 @@ export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChar
   const id = v4()
   chart.nodes[id] = {
     id,
-    type: data.type,
     position,
-    ports: {},
+    type: data.type,
+    ports: data.ports,
+    properties: data.properties,
   }
   return chart
 }

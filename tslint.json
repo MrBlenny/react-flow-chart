@@ -11,6 +11,7 @@
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "quotemark": [true, "single", "jsx-double"],
-    "no-implicit-dependencies": [true, "dev"]
+    "no-implicit-dependencies": [true, "dev"],
+    "max-line-length": [true, 200]
   }
 }

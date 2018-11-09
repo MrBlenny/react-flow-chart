@@ -27,6 +27,9 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     if (el) {
       const { node, port, onPortPositionChange } = this.props
       this.nodeRef = el
+
+      // Ports component should be positions absolute
+      // Factor this in so we get position relative to the node
       const nodesEl = el.parentElement
         ? el.parentElement
         : { offsetLeft: 0, offsetTop: 0 }
@@ -39,7 +42,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     }
   }
   public onMouseDown = (startEvent: any) => {
-    const { node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
+    const { chart, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
     const linkId = v4()
     const fromNodeId = node.id
     const fromPortId = port.id
@@ -50,8 +53,8 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       onLinkMove({
         linkId, startEvent, fromNodeId, fromPortId,
         toPosition: {
-          x: e.clientX,
-          y: e.clientY,
+          x: e.clientX - chart.offset.x,
+          y: e.clientY - chart.offset.y,
         },
       })
     }

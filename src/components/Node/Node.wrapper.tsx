@@ -34,10 +34,10 @@ export const NodeWrapper = ({
     >
       <Component
         children={children}
-        onClick={ (e) => {
+        onClick={(e) => {
           onNodeClick({ nodeId: node.id })
           e.stopPropagation()
-        } }
+        }}
         isSelected={selected.type === 'node' && selected.id === node.id}
         node={node}
       />
