@@ -12,9 +12,9 @@ For example:
 
 ## Data Stucture
 
-The flow chart is designed as a collection of Nodes, Ports and Links. You can specify your own custom properties, making this format quite flexible. See [types/chart.ts](https://github.com/MrBlenny/react-flow-chart/blob/master/src/types/chart.ts). Note, nodes, ports and links should have a unique id.
+The flow chart is designed as a collection of Nodes, Ports and Links. You can specify your own custom properties, making this format quite flexible. See [types/chart.ts](./src/types/chart.ts). Note, nodes, ports and links should have a unique id.
 
-Example
+#### Example
 
 ```ts
 
@@ -85,6 +85,10 @@ export const chart: IChart = {
 }
 
 ```
+
+This will produce a simple 2 noded chart which looks like:
+
+![Demo](./images/demo.png)
 
 ## Contributing
 
