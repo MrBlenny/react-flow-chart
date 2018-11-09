@@ -1,11 +1,11 @@
 import { map } from 'lodash'
 import * as React from 'react'
-import { 
-  CanvasWrapper, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, 
-  IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, 
-  IOnLinkMove, IOnLinkStart, IOnNodeClick , IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps,
-  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, 
-  PortWrapper,
+import {
+  CanvasWrapper, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop,
+  IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
+  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick , IOnPortPositionChange, IPortDefaultProps,
+  IPortsDefaultProps, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault,
+  PortsDefault, PortWrapper,
 } from '../../'
 
 export interface IFlowChartCallbacks {
@@ -34,11 +34,11 @@ export interface IFlowChartComponents {
 }
 
 export interface IFlowChartProps {
-  /** 
+  /**
    * The current chart state
    */
   chart: IChart
-  /** 
+  /**
    * Callbacks for updating chart state.
    * See container/actions.ts for example state mutations
    */
@@ -84,37 +84,37 @@ export const FlowChart = (props: IFlowChartProps) => {
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
 
   return (
-    <CanvasWrapper 
-      position={ chart.offset } 
-      { ...canvasCallbacks }
+    <CanvasWrapper
+      position={chart.offset}
+      {...canvasCallbacks}
     >
-      { map(links, link => (
-        <LinkWrapper 
-          chart={ chart }
-          key={ link.id } 
-          link={ link } 
-          Component={ Link }
-          { ...linkCallbacks }
+      { map(links, (link) => (
+        <LinkWrapper
+          chart={chart}
+          key={link.id}
+          link={link}
+          Component={Link}
+          {...linkCallbacks}
         />
       ))}
-      { map(nodes, node => (
+      { map(nodes, (node) => (
         <NodeWrapper
-          key={ node.id } 
-          node={ node }
-          selected={ selected }
-          Component={ Node }
-          { ...nodeCallbacks }
+          key={node.id}
+          node={node}
+          selected={selected}
+          Component={Node}
+          {...nodeCallbacks}
         >
-          <NodeInner node={ node }/>
+          <NodeInner node={node}/>
           <Ports>
-            { map(node.ports, port => (
+            { map(node.ports, (port) => (
               <PortWrapper
-                key={ port.id }
-                chart={ chart }
-                node={ node }
-                port={ port }
-                Component={ Port }
-                { ...portCallbacks }
+                key={port.id}
+                chart={chart}
+                node={node}
+                port={port}
+                Component={Port}
+                {...portCallbacks}
               />
             )) }
           </Ports>

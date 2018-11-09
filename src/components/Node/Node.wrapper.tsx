@@ -12,8 +12,8 @@ export interface INodeWrapperProps {
   Component?: React.SFC<INodeDefaultProps>
 }
 
-export const NodeWrapper = ({ 
-  node, 
+export const NodeWrapper = ({
+  node,
   onDragNode,
   children,
   onNodeClick,
@@ -26,20 +26,20 @@ export const NodeWrapper = ({
       axis="both"
       position={node.position}
       grid={[1,1]}
-      onStart={ e => {
+      onStart={ (e) => {
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
-      onDrag={ (e, dragData) => onDragNode(e, dragData, node.id) }
+      onDrag={(e, dragData) => onDragNode(e, dragData, node.id)}
     >
-      <Component 
-        children={ children } 
+      <Component
+        children={children}
         onClick={ (e) => {
           onNodeClick({ nodeId: node.id })
           e.stopPropagation()
         } }
-        isSelected={ selected.type === 'node' && selected.id === node.id }
-        node={ node }
+        isSelected={selected.type === 'node' && selected.id === node.id}
+        node={node}
       />
     </Draggable>
   )

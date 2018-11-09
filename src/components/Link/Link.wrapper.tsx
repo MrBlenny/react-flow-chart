@@ -12,7 +12,7 @@ export interface ILinkWrapperProps {
   Component?: React.SFC<ILinkDefaultProps>
 }
 
-export const LinkWrapper = ({ 
+export const LinkWrapper = ({
   Component = LinkDefault,
   link,
   chart,
@@ -22,8 +22,8 @@ export const LinkWrapper = ({
 }: ILinkWrapperProps) => {
   const startPos = getLinkPosition(chart, link.from.nodeId, link.from.portId)
 
-  const endPos = link.to.nodeId && link.to.portId 
-    ? getLinkPosition(chart, link.to.nodeId, link.to.portId) 
+  const endPos = link.to.nodeId && link.to.portId
+    ? getLinkPosition(chart, link.to.nodeId, link.to.portId)
     : link.to.position
 
   // Don't render the link yet if there is no end pos
@@ -34,14 +34,14 @@ export const LinkWrapper = ({
 
   return (
     <Component
-      link={ link }
-      startPos={ startPos } 
-      endPos={ endPos }
-      onLinkMouseEnter={ onLinkMouseEnter }
-      onLinkMouseLeave={ onLinkMouseLeave }
-      onLinkClick={ onLinkClick }
-      isSelected={ chart.selected.type === 'link' && chart.selected.id === link.id }
-      isHovered={ chart.hovered.type === 'link' && chart.hovered.id === link.id }
+      link={link}
+      startPos={startPos}
+      endPos={endPos}
+      onLinkMouseEnter={onLinkMouseEnter}
+      onLinkMouseLeave={onLinkMouseLeave}
+      onLinkClick={onLinkClick}
+      isSelected={chart.selected.type === 'link' && chart.selected.id === link.id}
+      isHovered={chart.hovered.type === 'link' && chart.hovered.id === link.id}
     />
   )
 }

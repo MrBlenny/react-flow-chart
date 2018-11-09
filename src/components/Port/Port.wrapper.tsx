@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { v4 } from 'uuid'
-import { IChart, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort } from '../../'
+import {
+  IChart, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
+   IOnLinkStart, IOnPortPositionChange, IPort,
+} from '../../'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
 export interface IPortWrapperProps {
@@ -19,7 +22,7 @@ export interface IPortWrapperProps {
 }
 
 export class PortWrapper extends React.Component<IPortWrapperProps> {
-  public nodeRef?: HTMLDivElement 
+  public nodeRef?: HTMLDivElement
   public getNodRef = (el: HTMLDivElement) => {
     if (el) {
       const { node, port, onPortPositionChange } = this.props
@@ -38,18 +41,18 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   public onMouseDown = (startEvent: any) => {
     const { node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
     const linkId = v4()
-    const fromNodeId = node.id 
-    const fromPortId = port.id 
+    const fromNodeId = node.id
+    const fromPortId = port.id
 
     // Create the move handler
     // This will update the position as the mouse moves
     const mouseMoveHandler = (e: MouseEvent) => {
-      onLinkMove({ 
-        linkId, startEvent, fromNodeId, fromPortId, 
-        toPosition: { 
+      onLinkMove({
+        linkId, startEvent, fromNodeId, fromPortId,
+        toPosition: {
           x: e.clientX,
           y: e.clientY,
-        }, 
+        },
       })
     }
 
@@ -90,11 +93,11 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     startEvent.preventDefault()
     startEvent.stopPropagation()
   }
-  public render() {
-    const { 
+  public render () {
+    const {
       chart,
-      style, 
-      port, 
+      style,
+      port,
       node,
       Component = PortDefault,
     } = this.props
@@ -104,25 +107,25 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
     return (
       <div
-        data-port-id={ port.id }
-        data-node-id={ node.id }
-        onMouseDown={ this.onMouseDown }
-        ref={ this.getNodRef } 
-        style={ style }
+        data-port-id={port.id}
+        data-node-id={node.id}
+        onMouseDown={this.onMouseDown}
+        ref={this.getNodRef}
+        style={style}
       >
-        <Component 
-          port={ port }
-          isSelected={ chart.selected.type === 'port' && chart.selected.id === port.id }
-          isHovered={ chart.hovered.type === 'port' && chart.hovered.id === port.id }
-          isLinkSelected={ selectedLink 
-            ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) || 
+        <Component
+          port={port}
+          isSelected={chart.selected.type === 'port' && chart.selected.id === port.id}
+          isHovered={chart.hovered.type === 'port' && chart.hovered.id === port.id}
+          isLinkSelected={ selectedLink
+            ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) ||
                (selectedLink.to.portId === port.id && selectedLink.to.nodeId === node.id))
-            : false 
+            : false
           }
-          isLinkHovered={ hoveredLink 
-            ? ((hoveredLink.from.portId === port.id && hoveredLink.from.nodeId === node.id) || 
+          isLinkHovered={ hoveredLink
+            ? ((hoveredLink.from.portId === port.id && hoveredLink.from.nodeId === node.id) ||
                (hoveredLink.to.portId === port.id && hoveredLink.to.nodeId === node.id))
-            : false 
+            : false
           }
         />
       </div>

@@ -4,8 +4,8 @@ import { FlowChart, IChart, IFlowChartComponents } from '../'
 import * as actions from './actions'
 
 export interface IFlowChartWithStateProps {
-	initialValue: IChart
-	Components?: IFlowChartComponents
+  initialValue: IChart
+  Components?: IFlowChartComponents
 }
 
 /**
@@ -13,19 +13,21 @@ export interface IFlowChartWithStateProps {
  */
 export class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
   public state: IChart
-  constructor(props: IFlowChartWithStateProps) {
+  constructor (props: IFlowChartWithStateProps) {
     super(props)
     this.state = props.initialValue
-	}
-	public render() {
-		const { Components } = this.props
-		const stateActions = mapValues(actions, (func: any) => (...args: any) => this.setState(func(...args))) as typeof actions
-		return (
-			<FlowChart
-				chart={ this.state }
-				callbacks={ stateActions }
-				Components={ Components }
-			/>
-		)
-	}
+  }
+  public render () {
+    const { Components } = this.props
+    const stateActions = mapValues(actions, (func: any) =>
+      (...args: any) => this.setState(func(...args))) as typeof actions
+
+    return (
+      <FlowChart
+        chart={this.state}
+        callbacks={stateActions}
+        Components={Components}
+      />
+    )
+  }
 }

@@ -6,7 +6,7 @@ export const chartSimple: IChart = {
     y: 0,
   },
   nodes: {
-    'node1': {
+    node1: {
       id: 'node1',
       type: 'output-only',
       position: {
@@ -23,8 +23,8 @@ export const chartSimple: IChart = {
           type: 'output',
         },
       },
-    }, 
-    'node2': {
+    },
+    node2: {
       id: 'node2',
       type: 'input-output',
       position: {
@@ -32,10 +32,10 @@ export const chartSimple: IChart = {
         y: 300,
       },
       ports: {
-        port1:{
+        port1: {
           id: 'port1',
           type: 'input',
-        }, 
+        },
         port2: {
           id: 'port2',
           type: 'output',
@@ -56,7 +56,6 @@ export const chartSimple: IChart = {
       },
     },
   },
-  selected:{},
-  hovered:{},
+  selected: {},
+  hovered: {},
 }
-

@@ -26,7 +26,7 @@ const PageContent = styled.div`
 
 export const Page = ({ children }: { children: any}) => (
   <PageContent>
-    { children }
+    {children}
     <GlobalStyle />
   </PageContent>
 )

@@ -5,11 +5,11 @@ import { Content, Page, Sidebar, SidebarItem } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
 storiesOf('With Sidebar', module)
-	.add('default', () => {
-		return (
+  .add('default', () => {
+    return (
       <Page>
         <Content>
-          <FlowChartWithState initialValue={ chartSimple } />
+          <FlowChartWithState initialValue={chartSimple} />
         </Content>
         <Sidebar>
           <SidebarItem type="example-1" />
@@ -17,4 +17,4 @@ storiesOf('With Sidebar', module)
         </Sidebar>
       </Page>
     )
-	})
+  })

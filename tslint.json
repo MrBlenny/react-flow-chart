@@ -2,14 +2,14 @@
   "extends": [
     "tslint:latest",
     "tslint-config-standard",
-    "tslint-react",
-    "tslint-config-prettier"
+    "tslint-react"
   ],
   "rules": {
     "semicolon": [true, "never"],
     "object-literal-sort-keys": false,
     "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
     "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
     "quotemark": [true, "single", "jsx-double"],
     "no-implicit-dependencies": [true, "dev"]
   }

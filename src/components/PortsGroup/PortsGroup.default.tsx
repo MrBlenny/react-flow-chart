@@ -9,7 +9,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
   display: flex;
   justify-content: center;
 
-  ${props => {
+  ${(props) => {
     if (props.side === 'top') {
       return css`
         width: 100%;

@@ -9,10 +9,10 @@ export type IOnDragCanvas = (event: MouseEvent, dragData: DraggableData) => void
 export type IOnPortPositionChange = (node: INode, port: IPort, position: IPosition) => void
 
 export interface IOnLinkBaseEvent {
-  linkId: string, 
-  startEvent: MouseEvent, 
-  fromNodeId: string, 
-  fromPortId: string 
+  linkId: string,
+  startEvent: MouseEvent,
+  fromNodeId: string,
+  fromPortId: string
 }
 
 export type IOnLinkStart = (input: IOnLinkBaseEvent) => void
@@ -28,8 +28,8 @@ export type IOnLinkMove = (input: IOnLinkMoveInput) => void
 export type IOnLinkCancel = (input: IOnLinkBaseEvent) => void
 
 export interface IOnLinkCompleteInput extends IOnLinkBaseEvent {
-  toNodeId: string, 
-  toPortId: string 
+  toNodeId: string,
+  toPortId: string
 }
 export type IOnLinkComplete = (input: IOnLinkCompleteInput) => void
 

@@ -16,7 +16,7 @@ const Outer = styled.div`
 export const NodeInnerDefault = ({ node }: INodeInnerDefaultProps) => {
   return (
     <Outer>
-      <div>Type: { node.type }</div>
+      <div>Type: {node.type}</div>
     </Outer>
   )
 }

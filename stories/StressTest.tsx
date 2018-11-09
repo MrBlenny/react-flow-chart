@@ -5,9 +5,9 @@ import { FlowChartWithState } from '../src'
 import { Page } from './components'
 
 storiesOf('Stress Test', module)
-	.add('default', () => {
+  .add('default', () => {
 
-    const xyGrid = flatten(range(0, 1500, 300).map(x => range(0, 1000, 150).map(y => ({x, y}))))
+    const xyGrid = flatten(range(0, 1500, 300).map((x) => range(0, 1000, 150).map((y) => ({ x, y }))))
 
     const chart = {
       offset: {
@@ -64,13 +64,12 @@ storiesOf('Stress Test', module)
         }
         return undefined
       })), 'id') as any,
-      selected:{},
-      hovered:{},
+      selected: {},
+      hovered: {},
     }
-		return (
+    return (
       <Page>
-        <FlowChartWithState initialValue={ chart } />
+        <FlowChartWithState initialValue={chart} />
       </Page>
     )
   })
-  

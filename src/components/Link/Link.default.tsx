@@ -28,27 +28,27 @@ export const LinkDefault = ({
     <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer' }}>
       <circle
         r="4"
-        cx={ startPos.x }
-        cy={ startPos.y }
+        cx={startPos.x}
+        cy={startPos.y}
         fill="cornflowerblue"
       />
       {/* Main line */}
       <polyline
-        points={ points }  
-        stroke="cornflowerblue" 
+        points={points}
+        stroke="cornflowerblue"
         strokeWidth="3"
         fill="none"
       />
       {/* Thick line to make selection easier */}
       <polyline
-        points={ points }  
-        stroke="cornflowerblue" 
+        points={points}
+        stroke="cornflowerblue"
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
-        strokeOpacity={ (isHovered || isSelected) ? 0.1 : 0 }
-        onMouseEnter={() => onLinkMouseEnter({ linkId: link.id }) }
-        onMouseLeave={() => onLinkMouseLeave({ linkId: link.id }) }
+        strokeOpacity={(isHovered || isSelected) ? 0.1 : 0}
+        onMouseEnter={() => onLinkMouseEnter({ linkId: link.id })}
+        onMouseLeave={() => onLinkMouseLeave({ linkId: link.id })}
         onClick={(e) => {
           onLinkClick({ linkId: link.id })
           e.stopPropagation()
@@ -56,8 +56,8 @@ export const LinkDefault = ({
       />
       <circle
         r="4"
-        cx={ endPos.x }
-        cy={ endPos.y }
+        cx={endPos.x}
+        cy={endPos.y}
         fill="cornflowerblue"
       />
     </svg>

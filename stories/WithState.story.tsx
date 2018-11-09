@@ -5,10 +5,10 @@ import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
 storiesOf('With State', module)
-	.add('default', () => {
-		return (
-      <Page>
-				<FlowChartWithState initialValue={ chartSimple } />
-      </Page>
+  .add('default', () => {
+    return (
+    <Page>
+      <FlowChartWithState initialValue={chartSimple} />
+    </Page>
     )
-	})
+  })

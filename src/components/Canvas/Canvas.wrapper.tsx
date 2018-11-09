@@ -18,12 +18,12 @@ export interface ICanvasWrapperProps {
   children: any
 }
 
-export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
-  public render() {
-    const { 
-      ComponentInner = CanvasInnerDefault, 
-      ComponentOuter = CanvasOuterDefault, 
-      position, 
+export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
+  public render () {
+    const {
+      ComponentInner = CanvasInnerDefault,
+      ComponentOuter = CanvasOuterDefault,
+      position,
       onDragCanvas,
       children,
       onCanvasClick,
@@ -37,12 +37,12 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
           axis="both"
           position={position}
           grid={[1, 1]}
-          onDrag={ (e, dragData) => onDragCanvas(e, dragData) }
+          onDrag={(e, dragData) => onDragCanvas(e, dragData)}
         >
-          <ComponentInner 
-            children={ children } 
-            onClick={ onCanvasClick }
-            tabIndex={ 0 }
+          <ComponentInner
+            children={children}
+            onClick={onCanvasClick}
+            tabIndex={0}
             onKeyDown={ (e: React.KeyboardEvent) => {
               if (e.keyCode === 46) {
                 onDeleteKey()
@@ -51,7 +51,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
             onDrop={ (e) => {
               const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
               onCanvasDrop({ data, position: {
-                x: 300, 
+                x: 300,
                 y: 300,
               }})
               // const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
@@ -70,4 +70,3 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps>{
     )
   }
 }
-

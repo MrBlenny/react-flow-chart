@@ -28,14 +28,14 @@ const PortDefaultInner = styled.div<{ active: boolean }>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background:  ${props => props.active ? 'cornflowerblue' : 'grey' };
+  background:  ${(props) => props.active ? 'cornflowerblue' : 'grey' };
   cursor: pointer;
 `
 
 export const PortDefault = ({ isLinkSelected, isLinkHovered }: IPortDefaultProps) => (
   <PortDefaultOuter>
-    <PortDefaultInner 
-      active={ isLinkSelected || isLinkHovered } 
+    <PortDefaultInner
+      active={isLinkSelected || isLinkHovered}
     />
   </PortDefaultOuter>
 )

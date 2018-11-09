@@ -1,11 +1,11 @@
 import { IPosition } from './generics'
 
 export interface IChart {
-	offset: IPosition
-	nodes: {
+  offset: IPosition
+  nodes: {
     [id: string]: INode,
   }
-	links: {
+  links: {
     [id: string]: ILink,
   }
   properties?: any
@@ -53,4 +53,3 @@ export interface ILink {
   }
   properties?: any
 }
-
