@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
+import { generateCurvePath, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
 
 export interface ILinkDefaultProps {
   link: ILink
@@ -22,7 +22,7 @@ export const LinkDefault = ({
   isHovered,
   isSelected,
 }: ILinkDefaultProps) => {
-  const points = `${startPos.x},${startPos.y} ${endPos.x},${endPos.y}`
+  const points = generateCurvePath(startPos, endPos)
 
   return (
     <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer' }}>
@@ -33,15 +33,15 @@ export const LinkDefault = ({
         fill="cornflowerblue"
       />
       {/* Main line */}
-      <polyline
-        points={points}
+      <path
+        d={points}
         stroke="cornflowerblue"
         strokeWidth="3"
         fill="none"
       />
       {/* Thick line to make selection easier */}
-      <polyline
-        points={points}
+      <path
+        d={points}
         stroke="cornflowerblue"
         strokeWidth="20"
         fill="none"
