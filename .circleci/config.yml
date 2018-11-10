@@ -13,7 +13,7 @@ jobs:
           - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
 
-      - run: yarn install
+      - run: npm i
 
       - save_cache:
           paths:
