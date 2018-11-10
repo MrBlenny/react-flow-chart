@@ -10,6 +10,7 @@
 - [x] Base functionality complete
 - [ ] Stable NPM version + changelog
 - [ ] Scroll/Pinch canvas to zoom
+- [ ] Ctrl+z/Ctrl+y history
 - [ ] Read-only mode
 - [ ] Redux state container
 - [ ] Arrow heads on links
