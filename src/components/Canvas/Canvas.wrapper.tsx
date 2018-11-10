@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Draggable from 'react-draggable'
 import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
+import { PinchZoomPan } from '../PinchZoomPan'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
 
@@ -24,7 +24,6 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
       ComponentInner,
       ComponentOuter,
       position,
-      onDragCanvas,
       children,
       onCanvasClick,
       onDeleteKey,
@@ -33,11 +32,12 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
 
     return (
       <ComponentOuter>
-        <Draggable
-          axis="both"
-          position={position}
-          grid={[1, 1]}
-          onDrag={(e, dragData) => onDragCanvas(e, dragData)}
+        <PinchZoomPan
+          initialTop={0}
+          initialLeft={0}
+          initialScale={'auto'}
+          minScale={'auto'}
+          maxScale={1}
         >
           <ComponentInner
             children={children}
@@ -59,8 +59,8 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
               e.preventDefault()
             } }
           />
-        </Draggable>
-      </ComponentOuter>
+        </PinchZoomPan>
+      </ComponentOuter >
     )
   }
 }
