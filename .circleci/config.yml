@@ -10,7 +10,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-{{ checksum "package-locl.json" }}
           - v1-dependencies-
 
       - run: yarn install
@@ -18,7 +18,10 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          
+      # run build!
+      - run: npm run lint
 
       # run build!
-      - run: yarn build:storybook
+      - run: npm run build:storybook
