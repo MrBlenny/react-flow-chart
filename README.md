@@ -1,6 +1,8 @@
 # React Flow Chart
 
-## WORK IN PROGRESS
+[![CircleCI](https://circleci.com/gh/MrBlenny/dynamo-s3-document-client.svg?style=svg)](https://circleci.com/gh/MrBlenny/dynamo-s3-document-client)
+
+### WORK IN PROGRESS
 
 - [X] Dragabble Nodes and Canvas
 - [x] Create curved links between ports
