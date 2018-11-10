@@ -10,7 +10,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package-locl.json" }}
+          - v1-dependencies-{{ checksum "package-lock.json" }}
           - v1-dependencies-
 
       - run: yarn install
