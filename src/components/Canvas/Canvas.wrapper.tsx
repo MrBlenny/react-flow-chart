@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
+import { IOnCanvasClick, IOnCanvasDrop, IOnDragCanvas, IOnRemoveKey, REACT_FLOW_CHART } from '../../'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
 
@@ -10,12 +10,13 @@ export interface ICanvasWrapperProps {
     y: number,
   }
   onDragCanvas: IOnDragCanvas
-  onDeleteKey: IOnDeleteKey
+  onRemoveKey: IOnRemoveKey
   onCanvasClick: IOnCanvasClick
   onCanvasDrop: IOnCanvasDrop
   ComponentInner: React.SFC<ICanvasInnerDefaultProps>
   ComponentOuter: React.SFC<ICanvasOuterDefaultProps>
   children: any
+  removeKeyCodes: number[]
 }
 
 export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
@@ -27,8 +28,9 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
       onDragCanvas,
       children,
       onCanvasClick,
-      onDeleteKey,
+      onRemoveKey,
       onCanvasDrop,
+      removeKeyCodes,
     } = this.props
 
     return (
@@ -44,8 +46,8 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps> {
             onClick={onCanvasClick}
             tabIndex={0}
             onKeyDown={ (e: React.KeyboardEvent) => {
-              if (e.keyCode === 46) {
-                onDeleteKey()
+              if (removeKeyCodes.includes(e.keyCode)) {
+                onRemoveKey()
               }
             }}
             onDrop={ (e) => {

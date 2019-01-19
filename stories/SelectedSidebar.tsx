@@ -50,10 +50,10 @@ export class SelectedSidebar extends React.Component {
               <div>ID: {chart.selected.id}</div>
               <br/>
               {/*
-                We can re-use the onDeleteKey action. This will delete whatever is selected.
+                We can re-use the onRemoveKey action. This will delete whatever is selected.
                 Otherwise, we have access to the state here so we can do whatever we want.
               */}
-              <Button onClick={() => stateActions.onDeleteKey()}>Delete</Button>
+              <Button onClick={() => stateActions.onRemoveKey()}>Delete</Button>
             </Message>
           : <Message>Click on a Node, Port or Link</Message> }
         </Sidebar>

@@ -1,8 +1,8 @@
 import { forEach } from 'lodash'
 import { v4 } from 'uuid'
 import {
-  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
-  IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnPortPositionChange,
+  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkComplete,
+  IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IOnRemoveKey,
 } from '../'
 
 /**
@@ -94,7 +94,7 @@ export const onCanvasClick: IOnCanvasClick = () => (chart: IChart) => {
   return chart
 }
 
-export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
+export const onRemoveKey: IOnRemoveKey = () => (chart: IChart) => {
   if (chart.selected.type === 'node' && chart.selected.id) {
     const node = chart.nodes[chart.selected.id]
     // Delete the connected links

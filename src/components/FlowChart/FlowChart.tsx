@@ -2,9 +2,9 @@ import { map } from 'lodash'
 import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps,
-  INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
-  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, LinkDefault, LinkWrapper,
+  INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
+  IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart,
+  IOnNodeClick, IOnPortPositionChange, IOnRemoveKey, IPortDefaultProps, IPortsDefaultProps, LinkDefault, LinkWrapper,
   NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, PortWrapper,
 } from '../../'
 
@@ -21,7 +21,7 @@ export interface IFlowChartCallbacks {
   onLinkMouseLeave: IOnLinkMouseLeave
   onLinkClick: IOnLinkClick
   onCanvasClick: IOnCanvasClick
-  onDeleteKey: IOnDeleteKey
+  onRemoveKey: IOnRemoveKey
   onNodeClick: IOnNodeClick
 }
 
@@ -49,6 +49,11 @@ export interface IFlowChartProps {
    * Custom components
    */
   Components?: IFlowChartComponents
+  /**
+   * The key codes that will trigger a node or link to be removed
+   * Defaults: 46 (delete) & 8 (backspace)
+   */
+  removeKeyCodes?: number[]
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -67,7 +72,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       onLinkMouseLeave,
       onLinkClick,
       onCanvasClick,
-      onDeleteKey,
+      onRemoveKey,
       onNodeClick,
     },
     Components: {
@@ -79,10 +84,11 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
+    removeKeyCodes = [46, 8],
   } = props
   const { links, nodes, selected } = chart
 
-  const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
+  const canvasCallbacks = { onDragCanvas, onCanvasClick, onRemoveKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
   const nodeCallbacks = { onDragNode, onNodeClick }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
@@ -90,6 +96,7 @@ export const FlowChart = (props: IFlowChartProps) => {
   return (
     <CanvasWrapper
       position={chart.offset}
+      removeKeyCodes={removeKeyCodes}
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
       {...canvasCallbacks}
