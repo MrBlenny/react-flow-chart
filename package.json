@@ -1,8 +1,8 @@
 {
   "name": "@mrblenny/react-flow-chart",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A flexible, stateless flow chart library for react.",
-  "main": "src/index",
+  "main": "src/index.js",
   "repository": "git@github.com:MrBlenny/react-flow-chart.git",
   "author": "David Revay <daverevay@gmail.com>",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "@types/webpack": "4.4.17",
     "babel-loader": "^8.0.4",
     "np": "^3.0.4",
-    "react": "^16.5.2",
+    "react": "^16.8.4",
     "react-dom": "^16.5.2",
     "ts-loader": "^5.2.2",
     "ts-node": "^7.0.1",
@@ -42,7 +42,7 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "react": "^16.5.2",
+    "react": "^16.8.4",
     "react-dom": "^16.5.2"
   },
   "scripts": {
