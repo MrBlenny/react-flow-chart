@@ -25,7 +25,7 @@ export const LinkDefault = ({
   const points = generateCurvePath(startPos, endPos)
 
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer' }}>
+    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0, }}>
       <circle
         r="4"
         cx={startPos.x}
