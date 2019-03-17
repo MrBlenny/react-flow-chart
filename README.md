@@ -112,10 +112,15 @@ This will produce a simple 2 noded chart which looks like:
 npm i @mrblenny/react-flow-chart
 ```
 
-Most components/types are available as a root level export. For example:
+Most components/types are available as a root level export. Check the storybook demo for more examples.
 
-```ts
-import { FlowChartWithState } from '@mrblenny/react-flow-chart'
+```tsx
+import { FlowChartWithState } from "@mrblenny/react-flow-chart";
+import { chartSimple } from "@mrblenny/react-flow-chart/stories/misc/exampleChartState"; // Demo chart state
+
+const Example = (
+  <FlowChartWithState initialValue={chartSimple} />
+);
 ```
 
 ### With Internal State
