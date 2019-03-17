@@ -8,7 +8,7 @@ import { chartSimple } from './misc/exampleChartState'
 /**
  * State is external to the <FlowChart> Element
  *
- * You could easily move this state to Redux or similar by creating your own callback actions. 
+ * You could easily move this state to Redux or similar by creating your own callback actions.
  */
 export class ExternalReactState extends React.Component {
   public state = cloneDeep(chartSimple)
