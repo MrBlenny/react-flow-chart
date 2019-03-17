@@ -108,8 +108,6 @@ This will produce a simple 2 noded chart which looks like:
 
 ## Basic Usage
 
-Probably best not to use npm at this point. Things will be changing wildly.
-
 ```bash
 npm i @mrblenny/react-flow-chart
 ```
