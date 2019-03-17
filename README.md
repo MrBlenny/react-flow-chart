@@ -2,15 +2,13 @@
 
 [![CircleCI](https://circleci.com/gh/MrBlenny/react-flow-chart.svg?style=svg)](https://circleci.com/gh/MrBlenny/react-flow-chart)
 
-### WORK IN PROGRESS
-
 - [X] Dragabble Nodes and Canvas
 - [x] Create curved links between ports
 - [x] Custom components for Canvas, Links, Ports, Nodes
 - [X] React state container
 - [X] Update state on Select/Hover nodes, ports and links
 - [x] Base functionality complete
-- [ ] Stable NPM version + changelog
+- [X] Stable NPM version
 - [ ] Scroll/Pinch canvas to zoom
 - [ ] Ctrl+z/Ctrl+y history
 - [ ] Read-only mode
@@ -18,7 +16,9 @@
 - [ ] Arrow heads on links
 - [ ] Docs
 
-### [Demo](https://mrblenny.github.io/react-flow-chart/index.html?selectedKind=With%20Sidebar&selectedStory=default&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook-addon-viewport%2Faddon-panel)
+### [Storybook Demo](https://mrblenny.github.io/react-flow-chart/index.html?selectedKind=With%20Sidebar&selectedStory=default&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook-addon-viewport%2Faddon-panel)
+
+### [CodeSandbox Demo](https://codesandbox.io/s/4w46wv71o7)
 
 This project aims to build a highly customisable, declarative flow chart library. Critically, your control the state. Pick from Redux, MobX, React or any other state managment library - simply pass in the current state and hook up the callbacks.
 
