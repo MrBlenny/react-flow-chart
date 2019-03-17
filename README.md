@@ -127,7 +127,7 @@ const Example = (
 [stories/InternalReactState.tsx](./stories/InternalReactState.tsx)
 
 ### With External State
-[stories/ExternalReactState.tsx](./stories/InternalReactState.tsx)
+[stories/ExternalReactState.tsx](./stories/ExternalReactState.tsx)
 
 ### Other Demos
 [stories/ExternalReactState.tsx](./stories)
