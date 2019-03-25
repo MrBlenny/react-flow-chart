@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { v4 } from 'uuid'
 import {
-  IChart, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
-   IOnLinkStart, IOnPortPositionChange, IPort,
+  IPosition, ISelectedOrHovered, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
+   IOnLinkStart, IOnPortPositionChange, IPort, ILink
 } from '../../'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
@@ -18,7 +18,11 @@ const composedPath = (el: HTMLElement | null) => {
 
 export interface IPortWrapperProps {
   style?: object
-  chart: IChart
+  offset: IPosition
+  selected: ISelectedOrHovered | undefined
+  hovered: ISelectedOrHovered | undefined
+  selectedLink: ILink | undefined
+  hoveredLink: ILink | undefined
   port: IPort
   node: INode
   onPortPositionChange: IOnPortPositionChange
@@ -52,7 +56,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     }
   }
   public onMouseDown = (startEvent: any) => {
-    const { chart, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
+    const { offset, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
     const linkId = v4()
     const fromNodeId = node.id
     const fromPortId = port.id
@@ -63,8 +67,8 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       onLinkMove({
         linkId, startEvent, fromNodeId, fromPortId,
         toPosition: {
-          x: e.clientX - chart.offset.x,
-          y: e.clientY - chart.offset.y,
+          x: e.clientX - offset.x,
+          y: e.clientY - offset.y,
         },
       })
     }
@@ -110,15 +114,15 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   }
   public render () {
     const {
-      chart,
+      selected,
+      selectedLink,
+      hovered,
+      hoveredLink,
       style,
       port,
       node,
       Component = PortDefault,
     } = this.props
-
-    const selectedLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id]
-    const hoveredLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id]
 
     return (
       <div
@@ -130,8 +134,8 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       >
         <Component
           port={port}
-          isSelected={chart.selected.type === 'port' && chart.selected.id === port.id}
-          isHovered={chart.hovered.type === 'port' && chart.hovered.id === port.id}
+          isSelected={!!selected && selected.type === 'port' && selected.id === port.id}
+          isHovered={!!hovered && hovered.type === 'port' && hovered.id === port.id}
           isLinkSelected={ selectedLink
             ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) ||
                (selectedLink.to.portId === port.id && selectedLink.to.nodeId === node.id))

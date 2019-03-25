@@ -1,29 +1,35 @@
 import * as React from 'react'
-import { IChart, ILink, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
+import { INode, ILink, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
 import { getLinkPosition } from './utils'
 
 export interface ILinkWrapperProps {
   link: ILink
-  chart: IChart
+  isSelected: boolean
+  isHovered: boolean
+  fromNode: INode
+  toNode: INode | undefined
   onLinkMouseEnter: IOnLinkMouseEnter
   onLinkMouseLeave: IOnLinkMouseLeave
   onLinkClick: IOnLinkMouseLeave
   Component?: React.SFC<ILinkDefaultProps>
 }
 
-export const LinkWrapper = ({
+export const LinkWrapper = React.memo(({
   Component = LinkDefault,
   link,
-  chart,
   onLinkMouseEnter,
   onLinkMouseLeave,
   onLinkClick,
+  isSelected,
+  isHovered,
+  fromNode,
+  toNode
 }: ILinkWrapperProps) => {
-  const startPos = getLinkPosition(chart, link.from.nodeId, link.from.portId)
+  const startPos = getLinkPosition(fromNode, link.from.portId)
 
-  const endPos = link.to.nodeId && link.to.portId
-    ? getLinkPosition(chart, link.to.nodeId, link.to.portId)
+  const endPos = toNode && link.to.portId
+    ? getLinkPosition(toNode, link.to.portId)
     : link.to.position
 
   // Don't render the link yet if there is no end pos
@@ -40,8 +46,8 @@ export const LinkWrapper = ({
       onLinkMouseEnter={onLinkMouseEnter}
       onLinkMouseLeave={onLinkMouseLeave}
       onLinkClick={onLinkClick}
-      isSelected={chart.selected.type === 'link' && chart.selected.id === link.id}
-      isHovered={chart.hovered.type === 'link' && chart.hovered.id === link.id}
+      isSelected={isSelected}
+      isHovered={isHovered}
     />
   )
-}
+})

@@ -3,11 +3,10 @@ import * as React from 'react'
 import { FlowChartWithState } from '../src'
 import { Page } from './components'
 
-export const StressTestDemo = () => {
+const getChart = (rows: number, cols: number) => {
+  const xyGrid = flatten(range(0, cols * 300, 300).map((x) => range(0, rows * 150, 150).map((y) => ({ x, y }))))
 
-  const xyGrid = flatten(range(0, 1500, 300).map((x) => range(0, 1000, 150).map((y) => ({ x, y }))))
-
-  const chart = {
+  return {
     offset: {
       x: 0,
       y: 0,
@@ -65,9 +64,27 @@ export const StressTestDemo = () => {
     selected: {},
     hovered: {},
   }
+}
+
+const StressTestWithState = () => {
+  const [rows, setRows] = React.useState(10)
+  const [cols, setCols] = React.useState(10)
+
+  const chart = React.useMemo(() => getChart(rows, cols), [rows, cols])
+
   return (
-    <Page>
-      <FlowChartWithState initialValue={chart} />
-    </Page>
+    <div>
+      <label>Columns:</label>
+      <input type="number" value={cols} onChange={(e) => setCols(parseInt(e.target.value, 10))} />
+      <label>Rows:</label>
+      <input type="number" value={rows} onChange={(e) => setRows(parseInt(e.target.value, 10))} />
+      <Page>
+        <FlowChartWithState key={`${cols}:${rows}`} initialValue={chart} />
+      </Page>
+    </div>
   )
+}
+
+export const StressTestDemo = () => {
+  return <StressTestWithState />
 }

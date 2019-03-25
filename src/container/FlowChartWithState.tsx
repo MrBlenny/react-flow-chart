@@ -13,19 +13,20 @@ export interface IFlowChartWithStateProps {
  */
 export class FlowChartWithState extends React.Component<IFlowChartWithStateProps, IChart> {
   public state: IChart
+  private stateActions = mapValues(actions, (func: any) =>
+      (...args: any) => this.setState(func(...args)))
+
   constructor (props: IFlowChartWithStateProps) {
     super(props)
     this.state = props.initialValue
   }
   public render () {
     const { Components } = this.props
-    const stateActions = mapValues(actions, (func: any) =>
-      (...args: any) => this.setState(func(...args)))
 
     return (
       <FlowChart
         chart={this.state}
-        callbacks={stateActions}
+        callbacks={this.stateActions}
         Components={Components}
       />
     )
