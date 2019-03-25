@@ -163,7 +163,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var __1 = __webpack_require__(/*! ../../ */ "./src/index.ts");
 exports.FlowChart = function (props) {
@@ -174,10 +173,10 @@ exports.FlowChart = function (props) {
     var nodeCallbacks = { onDragNode: onDragNode, onNodeClick: onNodeClick };
     var portCallbacks = { onPortPositionChange: onPortPositionChange, onLinkStart: onLinkStart, onLinkMove: onLinkMove, onLinkComplete: onLinkComplete, onLinkCancel: onLinkCancel };
     return (React.createElement(__1.CanvasWrapper, __assign({ position: chart.offset, ComponentInner: CanvasInner, ComponentOuter: CanvasOuter }, canvasCallbacks),
-        lodash_1.map(links, function (link) { return (React.createElement(__1.LinkWrapper, __assign({ chart: chart, key: link.id, link: link, Component: Link }, linkCallbacks))); }),
-        lodash_1.map(nodes, function (node) { return (React.createElement(__1.NodeWrapper, __assign({ key: node.id, node: node, selected: selected, Component: Node }, nodeCallbacks),
-            React.createElement(NodeInner, { node: node }),
-            React.createElement(Ports, null, lodash_1.map(node.ports, function (port) { return (React.createElement(__1.PortWrapper, __assign({ key: port.id, chart: chart, node: node, port: port, Component: Port }, portCallbacks))); })))); })));
+        Object.keys(links).map(function (linkId) { return (React.createElement(__1.LinkWrapper, __assign({ chart: chart, key: linkId, link: links[linkId], Component: Link }, linkCallbacks))); }),
+        Object.keys(nodes).map(function (nodeId) { return (React.createElement(__1.NodeWrapper, __assign({ key: nodeId, node: nodes[nodeId], selected: selected, Component: Node }, nodeCallbacks),
+            React.createElement(NodeInner, { node: nodes[nodeId] }),
+            React.createElement(Ports, null, Object.keys(nodes[nodeId].ports).map(function (portId) { return (React.createElement(__1.PortWrapper, __assign({ key: portId, chart: chart, node: nodes[nodeId], port: nodes[nodeId].ports[portId], Component: Port }, portCallbacks))); })))); })));
 };
 
 
@@ -646,16 +645,15 @@ __export(__webpack_require__(/*! ./Port.wrapper */ "./src/components/Port/Port.w
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var __1 = __webpack_require__(/*! ../../ */ "./src/index.ts");
 exports.PortsDefault = function (_a) {
     var children = _a.children;
     return (React.createElement("div", null,
-        React.createElement(__1.PortsGroupDefault, { side: "top" }, lodash_1.filter(children, function (child) { return ['input', 'top'].includes(child.props.port.type); })),
-        React.createElement(__1.PortsGroupDefault, { side: "bottom" }, lodash_1.filter(children, function (child) { return ['output', 'bottom'].includes(child.props.port.type); })),
-        React.createElement(__1.PortsGroupDefault, { side: "right" }, lodash_1.filter(children, function (child) { return ['right'].includes(child.props.port.type); })),
-        React.createElement(__1.PortsGroupDefault, { side: "left" }, lodash_1.filter(children, function (child) { return ['left'].includes(child.props.port.type); }))));
+        React.createElement(__1.PortsGroupDefault, { side: "top" }, children.filter(function (child) { return ['input', 'top'].includes(child.props.port.type); })),
+        React.createElement(__1.PortsGroupDefault, { side: "bottom" }, children.filter(function (child) { return ['output', 'bottom'].includes(child.props.port.type); })),
+        React.createElement(__1.PortsGroupDefault, { side: "right" }, children.filter(function (child) { return ['right'].includes(child.props.port.type); })),
+        React.createElement(__1.PortsGroupDefault, { side: "left" }, children.filter(function (child) { return ['left'].includes(child.props.port.type); }))));
 };
 
 
@@ -795,10 +793,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var __1 = __webpack_require__(/*! ../ */ "./src/index.ts");
 var actions = __webpack_require__(/*! ./actions */ "./src/container/actions.ts");
+var mapValues_1 = __webpack_require__(/*! ./utils/mapValues */ "./src/container/utils/mapValues.ts");
 /**
  * Flow Chart With State
  */
@@ -812,7 +810,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
     FlowChartWithState.prototype.render = function () {
         var _this = this;
         var Components = this.props.Components;
-        var stateActions = lodash_1.mapValues(actions, function (func) {
+        var stateActions = mapValues_1.default(actions, function (func) {
             return function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -840,7 +838,6 @@ exports.FlowChartWithState = FlowChartWithState;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 var uuid_1 = __webpack_require__(/*! uuid */ "./node_modules/uuid/index.js");
 /**
  * This file contains actions for updating state after each of the required callbacks
@@ -944,7 +941,8 @@ exports.onDeleteKey = function () { return function (chart) {
     if (chart.selected.type === 'node' && chart.selected.id) {
         var node_1 = chart.nodes[chart.selected.id];
         // Delete the connected links
-        lodash_1.forEach(chart.links, function (link) {
+        Object.keys(chart.links).forEach(function (linkId) {
+            var link = chart.links[linkId];
             if (link.from.nodeId === node_1.id || link.to.nodeId === node_1.id) {
                 delete chart.links[link.id];
             }
@@ -1009,6 +1007,30 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(/*! ./FlowChartWithState */ "./src/container/FlowChartWithState.tsx"));
+
+
+/***/ }),
+
+/***/ "./src/container/utils/mapValues.ts":
+/*!******************************************!*\
+  !*** ./src/container/utils/mapValues.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function mapValues(o, func) {
+    var res = {};
+    for (var key in o) {
+        if (o.hasOwnProperty(key)) {
+            res[key] = func(o[key]);
+        }
+    }
+    return res;
+}
+exports.default = mapValues;
 
 
 /***/ }),
@@ -1451,7 +1473,7 @@ var exampleChartState_1 = __webpack_require__(/*! ./misc/exampleChartState */ ".
 /**
  * State is external to the <FlowChart> Element
  *
- * You could easily move this state it Redux or similar by creating your own callback actions
+ * You could easily move this state to Redux or similar by creating your own callback actions.
  */
 var ExternalReactState = /** @class */ (function (_super) {
     __extends(ExternalReactState, _super);
@@ -1971,12 +1993,12 @@ exports.chartSimple = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/c/Users/david/Documents/Repositories/github/react-draggable-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
-__webpack_require__(/*! /mnt/c/Users/david/Documents/Repositories/github/react-draggable-flow-chart/node_modules/@storybook/core/dist/server/config/globals.js */"./node_modules/@storybook/core/dist/server/config/globals.js");
-module.exports = __webpack_require__(/*! /mnt/c/Users/david/Documents/Repositories/github/react-draggable-flow-chart/config/storybook/config.js */"./config/storybook/config.js");
+__webpack_require__(/*! /Users/alexander/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
+__webpack_require__(/*! /Users/alexander/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/globals.js */"./node_modules/@storybook/core/dist/server/config/globals.js");
+module.exports = __webpack_require__(/*! /Users/alexander/git/react-flow-chart/config/storybook/config.js */"./config/storybook/config.js");
 
 
 /***/ })
 
 },[[0,"runtime~iframe","vendors~iframe"]]]);
-//# sourceMappingURL=iframe.bfa8798cb0a9b3dfbe6b.bundle.js.map
+//# sourceMappingURL=iframe.a95e78ffab2067d3cf82.bundle.js.map

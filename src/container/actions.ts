@@ -1,4 +1,3 @@
-import { forEach } from 'lodash'
 import { v4 } from 'uuid'
 import {
   IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
@@ -98,7 +97,8 @@ export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
   if (chart.selected.type === 'node' && chart.selected.id) {
     const node = chart.nodes[chart.selected.id]
     // Delete the connected links
-    forEach(chart.links, (link) => {
+    Object.keys(chart.links).forEach((linkId) => {
+      const link = chart.links[linkId]
       if (link.from.nodeId === node.id || link.to.nodeId === node.id) {
         delete chart.links[link.id]
       }
