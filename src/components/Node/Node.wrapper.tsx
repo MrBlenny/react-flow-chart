@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { INode, IOnDragNode, IOnNodeClick, ISelectedOrHovered } from '../../'
+import { INode, IOnDragNode, IOnNodeClick } from '../../'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
@@ -8,7 +8,7 @@ export interface INodeWrapperProps {
   onDragNode: IOnDragNode
   onNodeClick: IOnNodeClick
   children: any
-  selected: ISelectedOrHovered
+  isSelected: boolean
   Component?: React.SFC<INodeDefaultProps>
 }
 
@@ -17,7 +17,7 @@ export const NodeWrapper = ({
   onDragNode,
   children,
   onNodeClick,
-  selected,
+  isSelected,
   Component = NodeDefault,
 }: INodeWrapperProps) => {
   return (
@@ -38,7 +38,7 @@ export const NodeWrapper = ({
           onNodeClick({ nodeId: node.id })
           e.stopPropagation()
         }}
-        isSelected={selected.type === 'node' && selected.id === node.id}
+        isSelected={isSelected}
         node={node}
       />
     </Draggable>

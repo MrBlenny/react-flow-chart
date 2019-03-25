@@ -10,13 +10,20 @@ import {
 
 export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
   const nodechart = chart.nodes[id]
-  if (nodechart) {
-    nodechart.position = {
-      x: data.x,
-      y: data.y,
-    }
-  }
-  return chart
+
+  return nodechart ? {
+    ...chart,
+    nodes: {
+      ...chart.nodes,
+      [id]: {
+        ...chart.nodes[id],
+        position: {
+          x: data.x,
+          y: data.y,
+        },
+      },
+    },
+  } : chart
 }
 
 export const onDragCanvas: IOnDragCanvas = (event, data) => (chart: IChart): IChart => {
@@ -63,9 +70,11 @@ export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (chart: IChar
   const link = chart.links[linkId]
   // Set the connected ports to hover
   if (link.to.nodeId && link.to.portId) {
-    chart.hovered = {
-      type: 'link',
-      id: linkId,
+    if (chart.hovered.type !== 'link' || chart.hovered.id !== linkId) {
+      chart.hovered = {
+        type: 'link',
+        id: linkId,
+      }
     }
   }
   return chart
@@ -81,15 +90,19 @@ export const onLinkMouseLeave: IOnLinkMouseLeave = ({ linkId }) => (chart: IChar
 }
 
 export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (chart: IChart) => {
-  chart.selected = {
-    type: 'link',
-    id: linkId,
+  if (chart.selected.id !== linkId || chart.selected.type !== 'link') {
+    chart.selected = {
+      type: 'link',
+      id: linkId,
+    }
   }
   return chart
 }
 
 export const onCanvasClick: IOnCanvasClick = () => (chart: IChart) => {
-  chart.selected = {}
+  if (chart.selected.id) {
+    chart.selected = {}
+  }
   return chart
 }
 
@@ -108,24 +121,32 @@ export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
   } else if (chart.selected.type === 'link' && chart.selected.id) {
     delete chart.links[chart.selected.id]
   }
-  chart.selected = {}
+  if (chart.selected) {
+    chart.selected = {}
+  }
   return chart
 }
 
 export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
-  chart.selected = {
-    type: 'node',
-    id: nodeId,
+  if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+    chart.selected = {
+      type: 'node',
+      id: nodeId,
+    }
   }
   return chart
 }
 
 export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, position) =>
   (chart: IChart): IChart => {
-    chart.nodes[nodeToUpdate.id].ports[port.id].position = {
+    const node = chart.nodes[nodeToUpdate.id]
+    node.ports[port.id].position = {
       x: position.x,
       y: position.y,
     }
+
+    chart.nodes[nodeToUpdate.id] = { ...node }
+
     return chart
   }
 

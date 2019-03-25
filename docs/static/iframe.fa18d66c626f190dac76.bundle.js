@@ -162,22 +162,53 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var __1 = __webpack_require__(/*! ../../ */ "./src/index.ts");
 exports.FlowChart = function (props) {
     var chart = props.chart, _a = props.callbacks, onDragNode = _a.onDragNode, onDragCanvas = _a.onDragCanvas, onCanvasDrop = _a.onCanvasDrop, onLinkStart = _a.onLinkStart, onLinkMove = _a.onLinkMove, onLinkComplete = _a.onLinkComplete, onLinkCancel = _a.onLinkCancel, onPortPositionChange = _a.onPortPositionChange, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick, onCanvasClick = _a.onCanvasClick, onDeleteKey = _a.onDeleteKey, onNodeClick = _a.onNodeClick, _b = props.Components, _c = _b === void 0 ? {} : _b, _d = _c.CanvasOuter, CanvasOuter = _d === void 0 ? __1.CanvasOuterDefault : _d, _e = _c.CanvasInner, CanvasInner = _e === void 0 ? __1.CanvasInnerDefault : _e, _f = _c.NodeInner, NodeInner = _f === void 0 ? __1.NodeInnerDefault : _f, _g = _c.Ports, Ports = _g === void 0 ? __1.PortsDefault : _g, _h = _c.Port, Port = _h === void 0 ? __1.PortDefault : _h, _j = _c.Node, Node = _j === void 0 ? __1.NodeDefault : _j, _k = _c.Link, Link = _k === void 0 ? __1.LinkDefault : _k;
-    var links = chart.links, nodes = chart.nodes, selected = chart.selected;
+    var links = chart.links, nodes = chart.nodes, selected = chart.selected, hovered = chart.hovered;
     var canvasCallbacks = { onDragCanvas: onDragCanvas, onCanvasClick: onCanvasClick, onDeleteKey: onDeleteKey, onCanvasDrop: onCanvasDrop };
     var linkCallbacks = { onLinkMouseEnter: onLinkMouseEnter, onLinkMouseLeave: onLinkMouseLeave, onLinkClick: onLinkClick };
     var nodeCallbacks = { onDragNode: onDragNode, onNodeClick: onNodeClick };
     var portCallbacks = { onPortPositionChange: onPortPositionChange, onLinkStart: onLinkStart, onLinkMove: onLinkMove, onLinkComplete: onLinkComplete, onLinkCancel: onLinkCancel };
     return (React.createElement(__1.CanvasWrapper, __assign({ position: chart.offset, ComponentInner: CanvasInner, ComponentOuter: CanvasOuter }, canvasCallbacks),
-        Object.keys(links).map(function (linkId) { return (React.createElement(__1.LinkWrapper, __assign({ chart: chart, key: linkId, link: links[linkId], Component: Link }, linkCallbacks))); }),
-        Object.keys(nodes).map(function (nodeId) { return (React.createElement(__1.NodeWrapper, __assign({ key: nodeId, node: nodes[nodeId], selected: selected, Component: Node }, nodeCallbacks),
-            React.createElement(NodeInner, { node: nodes[nodeId] }),
-            React.createElement(Ports, null, Object.keys(nodes[nodeId].ports).map(function (portId) { return (React.createElement(__1.PortWrapper, __assign({ key: portId, chart: chart, node: nodes[nodeId], port: nodes[nodeId].ports[portId], Component: Port }, portCallbacks))); })))); })));
+        Object.keys(links).map(function (linkId) {
+            var isSelected = selected.type === 'link' && selected.id === linkId;
+            var isHovered = hovered.type === 'link' && hovered.id === linkId;
+            var fromNodeId = links[linkId].from.nodeId;
+            var toNodeId = links[linkId].to.nodeId;
+            return (React.createElement(__1.LinkWrapper, __assign({ key: linkId, link: links[linkId], Component: Link, isSelected: isSelected, isHovered: isHovered, fromNode: nodes[fromNodeId], toNode: toNodeId ? nodes[toNodeId] : undefined }, linkCallbacks)));
+        }),
+        Object.keys(nodes).map(function (nodeId) {
+            var isSelected = selected.type === 'node' && selected.id === nodeId;
+            var selectedLink = getSelectedLinkForNode(selected, nodeId, links);
+            var hoveredLink = getSelectedLinkForNode(hovered, nodeId, links);
+            return (React.createElement(NodeWrapperWithChildren, __assign({ key: nodeId, Component: Node, node: nodes[nodeId], offset: chart.offset, isSelected: isSelected, selected: selectedLink ? selected : undefined, hovered: hoveredLink ? hovered : undefined, selectedLink: selectedLink, hoveredLink: hoveredLink, NodeInner: NodeInner, Ports: Ports, Port: Port }, nodeCallbacks, portCallbacks)));
+        })));
 };
+var getSelectedLinkForNode = function (selected, nodeId, links) {
+    var link = selected.type === 'link' && selected.id ? links[selected.id] : undefined;
+    if (link && (link.from.nodeId === nodeId || link.to.nodeId === nodeId)) {
+        return link;
+    }
+    return undefined;
+};
+var NodeWrapperWithChildren = React.memo(function (props) {
+    var node = props.node, offset = props.offset, isSelected = props.isSelected, selected = props.selected, selectedLink = props.selectedLink, hovered = props.hovered, hoveredLink = props.hoveredLink, NodeInner = props.NodeInner, Ports = props.Ports, Port = props.Port, onDragNode = props.onDragNode, onNodeClick = props.onNodeClick, Component = props.Component, portCallbacks = __rest(props, ["node", "offset", "isSelected", "selected", "selectedLink", "hovered", "hoveredLink", "NodeInner", "Ports", "Port", "onDragNode", "onNodeClick", "Component"]);
+    return (React.createElement(__1.NodeWrapper, { node: node, isSelected: isSelected, Component: Component, onDragNode: onDragNode, onNodeClick: onNodeClick },
+        React.createElement(NodeInner, { node: node }),
+        React.createElement(Ports, null, Object.keys(node.ports).map(function (portId) { return (React.createElement(__1.PortWrapper, __assign({ key: portId, offset: offset, selected: selected, selectedLink: selectedLink, hoveredLink: hoveredLink, hovered: hovered, node: node, port: node.ports[portId], Component: Port }, portCallbacks))); }))));
+});
 
 
 /***/ }),
@@ -241,19 +272,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Link_default_1 = __webpack_require__(/*! ./Link.default */ "./src/components/Link/Link.default.tsx");
 var utils_1 = __webpack_require__(/*! ./utils */ "./src/components/Link/utils/index.ts");
-exports.LinkWrapper = function (_a) {
-    var _b = _a.Component, Component = _b === void 0 ? Link_default_1.LinkDefault : _b, link = _a.link, chart = _a.chart, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick;
-    var startPos = utils_1.getLinkPosition(chart, link.from.nodeId, link.from.portId);
-    var endPos = link.to.nodeId && link.to.portId
-        ? utils_1.getLinkPosition(chart, link.to.nodeId, link.to.portId)
+exports.LinkWrapper = React.memo(function (_a) {
+    var _b = _a.Component, Component = _b === void 0 ? Link_default_1.LinkDefault : _b, link = _a.link, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick, isSelected = _a.isSelected, isHovered = _a.isHovered, fromNode = _a.fromNode, toNode = _a.toNode;
+    var startPos = utils_1.getLinkPosition(fromNode, link.from.portId);
+    var endPos = toNode && link.to.portId
+        ? utils_1.getLinkPosition(toNode, link.to.portId)
         : link.to.position;
     // Don't render the link yet if there is no end pos
     // This will occur if the link was just created
     if (!endPos) {
         return null;
     }
-    return (React.createElement(Component, { link: link, startPos: startPos, endPos: endPos, onLinkMouseEnter: onLinkMouseEnter, onLinkMouseLeave: onLinkMouseLeave, onLinkClick: onLinkClick, isSelected: chart.selected.type === 'link' && chart.selected.id === link.id, isHovered: chart.hovered.type === 'link' && chart.hovered.id === link.id }));
-};
+    return (React.createElement(Component, { link: link, startPos: startPos, endPos: endPos, onLinkMouseEnter: onLinkMouseEnter, onLinkMouseLeave: onLinkMouseLeave, onLinkClick: onLinkClick, isSelected: isSelected, isHovered: isHovered }));
+});
 
 
 /***/ }),
@@ -323,8 +354,7 @@ exports.generateCurvePath = function (startPos, endPos) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLinkPosition = function (chart, nodeId, portId) {
-    var node = chart.nodes[nodeId];
+exports.getLinkPosition = function (node, portId) {
     var port = node.ports[portId];
     return {
         x: node.position.x + (port.position ? port.position.x : 0),
@@ -390,7 +420,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_draggable_1 = __webpack_require__(/*! react-draggable */ "./node_modules/react-draggable/dist/react-draggable.js");
 var Node_default_1 = __webpack_require__(/*! ./Node.default */ "./src/components/Node/Node.default.tsx");
 exports.NodeWrapper = function (_a) {
-    var node = _a.node, onDragNode = _a.onDragNode, children = _a.children, onNodeClick = _a.onNodeClick, selected = _a.selected, _b = _a.Component, Component = _b === void 0 ? Node_default_1.NodeDefault : _b;
+    var node = _a.node, onDragNode = _a.onDragNode, children = _a.children, onNodeClick = _a.onNodeClick, isSelected = _a.isSelected, _b = _a.Component, Component = _b === void 0 ? Node_default_1.NodeDefault : _b;
     return (React.createElement(react_draggable_1.default, { bounds: "parent", axis: "both", position: node.position, grid: [1, 1], onStart: function (e) {
             // Stop propagation so the canvas does not move
             e.stopPropagation();
@@ -398,7 +428,7 @@ exports.NodeWrapper = function (_a) {
         React.createElement(Component, { children: children, onClick: function (e) {
                 onNodeClick({ nodeId: node.id });
                 e.stopPropagation();
-            }, isSelected: selected.type === 'node' && selected.id === node.id, node: node })));
+            }, isSelected: isSelected, node: node })));
 };
 
 
@@ -555,7 +585,7 @@ var PortWrapper = /** @class */ (function (_super) {
             }
         };
         _this.onMouseDown = function (startEvent) {
-            var _a = _this.props, chart = _a.chart, node = _a.node, port = _a.port, onLinkStart = _a.onLinkStart, onLinkCancel = _a.onLinkCancel, onLinkComplete = _a.onLinkComplete, onLinkMove = _a.onLinkMove;
+            var _a = _this.props, offset = _a.offset, node = _a.node, port = _a.port, onLinkStart = _a.onLinkStart, onLinkCancel = _a.onLinkCancel, onLinkComplete = _a.onLinkComplete, onLinkMove = _a.onLinkMove;
             var linkId = uuid_1.v4();
             var fromNodeId = node.id;
             var fromPortId = port.id;
@@ -565,8 +595,8 @@ var PortWrapper = /** @class */ (function (_super) {
                 onLinkMove({
                     linkId: linkId, startEvent: startEvent, fromNodeId: fromNodeId, fromPortId: fromPortId,
                     toPosition: {
-                        x: e.clientX - chart.offset.x,
-                        y: e.clientY - chart.offset.y,
+                        x: e.clientX - offset.x,
+                        y: e.clientY - offset.y,
                     },
                 });
             };
@@ -607,11 +637,9 @@ var PortWrapper = /** @class */ (function (_super) {
         return _this;
     }
     PortWrapper.prototype.render = function () {
-        var _a = this.props, chart = _a.chart, style = _a.style, port = _a.port, node = _a.node, _b = _a.Component, Component = _b === void 0 ? Port_default_1.PortDefault : _b;
-        var selectedLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id];
-        var hoveredLink = chart.selected.type === 'link' && chart.selected.id && chart.links[chart.selected.id];
+        var _a = this.props, selected = _a.selected, selectedLink = _a.selectedLink, hovered = _a.hovered, hoveredLink = _a.hoveredLink, style = _a.style, port = _a.port, node = _a.node, _b = _a.Component, Component = _b === void 0 ? Port_default_1.PortDefault : _b;
         return (React.createElement("div", { "data-port-id": port.id, "data-node-id": node.id, onMouseDown: this.onMouseDown, ref: this.getNodRef, style: style },
-            React.createElement(Component, { port: port, isSelected: chart.selected.type === 'port' && chart.selected.id === port.id, isHovered: chart.hovered.type === 'port' && chart.hovered.id === port.id, isLinkSelected: selectedLink
+            React.createElement(Component, { port: port, isSelected: !!selected && selected.type === 'port' && selected.id === port.id, isHovered: !!hovered && hovered.type === 'port' && hovered.id === port.id, isLinkSelected: selectedLink
                     ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) ||
                         (selectedLink.to.portId === port.id && selectedLink.to.nodeId === node.id))
                     : false, isLinkHovered: hoveredLink
@@ -814,13 +842,7 @@ var FlowChartWithState = /** @class */ (function (_super) {
     __extends(FlowChartWithState, _super);
     function FlowChartWithState(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = props.initialValue;
-        return _this;
-    }
-    FlowChartWithState.prototype.render = function () {
-        var _this = this;
-        var Components = this.props.Components;
-        var stateActions = mapValues_1.default(actions, function (func) {
+        _this.stateActions = mapValues_1.default(actions, function (func) {
             return function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -829,7 +851,12 @@ var FlowChartWithState = /** @class */ (function (_super) {
                 return _this.setState(func.apply(void 0, args));
             };
         });
-        return (React.createElement(__1.FlowChart, { chart: this.state, callbacks: stateActions, Components: Components }));
+        _this.state = props.initialValue;
+        return _this;
+    }
+    FlowChartWithState.prototype.render = function () {
+        var Components = this.props.Components;
+        return (React.createElement(__1.FlowChart, { chart: this.state, callbacks: this.stateActions, Components: Components }));
     };
     return FlowChartWithState;
 }(React.Component));
@@ -847,20 +874,29 @@ exports.FlowChartWithState = FlowChartWithState;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid_1 = __webpack_require__(/*! uuid */ "./node_modules/uuid/index.js");
 /**
  * This file contains actions for updating state after each of the required callbacks
  */
 exports.onDragNode = function (event, data, id) { return function (chart) {
+    var _a;
     var nodechart = chart.nodes[id];
-    if (nodechart) {
-        nodechart.position = {
-            x: data.x,
-            y: data.y,
-        };
-    }
-    return chart;
+    return nodechart ? __assign({}, chart, { nodes: __assign({}, chart.nodes, (_a = {}, _a[id] = __assign({}, chart.nodes[id], { position: {
+                x: data.x,
+                y: data.y,
+            } }), _a)) }) : chart;
 }; };
 exports.onDragCanvas = function (event, data) { return function (chart) {
     chart.offset.x = data.x;
@@ -914,10 +950,12 @@ exports.onLinkMouseEnter = function (_a) {
         var link = chart.links[linkId];
         // Set the connected ports to hover
         if (link.to.nodeId && link.to.portId) {
-            chart.hovered = {
-                type: 'link',
-                id: linkId,
-            };
+            if (chart.hovered.type !== 'link' || chart.hovered.id !== linkId) {
+                chart.hovered = {
+                    type: 'link',
+                    id: linkId,
+                };
+            }
         }
         return chart;
     };
@@ -936,15 +974,19 @@ exports.onLinkMouseLeave = function (_a) {
 exports.onLinkClick = function (_a) {
     var linkId = _a.linkId;
     return function (chart) {
-        chart.selected = {
-            type: 'link',
-            id: linkId,
-        };
+        if (chart.selected.id !== linkId || chart.selected.type !== 'link') {
+            chart.selected = {
+                type: 'link',
+                id: linkId,
+            };
+        }
         return chart;
     };
 };
 exports.onCanvasClick = function () { return function (chart) {
-    chart.selected = {};
+    if (chart.selected.id) {
+        chart.selected = {};
+    }
     return chart;
 }; };
 exports.onDeleteKey = function () { return function (chart) {
@@ -963,25 +1005,31 @@ exports.onDeleteKey = function () { return function (chart) {
     else if (chart.selected.type === 'link' && chart.selected.id) {
         delete chart.links[chart.selected.id];
     }
-    chart.selected = {};
+    if (chart.selected) {
+        chart.selected = {};
+    }
     return chart;
 }; };
 exports.onNodeClick = function (_a) {
     var nodeId = _a.nodeId;
     return function (chart) {
-        chart.selected = {
-            type: 'node',
-            id: nodeId,
-        };
+        if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+            chart.selected = {
+                type: 'node',
+                id: nodeId,
+            };
+        }
         return chart;
     };
 };
 exports.onPortPositionChange = function (nodeToUpdate, port, position) {
     return function (chart) {
-        chart.nodes[nodeToUpdate.id].ports[port.id].position = {
+        var node = chart.nodes[nodeToUpdate.id];
+        node.ports[port.id].position = {
             x: position.x,
             y: position.y,
         };
+        chart.nodes[nodeToUpdate.id] = __assign({}, node);
         return chart;
     };
 };
@@ -1628,9 +1676,9 @@ var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.j
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
 var components_1 = __webpack_require__(/*! ./components */ "./stories/components/index.ts");
-exports.StressTestDemo = function () {
-    var xyGrid = lodash_1.flatten(lodash_1.range(0, 1500, 300).map(function (x) { return lodash_1.range(0, 1000, 150).map(function (y) { return ({ x: x, y: y }); }); }));
-    var chart = {
+var getChart = function (rows, cols) {
+    var xyGrid = lodash_1.flatten(lodash_1.range(0, cols * 300, 300).map(function (x) { return lodash_1.range(0, rows * 150, 150).map(function (y) { return ({ x: x, y: y }); }); }));
+    return {
         offset: {
             x: 0,
             y: 0,
@@ -1692,8 +1740,21 @@ exports.StressTestDemo = function () {
         selected: {},
         hovered: {},
     };
-    return (React.createElement(components_1.Page, null,
-        React.createElement(src_1.FlowChartWithState, { initialValue: chart })));
+};
+var StressTestWithState = function () {
+    var _a = React.useState(10), rows = _a[0], setRows = _a[1];
+    var _b = React.useState(10), cols = _b[0], setCols = _b[1];
+    var chart = React.useMemo(function () { return getChart(rows, cols); }, [rows, cols]);
+    return (React.createElement("div", null,
+        React.createElement("label", null, "Columns:"),
+        React.createElement("input", { type: "number", value: cols, onChange: function (e) { return setCols(parseInt(e.target.value, 10)); } }),
+        React.createElement("label", null, "Rows:"),
+        React.createElement("input", { type: "number", value: rows, onChange: function (e) { return setRows(parseInt(e.target.value, 10)); } }),
+        React.createElement(components_1.Page, null,
+            React.createElement(src_1.FlowChartWithState, { key: cols + ":" + rows, initialValue: chart }))));
+};
+exports.StressTestDemo = function () {
+    return React.createElement(StressTestWithState, null);
 };
 
 
@@ -2003,12 +2064,12 @@ exports.chartSimple = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
-__webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/node_modules/@storybook/core/dist/server/config/globals.js */"./node_modules/@storybook/core/dist/server/config/globals.js");
-module.exports = __webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/config/storybook/config.js */"./config/storybook/config.js");
+__webpack_require__(/*! /Users/alexanderkuznetsov/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
+__webpack_require__(/*! /Users/alexanderkuznetsov/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/globals.js */"./node_modules/@storybook/core/dist/server/config/globals.js");
+module.exports = __webpack_require__(/*! /Users/alexanderkuznetsov/git/react-flow-chart/config/storybook/config.js */"./config/storybook/config.js");
 
 
 /***/ })
 
 },[[0,"runtime~iframe","vendors~iframe"]]]);
-//# sourceMappingURL=iframe.0fd77ada0df4b2602476.bundle.js.map
+//# sourceMappingURL=iframe.fa18d66c626f190dac76.bundle.js.map

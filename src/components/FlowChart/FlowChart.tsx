@@ -4,7 +4,7 @@ import {
   INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
   IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
   IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, LinkDefault, LinkWrapper,
-  NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, PortWrapper,
+  NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, PortWrapper, INode, IPosition, ISelectedOrHovered, ILink
 } from '../../'
 
 export interface IFlowChartCallbacks {
@@ -79,7 +79,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Link = LinkDefault,
     } = {},
   } = props
-  const { links, nodes, selected } = chart
+  const { links, nodes, selected, hovered } = chart
 
   const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
@@ -93,38 +93,110 @@ export const FlowChart = (props: IFlowChartProps) => {
       ComponentOuter={CanvasOuter}
       {...canvasCallbacks}
     >
-      { Object.keys(links).map((linkId) => (
-        <LinkWrapper
-          chart={chart}
-          key={linkId}
-          link={links[linkId]}
-          Component={Link}
-          {...linkCallbacks}
-        />
-      ))}
-      { Object.keys(nodes).map((nodeId) => (
-        <NodeWrapper
-          key={nodeId}
-          node={nodes[nodeId]}
-          selected={selected}
-          Component={Node}
-          {...nodeCallbacks}
-        >
-          <NodeInner node={nodes[nodeId]}/>
-          <Ports>
-            { Object.keys(nodes[nodeId].ports).map((portId) => (
-              <PortWrapper
-                key={portId}
-                chart={chart}
-                node={nodes[nodeId]}
-                port={nodes[nodeId].ports[portId]}
-                Component={Port}
-                {...portCallbacks}
-              />
-            )) }
-          </Ports>
-        </NodeWrapper>
-      ))}
+      { Object.keys(links).map((linkId) => {
+        const isSelected = selected.type === 'link' && selected.id === linkId
+        const isHovered = hovered.type === 'link' && hovered.id === linkId
+        const fromNodeId = links[linkId].from.nodeId
+        const toNodeId = links[linkId].to.nodeId
+
+        return (
+          <LinkWrapper
+            key={linkId}
+            link={links[linkId]}
+            Component={Link}
+            isSelected={isSelected}
+            isHovered={isHovered}
+            fromNode={nodes[fromNodeId]}
+            toNode={toNodeId ? nodes[toNodeId] : undefined}
+            {...linkCallbacks}
+          />
+        )
+      })}
+      { Object.keys(nodes).map((nodeId) => {
+        const isSelected = selected.type === 'node' && selected.id === nodeId
+        const selectedLink = getSelectedLinkForNode(selected, nodeId, links)
+        const hoveredLink = getSelectedLinkForNode(hovered, nodeId, links)
+
+        return (
+          <NodeWrapperWithChildren
+            key={nodeId}
+            Component={Node}
+            node={nodes[nodeId]}
+            offset={chart.offset}
+            isSelected={isSelected}
+            selected={selectedLink ? selected : undefined}
+            hovered={hoveredLink ? hovered : undefined}
+            selectedLink={selectedLink}
+            hoveredLink={hoveredLink}
+            NodeInner={NodeInner}
+            Ports={Ports}
+            Port={Port}
+            {...nodeCallbacks}
+            {...portCallbacks}
+          />
+        )
+      })
+    }
     </CanvasWrapper>
   )
 }
+
+const getSelectedLinkForNode = (selected: ISelectedOrHovered, nodeId: string, links: IChart['links']) => {
+  const link = selected.type === 'link' && selected.id ? links[selected.id] : undefined
+
+  if (link && (link.from.nodeId === nodeId || link.to.nodeId === nodeId)) {
+    return link
+  }
+
+  return undefined
+}
+
+const NodeWrapperWithChildren = React.memo((props: {
+  node: INode
+  Component: React.SFC<INodeDefaultProps>
+  offset: IPosition
+  selected: ISelectedOrHovered | undefined
+  hovered: ISelectedOrHovered | undefined
+  selectedLink: ILink | undefined
+  hoveredLink: ILink | undefined
+  isSelected: boolean
+  NodeInner: React.SFC<INodeInnerDefaultProps>
+  Ports: React.SFC<IPortsDefaultProps>
+  Port: React.SFC<IPortDefaultProps>
+  onPortPositionChange: IOnPortPositionChange
+  onLinkStart: IOnLinkStart
+  onLinkMove: IOnLinkMove
+  onLinkComplete: IOnLinkComplete
+  onLinkCancel: IOnLinkCancel;
+  onDragNode: IOnDragNode
+  onNodeClick: IOnNodeClick
+}) => {
+  const { node, offset, isSelected, selected, selectedLink, hovered, hoveredLink, NodeInner, Ports, Port, onDragNode, onNodeClick, Component, ...portCallbacks } = props
+  return (
+  <NodeWrapper
+    node={node}
+    isSelected={isSelected}
+    Component={Component}
+    onDragNode={onDragNode}
+    onNodeClick={onNodeClick}
+  >
+    <NodeInner node={node}/>
+    <Ports>
+      { Object.keys(node.ports).map((portId) => (
+        <PortWrapper
+          key={portId}
+          offset={offset}
+          selected={selected}
+          selectedLink={selectedLink}
+          hoveredLink={hoveredLink}
+          hovered={hovered}
+          node={node}
+          port={node.ports[portId]}
+          Component={Port}
+          {...portCallbacks}
+        />
+      )) }
+    </Ports>
+  </NodeWrapper>
+)
+})
