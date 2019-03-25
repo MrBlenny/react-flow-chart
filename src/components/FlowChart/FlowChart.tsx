@@ -1,4 +1,3 @@
-import { map } from 'lodash'
 import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps,
@@ -94,31 +93,31 @@ export const FlowChart = (props: IFlowChartProps) => {
       ComponentOuter={CanvasOuter}
       {...canvasCallbacks}
     >
-      { map(links, (link) => (
+      { Object.keys(links).map((linkId) => (
         <LinkWrapper
           chart={chart}
-          key={link.id}
-          link={link}
+          key={linkId}
+          link={links[linkId]}
           Component={Link}
           {...linkCallbacks}
         />
       ))}
-      { map(nodes, (node) => (
+      { Object.keys(nodes).map((nodeId) => (
         <NodeWrapper
-          key={node.id}
-          node={node}
+          key={nodeId}
+          node={nodes[nodeId]}
           selected={selected}
           Component={Node}
           {...nodeCallbacks}
         >
-          <NodeInner node={node}/>
+          <NodeInner node={nodes[nodeId]}/>
           <Ports>
-            { map(node.ports, (port) => (
+            { Object.keys(nodes[nodeId].ports).map((portId) => (
               <PortWrapper
-                key={port.id}
+                key={portId}
                 chart={chart}
-                node={node}
-                port={port}
+                node={nodes[nodeId]}
+                port={nodes[nodeId].ports[portId]}
                 Component={Port}
                 {...portCallbacks}
               />

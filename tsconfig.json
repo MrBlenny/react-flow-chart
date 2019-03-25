@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"outDir": "dist",
+		"outDir": "dist/src",
 		"module": "commonjs",
 		"target": "es5",
 		"lib": ["es5", "es6", "es7", "es2017", "dom"],
@@ -21,6 +21,6 @@
 		"allowJs": false,
 		"declaration": true
 	},
-	"include": ["src/**/*", "stories/**/*"],
+	"include": ["src/**/*"],
 	"exclude": ["node_modules", "build", "scripts", "config"]
 }
