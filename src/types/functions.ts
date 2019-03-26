@@ -1,6 +1,6 @@
 import { DraggableData } from 'react-draggable'
 import { INode, IPort } from './chart'
-import { IPosition } from './generics'
+import { IPosition, ISize } from './generics'
 
 export type IOnDragNode = (event: MouseEvent, dragData: DraggableData, id: string) => void
 
@@ -10,7 +10,7 @@ export type IOnPortPositionChange = (node: INode, port: IPort, position: IPositi
 
 export interface IOnLinkBaseEvent {
   linkId: string,
-  startEvent: MouseEvent,
+  startEvent: React.MouseEvent,
   fromNodeId: string,
   fromPortId: string
 }
@@ -44,5 +44,7 @@ export type IOnCanvasClick = () => void
 export type IOnDeleteKey = () => void
 
 export type IOnNodeClick = ({ nodeId }: { nodeId: string }) => void
+
+export type IOnNodeSizeChange = (opts: { nodeId: string, size: ISize }) => void
 
 export type IOnCanvasDrop = ({ data, position }: { data: any, position: IPosition }) => void

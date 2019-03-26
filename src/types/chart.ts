@@ -1,4 +1,4 @@
-import { IPosition } from './generics'
+import { IPosition, ISize } from './generics'
 
 export interface IChart {
   offset: IPosition
@@ -24,6 +24,7 @@ export interface INode {
   id: string
   type: string
   position: IPosition
+  size?: ISize
   ports: {
     [id: string]: IPort,
   }

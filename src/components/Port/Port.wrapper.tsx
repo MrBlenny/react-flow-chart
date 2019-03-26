@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { v4 } from 'uuid'
 import {
-  IPosition, ISelectedOrHovered, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
-   IOnLinkStart, IOnPortPositionChange, IPort, ILink
+  CanvasContext, ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
+  IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered,
 } from '../../'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
@@ -26,7 +26,7 @@ export interface IPortWrapperProps {
   port: IPort
   node: INode
   onPortPositionChange: IOnPortPositionChange
-  Component: React.SFC<IPortDefaultProps>
+  Component: React.ElementType<IPortDefaultProps>
 
   // Link handlers
   onLinkStart: IOnLinkStart
@@ -36,7 +36,11 @@ export interface IPortWrapperProps {
 }
 
 export class PortWrapper extends React.Component<IPortWrapperProps> {
+  public static contextType = CanvasContext
+  public context!: React.ContextType<typeof CanvasContext>
+
   public nodeRef?: HTMLDivElement
+
   public getNodRef = (el: HTMLDivElement) => {
     if (el) {
       const { node, port, onPortPositionChange } = this.props
@@ -55,20 +59,25 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       onPortPositionChange(node, port, position)
     }
   }
-  public onMouseDown = (startEvent: any) => {
+
+  public onMouseDown = (startEvent: React.MouseEvent) => {
     const { offset, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove } = this.props
     const linkId = v4()
     const fromNodeId = node.id
     const fromPortId = port.id
 
+    // const portEl = startEvent.target as HTMLDivElement
+
     // Create the move handler
     // This will update the position as the mouse moves
     const mouseMoveHandler = (e: MouseEvent) => {
+      const { offsetX, offsetY } = this.context
+
       onLinkMove({
         linkId, startEvent, fromNodeId, fromPortId,
         toPosition: {
-          x: e.clientX - offset.x,
-          y: e.clientY - offset.y,
+          x: e.clientX - offsetX - offset.x,
+          y: e.clientY - offsetY - offset.y,
         },
       })
     }
