@@ -1,5 +1,6 @@
 import { compact, flatMap, flatten, keyBy, range } from 'lodash'
 import * as React from 'react'
+import styled from 'styled-components'
 import { FlowChartWithState } from '../src'
 import { Page } from './components'
 
@@ -67,24 +68,41 @@ const getChart = (rows: number, cols: number) => {
 }
 
 const StressTestWithState = () => {
-  const [rows, setRows] = React.useState(10)
-  const [cols, setCols] = React.useState(10)
+  const [rows, setRows] = React.useState(100)
+  const [cols, setCols] = React.useState(100)
 
   const chart = React.useMemo(() => getChart(rows, cols), [rows, cols])
 
   return (
-    <div>
-      <label>Columns:</label>
-      <input type="number" value={cols} onChange={(e) => setCols(parseInt(e.target.value, 10))} />
-      <label>Rows:</label>
-      <input type="number" value={rows} onChange={(e) => setRows(parseInt(e.target.value, 10))} />
+    <>
+      <Controls>
+        <Label>Columns:</Label>
+        <Input type="number" value={cols} onChange={(e) => setCols(parseInt(e.target.value, 10))} />
+        <Label>Rows:</Label>
+        <Input type="number" value={rows} onChange={(e) => setRows(parseInt(e.target.value, 10))} />
+      </Controls>
       <Page>
         <FlowChartWithState key={`${cols}:${rows}`} initialValue={chart} />
       </Page>
-    </div>
+    </>
   )
 }
 
 export const StressTestDemo = () => {
   return <StressTestWithState />
 }
+
+const Input = styled.input`
+  padding: 5px 5px 5px 10px;
+  width: 50px;
+`
+
+const Label = styled.label`
+  padding: 0 10px;
+  font-size: 14px;
+`
+
+const Controls = styled.div`
+  padding: 10px;
+`
+

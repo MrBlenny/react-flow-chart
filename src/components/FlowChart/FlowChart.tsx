@@ -3,8 +3,8 @@ import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps,
   INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
   IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, LinkDefault, LinkWrapper,
-  NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, PortWrapper, INode, IPosition, ISelectedOrHovered, ILink
+  IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered,
+  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 
 export interface IFlowChartCallbacks {
@@ -22,16 +22,17 @@ export interface IFlowChartCallbacks {
   onCanvasClick: IOnCanvasClick
   onDeleteKey: IOnDeleteKey
   onNodeClick: IOnNodeClick
+  onNodeSizeChange: IOnNodeSizeChange
 }
 
 export interface IFlowChartComponents {
-  CanvasOuter?: React.SFC<ICanvasOuterDefaultProps>
-  CanvasInner?: React.SFC<ICanvasInnerDefaultProps>
-  NodeInner?: React.SFC<INodeInnerDefaultProps>
-  Ports?: React.SFC<IPortsDefaultProps>
-  Port?: React.SFC<IPortDefaultProps>
-  Node?: React.SFC<INodeDefaultProps>
-  Link?: React.SFC<ILinkDefaultProps>
+  CanvasOuter?: React.ElementType<ICanvasOuterDefaultProps>
+  CanvasInner?: React.ElementType<ICanvasInnerDefaultProps>
+  NodeInner?: React.ElementType<INodeInnerDefaultProps>
+  Ports?: React.ElementType<IPortsDefaultProps>
+  Port?: React.ElementType<IPortDefaultProps>
+  Node?: React.ElementType<INodeDefaultProps>
+  Link?: React.ElementType<ILinkDefaultProps>
 }
 
 export interface IFlowChartProps {
@@ -51,6 +52,8 @@ export interface IFlowChartProps {
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
+  const [ canvasSize, setCanvasSize ] = React.useState<{ width: number, height: number }>({ width: 0, height: 0 })
+
   const {
     chart,
     callbacks: {
@@ -68,6 +71,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       onCanvasClick,
       onDeleteKey,
       onNodeClick,
+      onNodeSizeChange,
     },
     Components: {
       CanvasOuter = CanvasOuterDefault,
@@ -79,21 +83,44 @@ export const FlowChart = (props: IFlowChartProps) => {
       Link = LinkDefault,
     } = {},
   } = props
-  const { links, nodes, selected, hovered } = chart
+  const { links, nodes, selected, hovered, offset } = chart
 
   const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
-  const nodeCallbacks = { onDragNode, onNodeClick }
+  const nodeCallbacks = { onDragNode, onNodeClick, onNodeSizeChange }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
+
+  const nodesInView = Object.keys(nodes).filter((nodeId) => {
+    // TODO: define this in chart?
+    const defaultNodeSize = { width: 500, height: 500 }
+
+    const { x, y } = nodes[nodeId].position
+    const size = nodes[nodeId].size || defaultNodeSize
+
+    return x + offset.x + size.width > 0 && x + offset.x < canvasSize.width &&
+      y + offset.y + size.height > 0 && y + offset.y < canvasSize.height
+  })
+
+  const linksInView = Object.keys(links).filter((linkId) => {
+    const from = links[linkId].from
+    const to = links[linkId].to
+
+    return (
+      !to.nodeId ||
+      nodesInView.indexOf(from.nodeId) !== -1 ||
+      nodesInView.indexOf(to.nodeId) !== -1
+    )
+  })
 
   return (
     <CanvasWrapper
       position={chart.offset}
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
+      onSizeChange={(width, height) => setCanvasSize({ width, height })}
       {...canvasCallbacks}
     >
-      { Object.keys(links).map((linkId) => {
+      { linksInView.map((linkId) => {
         const isSelected = selected.type === 'link' && selected.id === linkId
         const isHovered = hovered.type === 'link' && hovered.id === linkId
         const fromNodeId = links[linkId].from.nodeId
@@ -112,13 +139,13 @@ export const FlowChart = (props: IFlowChartProps) => {
           />
         )
       })}
-      { Object.keys(nodes).map((nodeId) => {
+      { nodesInView.map((nodeId) => {
         const isSelected = selected.type === 'node' && selected.id === nodeId
         const selectedLink = getSelectedLinkForNode(selected, nodeId, links)
         const hoveredLink = getSelectedLinkForNode(hovered, nodeId, links)
 
         return (
-          <NodeWrapperWithChildren
+          <NodeWrapper
             key={nodeId}
             Component={Node}
             node={nodes[nodeId]}
@@ -141,7 +168,11 @@ export const FlowChart = (props: IFlowChartProps) => {
   )
 }
 
-const getSelectedLinkForNode = (selected: ISelectedOrHovered, nodeId: string, links: IChart['links']) => {
+const getSelectedLinkForNode = (
+  selected: ISelectedOrHovered,
+  nodeId: string,
+  links: IChart['links'],
+) => {
   const link = selected.type === 'link' && selected.id ? links[selected.id] : undefined
 
   if (link && (link.from.nodeId === nodeId || link.to.nodeId === nodeId)) {
@@ -150,53 +181,3 @@ const getSelectedLinkForNode = (selected: ISelectedOrHovered, nodeId: string, li
 
   return undefined
 }
-
-const NodeWrapperWithChildren = React.memo((props: {
-  node: INode
-  Component: React.SFC<INodeDefaultProps>
-  offset: IPosition
-  selected: ISelectedOrHovered | undefined
-  hovered: ISelectedOrHovered | undefined
-  selectedLink: ILink | undefined
-  hoveredLink: ILink | undefined
-  isSelected: boolean
-  NodeInner: React.SFC<INodeInnerDefaultProps>
-  Ports: React.SFC<IPortsDefaultProps>
-  Port: React.SFC<IPortDefaultProps>
-  onPortPositionChange: IOnPortPositionChange
-  onLinkStart: IOnLinkStart
-  onLinkMove: IOnLinkMove
-  onLinkComplete: IOnLinkComplete
-  onLinkCancel: IOnLinkCancel;
-  onDragNode: IOnDragNode
-  onNodeClick: IOnNodeClick
-}) => {
-  const { node, offset, isSelected, selected, selectedLink, hovered, hoveredLink, NodeInner, Ports, Port, onDragNode, onNodeClick, Component, ...portCallbacks } = props
-  return (
-  <NodeWrapper
-    node={node}
-    isSelected={isSelected}
-    Component={Component}
-    onDragNode={onDragNode}
-    onNodeClick={onNodeClick}
-  >
-    <NodeInner node={node}/>
-    <Ports>
-      { Object.keys(node.ports).map((portId) => (
-        <PortWrapper
-          key={portId}
-          offset={offset}
-          selected={selected}
-          selectedLink={selectedLink}
-          hoveredLink={hoveredLink}
-          hovered={hovered}
-          node={node}
-          port={node.ports[portId]}
-          Component={Port}
-          {...portCallbacks}
-        />
-      )) }
-    </Ports>
-  </NodeWrapper>
-)
-})

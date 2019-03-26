@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { INode, ILink, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
+import { ILink, INode, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
 import { getLinkPosition } from './utils'
 
@@ -12,7 +12,7 @@ export interface ILinkWrapperProps {
   onLinkMouseEnter: IOnLinkMouseEnter
   onLinkMouseLeave: IOnLinkMouseLeave
   onLinkClick: IOnLinkMouseLeave
-  Component?: React.SFC<ILinkDefaultProps>
+  Component?: React.ElementType<ILinkDefaultProps>
 }
 
 export const LinkWrapper = React.memo(({
@@ -24,7 +24,7 @@ export const LinkWrapper = React.memo(({
   isSelected,
   isHovered,
   fromNode,
-  toNode
+  toNode,
 }: ILinkWrapperProps) => {
   const startPos = getLinkPosition(fromNode, link.from.portId)
 
