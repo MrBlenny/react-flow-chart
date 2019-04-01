@@ -5,9 +5,7 @@ import {
   IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnPortPositionChange, IOnRemoveKey,
 } from '../'
 
-/**
- * This file contains actions for updating state after each of the required callbacks
- */
+// This file contains actions for updating state after each of the required callbacks
 
 export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
   const nodechart = chart.nodes[id]

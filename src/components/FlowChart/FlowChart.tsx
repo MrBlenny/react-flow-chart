@@ -35,6 +35,16 @@ export interface IFlowChartComponents {
   Link?: React.SFC<ILinkDefaultProps>
 }
 
+export interface IFlowChartConfig {
+  /**
+   * The key codes that will trigger a node or link to be removed
+   * Defaults: 46 (delete) & 8 (backspace)
+   */
+  removeKeyCodes?: number[]
+  /** Disables state changes */
+  readOnly?: boolean
+}
+
 export interface IFlowChartProps {
   /**
    * The current chart state
@@ -49,11 +59,8 @@ export interface IFlowChartProps {
    * Custom components
    */
   Components?: IFlowChartComponents
-  /**
-   * The key codes that will trigger a node or link to be removed
-   * Defaults: 46 (delete) & 8 (backspace)
-   */
-  removeKeyCodes?: number[]
+  /** Config */
+  config?: IFlowChartConfig
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -84,7 +91,10 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
-    removeKeyCodes = [46, 8],
+    config: {
+      removeKeyCodes = [46, 8],
+      readOnly = false,
+    } = {},
   } = props
   const { links, nodes, selected } = chart
 

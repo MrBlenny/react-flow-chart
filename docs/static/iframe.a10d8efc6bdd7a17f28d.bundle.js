@@ -56,12 +56,12 @@ var CanvasWrapper = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     CanvasWrapper.prototype.render = function () {
-        var _a = this.props, ComponentInner = _a.ComponentInner, ComponentOuter = _a.ComponentOuter, position = _a.position, onDragCanvas = _a.onDragCanvas, children = _a.children, onCanvasClick = _a.onCanvasClick, onDeleteKey = _a.onDeleteKey, onCanvasDrop = _a.onCanvasDrop;
+        var _a = this.props, ComponentInner = _a.ComponentInner, ComponentOuter = _a.ComponentOuter, position = _a.position, onDragCanvas = _a.onDragCanvas, children = _a.children, onCanvasClick = _a.onCanvasClick, onRemoveKey = _a.onRemoveKey, onCanvasDrop = _a.onCanvasDrop;
         return (React.createElement(ComponentOuter, null,
             React.createElement(react_draggable_1.default, { axis: "both", position: position, grid: [1, 1], onDrag: function (e, dragData) { return onDragCanvas(e, dragData); } },
                 React.createElement(ComponentInner, { children: children, onClick: onCanvasClick, tabIndex: 0, onKeyDown: function (e) {
                         if (e.keyCode === 46) {
-                            onDeleteKey();
+                            onRemoveKey();
                         }
                     }, onDrop: function (e) {
                         var data = JSON.parse(e.dataTransfer.getData(__1.REACT_FLOW_CHART));
@@ -167,9 +167,9 @@ var lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.j
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var __1 = __webpack_require__(/*! ../../ */ "./src/index.ts");
 exports.FlowChart = function (props) {
-    var chart = props.chart, _a = props.callbacks, onDragNode = _a.onDragNode, onDragCanvas = _a.onDragCanvas, onCanvasDrop = _a.onCanvasDrop, onLinkStart = _a.onLinkStart, onLinkMove = _a.onLinkMove, onLinkComplete = _a.onLinkComplete, onLinkCancel = _a.onLinkCancel, onPortPositionChange = _a.onPortPositionChange, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick, onCanvasClick = _a.onCanvasClick, onDeleteKey = _a.onDeleteKey, onNodeClick = _a.onNodeClick, _b = props.Components, _c = _b === void 0 ? {} : _b, _d = _c.CanvasOuter, CanvasOuter = _d === void 0 ? __1.CanvasOuterDefault : _d, _e = _c.CanvasInner, CanvasInner = _e === void 0 ? __1.CanvasInnerDefault : _e, _f = _c.NodeInner, NodeInner = _f === void 0 ? __1.NodeInnerDefault : _f, _g = _c.Ports, Ports = _g === void 0 ? __1.PortsDefault : _g, _h = _c.Port, Port = _h === void 0 ? __1.PortDefault : _h, _j = _c.Node, Node = _j === void 0 ? __1.NodeDefault : _j, _k = _c.Link, Link = _k === void 0 ? __1.LinkDefault : _k;
+    var chart = props.chart, _a = props.callbacks, onDragNode = _a.onDragNode, onDragCanvas = _a.onDragCanvas, onCanvasDrop = _a.onCanvasDrop, onLinkStart = _a.onLinkStart, onLinkMove = _a.onLinkMove, onLinkComplete = _a.onLinkComplete, onLinkCancel = _a.onLinkCancel, onPortPositionChange = _a.onPortPositionChange, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick, onCanvasClick = _a.onCanvasClick, onRemoveKey = _a.onRemoveKey, onNodeClick = _a.onNodeClick, _b = props.Components, _c = _b === void 0 ? {} : _b, _d = _c.CanvasOuter, CanvasOuter = _d === void 0 ? __1.CanvasOuterDefault : _d, _e = _c.CanvasInner, CanvasInner = _e === void 0 ? __1.CanvasInnerDefault : _e, _f = _c.NodeInner, NodeInner = _f === void 0 ? __1.NodeInnerDefault : _f, _g = _c.Ports, Ports = _g === void 0 ? __1.PortsDefault : _g, _h = _c.Port, Port = _h === void 0 ? __1.PortDefault : _h, _j = _c.Node, Node = _j === void 0 ? __1.NodeDefault : _j, _k = _c.Link, Link = _k === void 0 ? __1.LinkDefault : _k;
     var links = chart.links, nodes = chart.nodes, selected = chart.selected;
-    var canvasCallbacks = { onDragCanvas: onDragCanvas, onCanvasClick: onCanvasClick, onDeleteKey: onDeleteKey, onCanvasDrop: onCanvasDrop };
+    var canvasCallbacks = { onDragCanvas: onDragCanvas, onCanvasClick: onCanvasClick, onRemoveKey: onRemoveKey, onCanvasDrop: onCanvasDrop };
     var linkCallbacks = { onLinkMouseEnter: onLinkMouseEnter, onLinkMouseLeave: onLinkMouseLeave, onLinkClick: onLinkClick };
     var nodeCallbacks = { onDragNode: onDragNode, onNodeClick: onNodeClick };
     var portCallbacks = { onPortPositionChange: onPortPositionChange, onLinkStart: onLinkStart, onLinkMove: onLinkMove, onLinkComplete: onLinkComplete, onLinkCancel: onLinkCancel };
@@ -940,7 +940,7 @@ exports.onCanvasClick = function () { return function (chart) {
     chart.selected = {};
     return chart;
 }; };
-exports.onDeleteKey = function () { return function (chart) {
+exports.onRemoveKey = function () { return function (chart) {
     if (chart.selected.type === 'node' && chart.selected.id) {
         var node_1 = chart.nodes[chart.selected.id];
         // Delete the connected links
@@ -1571,7 +1571,7 @@ var SelectedSidebar = /** @class */ (function (_super) {
                         "ID: ",
                         chart.selected.id),
                     React.createElement("br", null),
-                    React.createElement(Button, { onClick: function () { return stateActions.onDeleteKey(); } }, "Delete"))
+                    React.createElement(Button, { onClick: function () { return stateActions.onRemoveKey(); } }, "Delete"))
                 : React.createElement(Message, null, "Click on a Node, Port or Link"))));
     };
     return SelectedSidebar;
