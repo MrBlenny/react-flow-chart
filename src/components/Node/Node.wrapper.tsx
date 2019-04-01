@@ -10,16 +10,16 @@ import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
   node: INode
-  Component: React.ElementType<INodeDefaultProps>
+  Component: React.FunctionComponent<INodeDefaultProps>
   offset: IPosition
   selected: ISelectedOrHovered | undefined
   hovered: ISelectedOrHovered | undefined
   selectedLink: ILink | undefined
   hoveredLink: ILink | undefined
   isSelected: boolean
-  NodeInner: React.ElementType<INodeInnerDefaultProps>
-  Ports: React.ElementType<IPortsDefaultProps>
-  Port: React.ElementType<IPortDefaultProps>
+  NodeInner: React.FunctionComponent<INodeInnerDefaultProps>
+  Ports: React.FunctionComponent<IPortsDefaultProps>
+  Port: React.FunctionComponent<IPortDefaultProps>
   onPortPositionChange: IOnPortPositionChange
   onLinkStart: IOnLinkStart
   onLinkMove: IOnLinkMove

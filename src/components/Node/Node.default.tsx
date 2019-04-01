@@ -7,6 +7,7 @@ export interface INodeDefaultProps {
   isSelected: boolean
   onClick: (e: React.MouseEvent) => void
   style?: object
+  ref?: React.Ref<any>
 }
 
 export const NodeDefault = styled.div<INodeDefaultProps>`

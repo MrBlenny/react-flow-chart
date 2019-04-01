@@ -26,13 +26,13 @@ export interface IFlowChartCallbacks {
 }
 
 export interface IFlowChartComponents {
-  CanvasOuter?: React.ElementType<ICanvasOuterDefaultProps>
-  CanvasInner?: React.ElementType<ICanvasInnerDefaultProps>
-  NodeInner?: React.ElementType<INodeInnerDefaultProps>
-  Ports?: React.ElementType<IPortsDefaultProps>
-  Port?: React.ElementType<IPortDefaultProps>
-  Node?: React.ElementType<INodeDefaultProps>
-  Link?: React.ElementType<ILinkDefaultProps>
+  CanvasOuter?: React.FunctionComponent<ICanvasOuterDefaultProps>
+  CanvasInner?: React.FunctionComponent<ICanvasInnerDefaultProps>
+  NodeInner?: React.FunctionComponent<INodeInnerDefaultProps>
+  Ports?: React.FunctionComponent<IPortsDefaultProps>
+  Port?: React.FunctionComponent<IPortDefaultProps>
+  Node?: React.FunctionComponent<INodeDefaultProps>
+  Link?: React.FunctionComponent<ILinkDefaultProps>
 }
 
 export interface IFlowChartProps {

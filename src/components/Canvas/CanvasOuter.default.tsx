@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export interface ICanvasOuterDefaultProps {
   children: any
+  ref?: React.Ref<any>
 }
 
 export const CanvasOuterDefault = styled.div<ICanvasOuterDefaultProps>`

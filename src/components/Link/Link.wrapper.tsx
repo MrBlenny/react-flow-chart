@@ -12,7 +12,7 @@ export interface ILinkWrapperProps {
   onLinkMouseEnter: IOnLinkMouseEnter
   onLinkMouseLeave: IOnLinkMouseLeave
   onLinkClick: IOnLinkMouseLeave
-  Component?: React.ElementType<ILinkDefaultProps>
+  Component?: React.FunctionComponent<ILinkDefaultProps>
 }
 
 export const LinkWrapper = React.memo(({
