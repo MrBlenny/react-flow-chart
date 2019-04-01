@@ -15,8 +15,8 @@ export interface ICanvasWrapperProps {
   onDeleteKey: IOnDeleteKey
   onCanvasClick: IOnCanvasClick
   onCanvasDrop: IOnCanvasDrop
-  ComponentInner: React.ElementType<ICanvasInnerDefaultProps>
-  ComponentOuter: React.ElementType<ICanvasOuterDefaultProps>
+  ComponentInner: React.FunctionComponent<ICanvasInnerDefaultProps>
+  ComponentOuter: React.FunctionComponent<ICanvasOuterDefaultProps>
   onSizeChange: (x: number, y: number) => void
   children: any
 }
