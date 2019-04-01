@@ -21,6 +21,6 @@
 		"allowJs": false,
 		"declaration": true
 	},
-	"include": ["src/**/*"],
+	"include": ["src/index.ts"],
 	"exclude": ["node_modules", "build", "scripts", "config"]
 }
