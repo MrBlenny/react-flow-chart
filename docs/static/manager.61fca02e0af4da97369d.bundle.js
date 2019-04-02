@@ -64696,12 +64696,12 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/alexander/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
-__webpack_require__(/*! /Users/alexander/git/react-flow-chart/config/storybook/addons.ts */"./config/storybook/addons.ts");
-module.exports = __webpack_require__(/*! /Users/alexander/git/react-flow-chart/node_modules/@storybook/core/dist/client/manager/index.js */"./node_modules/@storybook/core/dist/client/manager/index.js");
+__webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
+__webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/config/storybook/addons.ts */"./config/storybook/addons.ts");
+module.exports = __webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/node_modules/@storybook/core/dist/client/manager/index.js */"./node_modules/@storybook/core/dist/client/manager/index.js");
 
 
 /***/ })
 
 },[[1,"runtime~manager"]]]);
-//# sourceMappingURL=manager.eae9a64d827857855cbf.bundle.js.map
+//# sourceMappingURL=manager.61fca02e0af4da97369d.bundle.js.map

@@ -525,6 +525,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var uuid_1 = __webpack_require__(/*! uuid */ "./node_modules/uuid/index.js");
 var Port_default_1 = __webpack_require__(/*! ./Port.default */ "./src/components/Port/Port.default.tsx");
+/** Construct the composed path by traversing parentElements */
+var composedPath = function (el) {
+    var path = [];
+    while (el) {
+        path.push(el);
+        el = el.parentElement;
+    }
+    return path;
+};
 var PortWrapper = /** @class */ (function (_super) {
     __extends(PortWrapper, _super);
     function PortWrapper() {
@@ -566,7 +575,8 @@ var PortWrapper = /** @class */ (function (_super) {
             var mouseUpHandler = function (e) {
                 // We traverse up the event path until we find an element with 'data-port-id' and data-node-id'
                 // e.toElement cannot be used because it may be a child element of the port
-                var portEl = e.path.find(function (el) {
+                var path = composedPath(e.target);
+                var portEl = path.find(function (el) {
                     var toPortId = el.getAttribute && el.getAttribute('data-port-id');
                     var toNodeId = el.getAttribute && el.getAttribute('data-node-id');
                     return !!(toPortId && toNodeId);
@@ -1993,12 +2003,12 @@ exports.chartSimple = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/alexander/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
-__webpack_require__(/*! /Users/alexander/git/react-flow-chart/node_modules/@storybook/core/dist/server/config/globals.js */"./node_modules/@storybook/core/dist/server/config/globals.js");
-module.exports = __webpack_require__(/*! /Users/alexander/git/react-flow-chart/config/storybook/config.js */"./config/storybook/config.js");
+__webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/node_modules/@storybook/core/dist/server/config/polyfills.js */"./node_modules/@storybook/core/dist/server/config/polyfills.js");
+__webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/node_modules/@storybook/core/dist/server/config/globals.js */"./node_modules/@storybook/core/dist/server/config/globals.js");
+module.exports = __webpack_require__(/*! /mnt/c/Users/David/Documents/Git/misc/react-flow-chart/config/storybook/config.js */"./config/storybook/config.js");
 
 
 /***/ })
 
 },[[0,"runtime~iframe","vendors~iframe"]]]);
-//# sourceMappingURL=iframe.a95e78ffab2067d3cf82.bundle.js.map
+//# sourceMappingURL=iframe.0fd77ada0df4b2602476.bundle.js.map
