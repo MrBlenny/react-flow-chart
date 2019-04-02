@@ -8,10 +8,10 @@ import { IPortDefaultProps, PortDefault } from './Port.default'
 
 /** Construct the composed path by traversing parentElements */
 const composedPath = (el: HTMLElement | null) => {
-  const path: HTMLElement[] = [];
+  const path: HTMLElement[] = []
   while (el) {
-    path.push(el);
-    el = el.parentElement;
+    path.push(el)
+    el = el.parentElement
   }
   return path
 }
