@@ -6,6 +6,16 @@ import {
 } from '../../'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
+/** Construct the composed path by traversing parentElements */
+const composedPath = (el: HTMLElement | null) => {
+  const path: HTMLElement[] = [];
+  while (el) {
+    path.push(el);
+    el = el.parentElement;
+  }
+  return path
+}
+
 export interface IPortWrapperProps {
   style?: object
   chart: IChart
@@ -61,10 +71,12 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
     // Create and bind the mouse up handler
     // This is used to check if the link is complete or cancelled
-    const mouseUpHandler = (e: MouseEvent & { path: HTMLElement[] }) => {
+    const mouseUpHandler = (e: MouseEvent) => {
+
       // We traverse up the event path until we find an element with 'data-port-id' and data-node-id'
       // e.toElement cannot be used because it may be a child element of the port
-      const portEl = e.path.find((el) => {
+      const path = composedPath(e.target as HTMLElement)
+      const portEl = path.find((el) => {
         const toPortId = el.getAttribute && el.getAttribute('data-port-id')
         const toNodeId = el.getAttribute && el.getAttribute('data-node-id')
         return !!(toPortId && toNodeId)
