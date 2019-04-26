@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {
-  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps,
+  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILink, ILinkDefaultProps,
   INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
   IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
   IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered,
@@ -172,7 +172,7 @@ const getSelectedLinkForNode = (
   selected: ISelectedOrHovered,
   nodeId: string,
   links: IChart['links'],
-) => {
+): ILink | undefined => {
   const link = selected.type === 'link' && selected.id ? links[selected.id] : undefined
 
   if (link && (link.from.nodeId === nodeId || link.to.nodeId === nodeId)) {

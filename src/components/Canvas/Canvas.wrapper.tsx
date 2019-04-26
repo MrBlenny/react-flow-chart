@@ -1,10 +1,9 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
 import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
+import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
-
-export const CanvasContext = React.createContext({ offsetX: 0, offsetY: 0 })
 
 export interface ICanvasWrapperProps {
   position: {
@@ -96,9 +95,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                   y: e.clientY - position.y,
                 }})
               } }
-              onDragOver={ (e) => {
-                e.preventDefault()
-              } }
+              onDragOver={(e) => e.preventDefault()}
             />
           </Draggable>
         </ComponentOuter>
