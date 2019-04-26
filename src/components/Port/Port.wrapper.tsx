@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { v4 } from 'uuid'
 import {
-  CanvasContext, ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
+  ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
   IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered,
 } from '../../'
+import CanvasContext from '../Canvas/CanvasContext'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
 /** Construct the composed path by traversing parentElements */
@@ -65,8 +66,6 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     const linkId = v4()
     const fromNodeId = node.id
     const fromPortId = port.id
-
-    // const portEl = startEvent.target as HTMLDivElement
 
     // Create the move handler
     // This will update the position as the mouse moves

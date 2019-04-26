@@ -52,8 +52,11 @@ export const NodeWrapper = ({
   onLinkCancel,
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
+
   const compRef = React.useRef<HTMLElement>(null)
-  React.useEffect(() => {
+
+  // TODO: probably should add an observer to track node component size changes
+  React.useLayoutEffect(() => {
     const el = compRef.current
     if (el) {
       if (size.width !== el.offsetWidth || size.height !== el.offsetHeight) {
@@ -62,7 +65,7 @@ export const NodeWrapper = ({
         onNodeSizeChange({ nodeId: node.id, size: newSize })
       }
     }
-  })
+  }, [node, compRef.current, size.width, size.height])
 
   const children = (
     <>
