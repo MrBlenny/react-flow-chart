@@ -50,9 +50,9 @@ export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => (chart: IChar
   return chart
 }
 
-export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, toNodeId, toPortId }) =>
+export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, fromPortId, toNodeId, toPortId }) =>
   (chart: IChart): IChart => {
-    if (fromNodeId !== toPortId) {
+    if ([fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
       chart.links[linkId].to = {
         nodeId: toNodeId,
         portId: toPortId,
