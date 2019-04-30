@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.0.6] - 2019-04-30
+
 ## Added
 
 - Upgrade Typescript and Storybook.
