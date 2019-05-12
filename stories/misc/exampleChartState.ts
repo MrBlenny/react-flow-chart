@@ -96,6 +96,9 @@ export const chartSimple: IChart = {
         nodeId: 'node2',
         portId: 'port1',
       },
+      properties: {
+        label: 'example link label',
+      },
     },
     link2: {
       id: 'link2',
@@ -106,6 +109,9 @@ export const chartSimple: IChart = {
       to: {
         nodeId: 'node3',
         portId: 'port1',
+      },
+      properties: {
+        label: 'another example link label',
       },
     },
     link3: {
