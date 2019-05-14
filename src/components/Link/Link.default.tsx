@@ -1,15 +1,23 @@
-import * as React from 'react'
-import { generateCurvePath, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
+import * as React from "react";
+import {
+  generateCurvePath,
+  ILink,
+  IOnLinkClick,
+  IOnLinkMouseEnter,
+  IOnLinkMouseLeave,
+  IPosition
+} from "../../";
 
 export interface ILinkDefaultProps {
-  link: ILink
-  startPos: IPosition
-  endPos: IPosition
-  onLinkMouseEnter: IOnLinkMouseEnter
-  onLinkMouseLeave: IOnLinkMouseLeave
-  onLinkClick: IOnLinkClick
-  isHovered: boolean
-  isSelected: boolean
+  link: ILink;
+  startPos: IPosition;
+  endPos: IPosition;
+  onLinkMouseEnter: IOnLinkMouseEnter;
+  onLinkMouseLeave: IOnLinkMouseLeave;
+  onLinkClick: IOnLinkClick;
+  isHovered: boolean;
+  isSelected: boolean;
+  className?: string;
 }
 
 export const LinkDefault = ({
@@ -21,24 +29,24 @@ export const LinkDefault = ({
   onLinkClick,
   isHovered,
   isSelected,
+  className
 }: ILinkDefaultProps) => {
-  const points = generateCurvePath(startPos, endPos)
+  const points = generateCurvePath(startPos, endPos);
 
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
-      <circle
-        r="4"
-        cx={startPos.x}
-        cy={startPos.y}
-        fill="cornflowerblue"
-      />
+    <svg
+      className={className}
+      style={{
+        overflow: "visible",
+        position: "absolute",
+        cursor: "pointer",
+        left: 0,
+        right: 0
+      }}
+    >
+      <circle r="4" cx={startPos.x} cy={startPos.y} fill="cornflowerblue" />
       {/* Main line */}
-      <path
-        d={points}
-        stroke="cornflowerblue"
-        strokeWidth="3"
-        fill="none"
-      />
+      <path d={points} stroke="cornflowerblue" strokeWidth="3" fill="none" />
       {/* Thick line to make selection easier */}
       <path
         d={points}
@@ -46,20 +54,15 @@ export const LinkDefault = ({
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
-        strokeOpacity={(isHovered || isSelected) ? 0.1 : 0}
+        strokeOpacity={isHovered || isSelected ? 0.1 : 0}
         onMouseEnter={() => onLinkMouseEnter({ linkId: link.id })}
         onMouseLeave={() => onLinkMouseLeave({ linkId: link.id })}
-        onClick={(e) => {
-          onLinkClick({ linkId: link.id })
-          e.stopPropagation()
-        } }
+        onClick={e => {
+          onLinkClick({ linkId: link.id });
+          e.stopPropagation();
+        }}
       />
-      <circle
-        r="4"
-        cx={endPos.x}
-        cy={endPos.y}
-        fill="cornflowerblue"
-      />
+      <circle r="4" cx={endPos.x} cy={endPos.y} fill="cornflowerblue" />
     </svg>
-  )
-}
+  );
+};
