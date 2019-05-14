@@ -1,7 +1,8 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components";
 
 export interface IPortsGroupDefaultProps {
-  side: 'top' | 'bottom' | 'left' | 'right'
+  side: "top" | "bottom" | "left" | "right";
+  className?: string;
 }
 
 export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
@@ -9,8 +10,8 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
   display: flex;
   justify-content: center;
 
-  ${(props) => {
-    if (props.side === 'top') {
+  ${props => {
+    if (props.side === "top") {
       return css`
         width: 100%;
         left: 0;
@@ -19,8 +20,8 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
         > div {
           margin: 0 3px;
         }
-      `
-    } else if (props.side === 'bottom') {
+      `;
+    } else if (props.side === "bottom") {
       return css`
         width: 100%;
         left: 0;
@@ -29,8 +30,8 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
         > div {
           margin: 0 3px;
         }
-      `
-    } else if (props.side === 'left') {
+      `;
+    } else if (props.side === "left") {
       return css`
         height: 100%;
         top: 0;
@@ -39,7 +40,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
         > div {
           margin: 3px 0;
         }
-      `
+      `;
     } else {
       return css`
         height: 100%;
@@ -49,7 +50,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
         > div {
           margin: 3px 0;
         }
-      `
+      `;
     }
   }}
-`
+`;

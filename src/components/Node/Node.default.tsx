@@ -1,13 +1,15 @@
-import styled, { css } from 'styled-components'
-import { INode } from '../../'
+import * as React from "react";
+import styled, { css } from "styled-components";
+import { INode } from "../../";
 
 export interface INodeDefaultProps {
-  node: INode
-  children: any
-  isSelected: boolean
-  onClick: (e: React.MouseEvent) => void
-  style?: object
-  ref?: React.Ref<any>
+  node: INode;
+  children: any;
+  isSelected: boolean;
+  onClick: (e: React.MouseEvent) => void;
+  style?: object;
+  ref?: React.Ref<any>;
+  className?: string;
 }
 
 export const NodeDefault = styled.div<INodeDefaultProps>`
@@ -16,9 +18,10 @@ export const NodeDefault = styled.div<INodeDefaultProps>`
   background: white;
   border-radius: 4px;
   min-width: 200px;
-  ${(props) => props.isSelected && css`
-    box-shadow: 0 10px 20px rgba(0,0,0,.1);
-    margin-top: -2px
-    `
-  }
-` as any
+  ${props =>
+    props.isSelected &&
+    css`
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-top: -2px;
+    `}
+` as any;

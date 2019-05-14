@@ -1,25 +1,30 @@
-import * as React from 'react'
-import { PortsGroupDefault } from '../../'
+import * as React from "react";
+import { PortsGroupDefault } from "../../";
 
 export interface IPortsDefaultProps {
-  children: Array<React.ReactElement<any>>
+  children: Array<React.ReactElement<any>>;
+  className?: string;
 }
 
-export const PortsDefault = ({ children }: IPortsDefaultProps) => {
+export const PortsDefault = ({ children, className }: IPortsDefaultProps) => {
   return (
-    <div>
+    <div className={className}>
       <PortsGroupDefault side="top">
-        {children.filter((child) => ['input', 'top'].includes(child.props.port.type))}
+        {children.filter(child =>
+          ["input", "top"].includes(child.props.port.type)
+        )}
       </PortsGroupDefault>
       <PortsGroupDefault side="bottom">
-        {children.filter((child) => ['output', 'bottom'].includes(child.props.port.type))}
+        {children.filter(child =>
+          ["output", "bottom"].includes(child.props.port.type)
+        )}
       </PortsGroupDefault>
       <PortsGroupDefault side="right">
-        {children.filter((child) => ['right'].includes(child.props.port.type))}
+        {children.filter(child => ["right"].includes(child.props.port.type))}
       </PortsGroupDefault>
       <PortsGroupDefault side="left">
-        {children.filter((child) => ['left'].includes(child.props.port.type))}
+        {children.filter(child => ["left"].includes(child.props.port.type))}
       </PortsGroupDefault>
     </div>
-  )
-}
+  );
+};
