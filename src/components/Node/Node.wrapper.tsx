@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
+import ResizeObserver from 'react-resize-observer'
 import {
   ILink, INode, INodeInnerDefaultProps, IOnDragNode,
   IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
@@ -70,6 +71,12 @@ export const NodeWrapper = ({
 
   const children = (
     <>
+      <ResizeObserver
+        onResize={(rect) => {
+          const newSize = { width: rect.width, height: rect.height }
+          setSize(newSize)
+        }}
+      />
       <NodeInner node={node} />
       <Ports>
         { Object.keys(node.ports).map((portId) => (
