@@ -6,7 +6,7 @@ export type IOnDragNode = (event: MouseEvent, dragData: DraggableData, id: strin
 
 export type IOnDragCanvas = (event: MouseEvent, dragData: DraggableData) => void
 
-export type IOnPortPositionChange = (node: INode, port: IPort, position: IPosition) => void
+export type IOnPortPositionChange = (node: INode, port: IPort, el: HTMLDivElement, nodesEl: HTMLDivElement | IOffset) => void
 
 export interface IOnLinkBaseEvent {
   linkId: string,

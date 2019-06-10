@@ -4,6 +4,7 @@ import {
   IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick,
   IOnNodeSizeChange, IOnPortPositionChange,
 } from '../'
+import { rotate } from './utils/rotate'
 
 /**
  * This file contains actions for updating state after each of the required callbacks
@@ -143,15 +144,24 @@ export const onNodeSizeChange: IOnNodeSizeChange = ({ nodeId, size }) => (chart:
   }
 }
 
-export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, position) =>
+export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, el, nodesEl) =>
   (chart: IChart): IChart => {
-    const node = chart.nodes[nodeToUpdate.id]
-    node.ports[port.id].position = {
-      x: position.x,
-      y: position.y,
-    }
+    if (nodeToUpdate.size) {
+      // rotate the port's position based on the node's orientation prop (angle)
+      const center = { x: nodeToUpdate.size.width / 2, y: nodeToUpdate.size.height / 2 }
+      const current = { x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2,
+                        y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2 }
+      const angle = nodeToUpdate.orientation | 0
+      const position = rotate(center, current, angle)
 
-    chart.nodes[nodeToUpdate.id] = { ...node }
+      const node = chart.nodes[nodeToUpdate.id]
+      node.ports[port.id].position = {
+        x: position.x,
+        y: position.y,
+      }
+
+      chart.nodes[nodeToUpdate.id] = { ...node }
+    }
 
     return chart
   }
