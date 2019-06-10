@@ -25,11 +25,12 @@ export interface INode {
   type: string
   position: IPosition
   orientation: number
-  size: ISize
   ports: {
     [id: string]: IPort,
   }
   properties?: any
+  /** System Temp */
+  size?: ISize
 }
 
 export interface IPort {

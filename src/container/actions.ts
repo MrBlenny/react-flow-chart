@@ -182,7 +182,6 @@ export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChar
     type: data.type,
     ports: data.ports,
     properties: data.properties,
-    size: data.size,
   }
   return chart
 }
