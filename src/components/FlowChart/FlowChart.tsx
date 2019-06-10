@@ -83,6 +83,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Link = LinkDefault,
     } = {},
   } = props
+  if (!chart.offset) chart.offset = { x: 0, y: 0 }
   const { links, nodes, selected, hovered, offset } = chart
 
   const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
