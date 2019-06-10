@@ -1,4 +1,6 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import { isEqual } from 'lodash'
 import { v4 } from 'uuid'
 import {
   ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
@@ -40,24 +42,21 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   public static contextType = CanvasContext
   public context!: React.ContextType<typeof CanvasContext>
 
-  public nodeRef?: HTMLDivElement
+  private nodeRef = React.createRef<HTMLDivElement>()
 
-  public getNodRef = (el: HTMLDivElement) => {
-    if (el) {
-      const { node, port, onPortPositionChange } = this.props
-      this.nodeRef = el
-
-      // Ports component should be positions absolute
-      // Factor this in so we get position relative to the node
-      const nodesEl = el.parentElement
-        ? el.parentElement
-        : { offsetLeft: 0, offsetTop: 0 }
-
-      const position = {
-        x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2,
-        y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2,
+  componentDidUpdate(prevProps: IPortWrapperProps) {
+    // Update port position after a re-render if node.size has changed
+    if (!isEqual(this.props.node.size, prevProps.node.size)) {
+      const el = ReactDOM.findDOMNode(this.nodeRef.current) as HTMLInputElement
+      if (el) {
+        // Ports component should be positions absolute
+        // Factor this in so we get position relative to the node
+        const nodesEl = el.parentElement
+          ? el.parentElement
+          : { offsetLeft: 0, offsetTop: 0 }
+        // update port position after node size has been determined
+        this.props.onPortPositionChange(this.props.node, this.props.port, el, nodesEl)
       }
-      onPortPositionChange(node, port, position)
     }
   }
 
@@ -137,7 +136,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         data-port-id={port.id}
         data-node-id={node.id}
         onMouseDown={this.onMouseDown}
-        ref={this.getNodRef}
+        ref={this.nodeRef}
         style={style}
       >
         <Component
