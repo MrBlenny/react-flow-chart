@@ -5,6 +5,7 @@ import {
   IOnNodeSizeChange, IOnPortPositionChange,
 } from '../'
 import { rotate } from './utils/rotate'
+import { validateLink } from './utils/validateLink'
 
 /**
  * This file contains actions for updating state after each of the required callbacks
@@ -49,16 +50,20 @@ export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => (chart: IChar
   return chart
 }
 
-export const onLinkComplete: IOnLinkComplete = ({ linkId, fromNodeId, fromPortId, toNodeId, toPortId }) =>
-  (chart: IChart): IChart => {
-    if ([fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
+export const onLinkComplete: IOnLinkComplete = (props) => {
+  const { linkId, fromNodeId, fromPortId, toNodeId, toPortId } = props
+  return (chart: IChart): IChart => {
+    if (validateLink(props, chart) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
       chart.links[linkId].to = {
         nodeId: toNodeId,
         portId: toPortId,
       }
+    } else {
+      delete chart.links[linkId]
     }
     return chart
   }
+}
 
 export const onLinkCancel: IOnLinkCancel = ({ linkId }) => (chart: IChart) => {
   delete chart.links[linkId]
