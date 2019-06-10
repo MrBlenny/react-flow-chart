@@ -47,6 +47,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
       } else {
         window.addEventListener('resize', this.updateSize)
       }
+      window.addEventListener('scroll', this.updateSize)
     }
   }
 
@@ -56,6 +57,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
 
   public componentWillUnmount () {
     window.removeEventListener('resize', this.updateSize)
+    window.removeEventListener('scroll', this.updateSize)
   }
 
   public render () {
@@ -92,8 +94,9 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
               onDrop={ (e) => {
                 const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
                 onCanvasDrop({ data, position: {
-                  x: e.clientX - position.x,
-                  y: e.clientY - position.y,
+                  // subtract offset to adjust for non zero origin of canvas
+                  x: e.clientX - position.x - this.state.offsetX,
+                  y: e.clientY - position.y - this.state.offsetY,
                 }})
               } }
               onDragOver={(e) => e.preventDefault()}
