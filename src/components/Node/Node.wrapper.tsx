@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
 import {
   ILink, INode, INodeInnerDefaultProps, IOnDragNode,
@@ -57,7 +58,7 @@ export const NodeWrapper = ({
 
   // TODO: probably should add an observer to track node component size changes
   React.useLayoutEffect(() => {
-    const el = compRef.current
+    const el = ReactDOM.findDOMNode(compRef.current) as HTMLInputElement
     if (el) {
       if (size.width !== el.offsetWidth || size.height !== el.offsetHeight) {
         const newSize = { width: el.offsetWidth, height: el.offsetHeight }
