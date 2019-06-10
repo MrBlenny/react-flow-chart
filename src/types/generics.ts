@@ -7,3 +7,8 @@ export interface ISize {
   width: number
   height: number
 }
+
+export interface IOffset {
+  offsetLeft: number
+  offsetTop: number
+}

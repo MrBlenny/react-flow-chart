@@ -142,6 +142,7 @@ export const onNodeSizeChange: IOnNodeSizeChange = ({ nodeId, size }) => (chart:
     ...chart.nodes[nodeId],
     size,
   }
+  return chart
 }
 
 export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, el, nodesEl) =>
@@ -176,6 +177,7 @@ export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChar
     type: data.type,
     ports: data.ports,
     properties: data.properties,
+    size: data.size,
   }
   return chart
 }
