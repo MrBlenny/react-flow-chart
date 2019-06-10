@@ -11,14 +11,12 @@ import {
 
 export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
   const nodechart = chart.nodes[id]
+  const snap = chart.properties && chart.properties.snap
 
   if (nodechart) {
     chart.nodes[id] = {
       ...nodechart,
-      position: {
-        x: data.x,
-        y: data.y,
-      },
+      position: snap ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data,
     }
   }
 
@@ -26,8 +24,8 @@ export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
 }
 
 export const onDragCanvas: IOnDragCanvas = (event, data) => (chart: IChart): IChart => {
-  chart.offset.x = data.x
-  chart.offset.y = data.y
+  const snap = chart.properties && chart.properties.snap
+  chart.offset = snap ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
   return chart
 }
 
@@ -160,9 +158,11 @@ export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, 
 
 export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChart): IChart => {
   const id = v4()
+  const snap = chart.properties && chart.properties.snap
   chart.nodes[id] = {
     id,
-    position,
+    position: snap ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : position,
+    orientation: data.orientation | 0,
     type: data.type,
     ports: data.ports,
     properties: data.properties,
