@@ -49,6 +49,10 @@ export interface IFlowChartProps {
    * Custom components
    */
   Components?: IFlowChartComponents
+  /**
+   * Additional props to be spread to the node components
+   */
+  nodeProps?: any
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -82,6 +86,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
+    nodeProps,
   } = props
   if (!chart.offset) chart.offset = { x: 0, y: 0 }
   const { links, nodes, selected, hovered, offset } = chart
@@ -150,6 +155,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             key={nodeId}
             Component={Node}
             node={nodes[nodeId]}
+            nodeProps={nodeProps}
             offset={chart.offset}
             isSelected={isSelected}
             selected={selectedLink ? selected : undefined}

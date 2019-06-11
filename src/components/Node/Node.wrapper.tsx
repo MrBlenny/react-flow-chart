@@ -12,6 +12,7 @@ import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
   node: INode
+  nodeProps?: any
   Component: React.FunctionComponent<INodeDefaultProps>
   offset: IPosition
   selected: ISelectedOrHovered | undefined
@@ -34,6 +35,7 @@ export interface INodeWrapperProps {
 
 export const NodeWrapper = ({
   node,
+  nodeProps,
   onDragNode,
   onNodeClick,
   isSelected,
@@ -77,7 +79,7 @@ export const NodeWrapper = ({
           setSize(newSize)
         }}
       />
-      <NodeInner node={node} />
+      <NodeInner node={node} nodeProps={nodeProps} />
       <Ports>
         { Object.keys(node.ports).map((portId) => (
           <PortWrapper
@@ -122,6 +124,7 @@ export const NodeWrapper = ({
         }}
         isSelected={isSelected}
         node={node}
+        nodeProps={nodeProps}
       />
     </Draggable>
   )

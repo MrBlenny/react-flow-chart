@@ -3,6 +3,7 @@ import { INode } from '../../'
 
 export interface INodeDefaultProps {
   node: INode
+  nodeProps?: any
   children: any
   isSelected: boolean
   onClick: (e: React.MouseEvent) => void

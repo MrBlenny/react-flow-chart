@@ -4,6 +4,7 @@ import { INode } from '../../'
 
 export interface INodeInnerDefaultProps {
   node: INode
+  nodeProps?: any
 }
 
 const Outer = styled.div`
