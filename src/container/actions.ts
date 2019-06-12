@@ -155,9 +155,8 @@ export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, 
     if (nodeToUpdate.size) {
       // rotate the port's position based on the node's orientation prop (angle)
       const center = { x: nodeToUpdate.size.width / 2, y: nodeToUpdate.size.height / 2 }
-      const current = { x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2,
-                        y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2 }
-      const angle = nodeToUpdate.orientation | 0
+      const current = { x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2, y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2 }
+      const angle = nodeToUpdate.orientation || 0
       const position = rotate(center, current, angle)
 
       const node = chart.nodes[nodeToUpdate.id]
@@ -178,7 +177,7 @@ export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChar
   chart.nodes[id] = {
     id,
     position: snap ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : position,
-    orientation: data.orientation | 0,
+    orientation: data.orientation || 0,
     type: data.type,
     ports: data.ports,
     properties: data.properties,

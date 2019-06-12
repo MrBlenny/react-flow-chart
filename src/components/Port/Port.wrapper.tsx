@@ -1,6 +1,6 @@
+import { isEqual } from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { isEqual } from 'lodash'
 import { v4 } from 'uuid'
 import {
   ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
@@ -44,7 +44,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
   private nodeRef = React.createRef<HTMLDivElement>()
 
-  componentDidUpdate(prevProps: IPortWrapperProps) {
+  public componentDidUpdate (prevProps: IPortWrapperProps) {
     // Update port position after a re-render if node.size has changed
     if (!isEqual(this.props.node.size, prevProps.node.size)) {
       const el = ReactDOM.findDOMNode(this.nodeRef.current) as HTMLInputElement
