@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import {
-  ILink, INode, INodeInnerDefaultProps, IOnDragNode,
+  IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
   IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
   IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
   IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
@@ -11,6 +11,7 @@ import {
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
+  config: IConfig
   node: INode
   nodeProps?: any
   Component: React.FunctionComponent<INodeDefaultProps>
@@ -34,6 +35,7 @@ export interface INodeWrapperProps {
 }
 
 export const NodeWrapper = ({
+  config,
   node,
   nodeProps,
   onDragNode,
@@ -66,7 +68,7 @@ export const NodeWrapper = ({
       if (size.width !== el.offsetWidth || size.height !== el.offsetHeight) {
         const newSize = { width: el.offsetWidth, height: el.offsetHeight }
         setSize(newSize)
-        onNodeSizeChange({ nodeId: node.id, size: newSize })
+        onNodeSizeChange({ config, nodeId: node.id, size: newSize })
       }
     }
   }, [node, compRef.current, size.width, size.height])
@@ -79,10 +81,11 @@ export const NodeWrapper = ({
           setSize(newSize)
         }}
       />
-      <NodeInner node={node} nodeProps={nodeProps} />
-      <Ports>
+      <NodeInner node={node} config={config} />
+      <Ports config={config}>
         { Object.keys(node.ports).map((portId) => (
           <PortWrapper
+            config={config}
             key={portId}
             offset={offset}
             selected={selected}
@@ -113,13 +116,14 @@ export const NodeWrapper = ({
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
-      onDrag={(e, dragData) => onDragNode(e, dragData, node.id)}
+      onDrag={(event, data) => onDragNode({ config, event, data, id: node.id })}
     >
       <Component
+        config={config}
         ref={compRef}
         children={children}
         onClick={(e) => {
-          onNodeClick({ nodeId: node.id })
+          onNodeClick({ config, nodeId: node.id })
           e.stopPropagation()
         }}
         isSelected={isSelected}

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import {
-  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILink, ILinkDefaultProps,
-  INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
-  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered,
-  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
+  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
+  ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
+  IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
+  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
+  IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 
 export interface IFlowChartCallbacks {
@@ -50,9 +50,10 @@ export interface IFlowChartProps {
    */
   Components?: IFlowChartComponents
   /**
-   * Additional props to be spread to the node components
+   * Other config. This will be passed into all components and actions.
+   * Don't store state here as it may trigger re-renders
    */
-  nodeProps?: any
+  config?: IConfig
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -86,7 +87,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
-    nodeProps,
+    config = {},
   } = props
   if (!chart.offset) chart.offset = { x: 0, y: 0 }
   const { links, nodes, selected, hovered, offset } = chart
@@ -120,6 +121,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
   return (
     <CanvasWrapper
+      config={config}
       position={chart.offset}
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
@@ -134,6 +136,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
         return (
           <LinkWrapper
+            config={config}
             key={linkId}
             link={links[linkId]}
             Component={Link}
@@ -152,10 +155,10 @@ export const FlowChart = (props: IFlowChartProps) => {
 
         return (
           <NodeWrapper
+            config={config}
             key={nodeId}
             Component={Node}
             node={nodes[nodeId]}
-            nodeProps={nodeProps}
             offset={chart.offset}
             isSelected={isSelected}
             selected={selectedLink ? selected : undefined}

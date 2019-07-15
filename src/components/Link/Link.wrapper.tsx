@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { ILink, INode, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
+import { IConfig, ILink, INode, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
 import { getLinkPosition } from './utils'
 
 export interface ILinkWrapperProps {
+  config: IConfig,
   link: ILink
   isSelected: boolean
   isHovered: boolean
@@ -16,6 +17,7 @@ export interface ILinkWrapperProps {
 }
 
 export const LinkWrapper = React.memo(({
+  config,
   Component = LinkDefault,
   link,
   onLinkMouseEnter,
@@ -40,6 +42,7 @@ export const LinkWrapper = React.memo(({
 
   return (
     <Component
+      config={config}
       link={link}
       startPos={startPos}
       endPos={endPos}

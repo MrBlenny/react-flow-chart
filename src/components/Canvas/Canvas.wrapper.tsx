@@ -1,11 +1,12 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
+import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
 
 export interface ICanvasWrapperProps {
+  config: IConfig
   position: {
     x: number
     y: number,
@@ -62,6 +63,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
 
   public render () {
     const {
+      config,
       ComponentInner,
       ComponentOuter,
       position,
@@ -74,26 +76,27 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
 
     return (
       <CanvasContext.Provider value={{ offsetX: this.state.offsetX, offsetY: this.state.offsetY }}>
-        <ComponentOuter ref={this.ref}>
+        <ComponentOuter config={config} ref={this.ref}>
           <Draggable
             axis="both"
             position={position}
             grid={[1, 1]}
-            onDrag={(e, dragData) => onDragCanvas(e, dragData)}
+            onDrag={(event, data) => onDragCanvas({ config, event, data })}
           >
             <ComponentInner
+              config={config}
               children={children}
               onClick={onCanvasClick}
               tabIndex={0}
               onKeyDown={ (e: React.KeyboardEvent) => {
                 // delete or backspace keys
                 if (e.keyCode === 46 || e.keyCode === 8) {
-                  onDeleteKey()
+                  onDeleteKey({ config })
                 }
               }}
               onDrop={ (e) => {
                 const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
-                onCanvasDrop({ data, position: {
+                onCanvasDrop({ config, data, position: {
                   // subtract offset to adjust for non zero origin of canvas
                   x: e.clientX - position.x - this.state.offsetX,
                   y: e.clientY - position.y - this.state.offsetY,

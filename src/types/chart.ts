@@ -24,7 +24,7 @@ export interface INode {
   id: string
   type: string
   position: IPosition
-  orientation: number
+  orientation?: number
   ports: {
     [id: string]: IPort,
   }

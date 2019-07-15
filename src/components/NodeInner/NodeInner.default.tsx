@@ -1,10 +1,10 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { INode } from '../../'
+import { IConfig, INode } from '../../'
 
 export interface INodeInnerDefaultProps {
+  config: IConfig
   node: INode
-  nodeProps?: any
 }
 
 const Outer = styled.div`

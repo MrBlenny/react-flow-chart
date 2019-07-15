@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { generateCurvePath, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
+import { generateCurvePath, IConfig, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
 
 export interface ILinkDefaultProps {
+  config: IConfig
   link: ILink
   startPos: IPosition
   endPos: IPosition
@@ -13,6 +14,7 @@ export interface ILinkDefaultProps {
 }
 
 export const LinkDefault = ({
+  config,
   link,
   startPos,
   endPos,
@@ -47,10 +49,10 @@ export const LinkDefault = ({
         fill="none"
         strokeLinecap="round"
         strokeOpacity={(isHovered || isSelected) ? 0.1 : 0}
-        onMouseEnter={() => onLinkMouseEnter({ linkId: link.id })}
-        onMouseLeave={() => onLinkMouseLeave({ linkId: link.id })}
+        onMouseEnter={() => onLinkMouseEnter({ config, linkId: link.id })}
+        onMouseLeave={() => onLinkMouseLeave({ config, linkId: link.id })}
         onClick={(e) => {
-          onLinkClick({ linkId: link.id })
+          onLinkClick({ config, linkId: link.id })
           e.stopPropagation()
         } }
       />

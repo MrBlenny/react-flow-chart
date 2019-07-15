@@ -1,5 +1,7 @@
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
+import { ConfigSnapToGridDemo } from './ConfigSnapToGrid'
+import { ConfigValidateLinkDemo } from './ConfigValidateLink'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
 import { CustomLinkDemo } from './CustomLink'
 import { CustomNodeDemo } from './CustomNode'
@@ -28,3 +30,7 @@ storiesOf('Stress Testing', module)
 storiesOf('Sidebar', module)
   .add('Drag and Drop', DragAndDropSidebar)
   .add('Selected Sidebar', () => <SelectedSidebar />)
+
+storiesOf('Other Config', module)
+  .add('Snap To Grid', ConfigSnapToGridDemo)
+  .add('Selected Sidebar', ConfigValidateLinkDemo)

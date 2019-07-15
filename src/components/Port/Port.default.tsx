@@ -1,8 +1,9 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { IPort } from '../../'
+import { IConfig, IPort } from '../../'
 
 export interface IPortDefaultProps {
+  config: IConfig
   port: IPort
   isSelected: boolean
   isHovered: boolean

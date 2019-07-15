@@ -71,7 +71,7 @@ export class CustomLinkDemo extends React.Component {
                     <Button
                       onClick={(e) => {
                         onLinkClick({ linkId: link.id })
-                        stateActions.onDeleteKey()
+                        stateActions.onDeleteKey({})
                         e.stopPropagation()
                       }}
                     >

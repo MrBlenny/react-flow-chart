@@ -5,29 +5,26 @@ import {
   IOnNodeSizeChange, IOnPortPositionChange,
 } from '../'
 import { rotate } from './utils/rotate'
-import { validateLink } from './utils/validateLink'
 
 /**
  * This file contains actions for updating state after each of the required callbacks
  */
 
-export const onDragNode: IOnDragNode = (event, data, id) => (chart: IChart) => {
+export const onDragNode: IOnDragNode = ({ config, event, data, id }) => (chart: IChart) => {
   const nodechart = chart.nodes[id]
-  const snap = chart.properties && chart.properties.snap
 
   if (nodechart) {
     chart.nodes[id] = {
       ...nodechart,
-      position: snap ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data,
+      position: config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data,
     }
   }
 
   return chart
 }
 
-export const onDragCanvas: IOnDragCanvas = (event, data) => (chart: IChart): IChart => {
-  const snap = chart.properties && chart.properties.snap
-  chart.offset = snap ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
+export const onDragCanvas: IOnDragCanvas = ({ config, event, data }) => (chart: IChart): IChart => {
+  chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
   return chart
 }
 
@@ -51,9 +48,9 @@ export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => (chart: IChar
 }
 
 export const onLinkComplete: IOnLinkComplete = (props) => {
-  const { linkId, fromNodeId, fromPortId, toNodeId, toPortId } = props
+  const { linkId, fromNodeId, fromPortId, toNodeId, toPortId, config = {} } = props
   return (chart: IChart): IChart => {
-    if (validateLink(props, chart) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
+    if ((config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
       chart.links[linkId].to = {
         nodeId: toNodeId,
         portId: toPortId,
@@ -150,7 +147,7 @@ export const onNodeSizeChange: IOnNodeSizeChange = ({ nodeId, size }) => (chart:
   return chart
 }
 
-export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, el, nodesEl) =>
+export const onPortPositionChange: IOnPortPositionChange = ({ node: nodeToUpdate, port, el, nodesEl }) =>
   (chart: IChart): IChart => {
     if (nodeToUpdate.size) {
       // rotate the port's position based on the node's orientation prop (angle)
@@ -171,12 +168,11 @@ export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, 
     return chart
   }
 
-export const onCanvasDrop: IOnCanvasDrop = ({ data, position }) => (chart: IChart): IChart => {
+export const onCanvasDrop: IOnCanvasDrop = ({ config, data, position }) => (chart: IChart): IChart => {
   const id = v4()
-  const snap = chart.properties && chart.properties.snap
   chart.nodes[id] = {
     id,
-    position: snap ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : position,
+    position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : position,
     orientation: data.orientation || 0,
     type: data.type,
     ports: data.ports,

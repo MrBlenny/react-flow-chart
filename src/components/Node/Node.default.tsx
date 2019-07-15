@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components'
-import { INode } from '../../'
+import { IConfig, INode } from '../../'
 
 export interface INodeDefaultProps {
+  config: IConfig
   node: INode
   nodeProps?: any
   children: any
