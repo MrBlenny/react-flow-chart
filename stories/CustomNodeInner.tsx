@@ -1,6 +1,8 @@
+import { cloneDeep, mapValues } from 'lodash'
 import * as React from 'react'
 import styled from 'styled-components'
-import { FlowChartWithState, INodeInnerDefaultProps } from '../src'
+import { FlowChart, IChart, INodeInnerDefaultProps } from '../src'
+import * as actions from '../src/container/actions'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
@@ -18,7 +20,7 @@ const Input = styled.input`
  * Create the custom component,
  * Make sure it has the same prop signature
  */
-const NodeInnerCustom = ({ node }: INodeInnerDefaultProps) => {
+const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
   if (node.type === 'output-only') {
     return (
       <Outer>
@@ -32,7 +34,9 @@ const NodeInnerCustom = ({ node }: INodeInnerDefaultProps) => {
         <p>You may need to stop event propagation so your forms work.</p>
         <br />
         <Input
-          placeholder="Add forms etc if required"
+          type="number"
+          onChange={(e) => (config as any).onChangeRotation(parseInt(e.target.value, 10),node.id)}
+          placeholder="Enter a number here to change rotation angle"
           onClick={(e) => e.stopPropagation()}
           onMouseUp={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
@@ -42,15 +46,30 @@ const NodeInnerCustom = ({ node }: INodeInnerDefaultProps) => {
   }
 }
 
-export const CustomNodeInnerDemo = () => {
-  return (
-    <Page>
-      <FlowChartWithState
-        initialValue={chartSimple}
-        Components={ {
-          NodeInner: NodeInnerCustom,
-        }}
-      />
-    </Page>
-  )
+export class CustomNodeInnerDemo extends React.Component {
+  public state = cloneDeep(chartSimple)
+  public onChangeRotation = (val: number, nodeId: string) => this.setState((state: IChart) => {
+    state.nodes[nodeId].orientation = val
+    console.log('rotate', state)
+  })
+  public render () {
+    const chart = this.state
+    const stateActions = mapValues(actions, (func: any) =>
+      (...args: any) => this.setState(func(...args))) as typeof actions
+
+    return (
+      <Page>
+        <FlowChart
+          chart={chart}
+          callbacks={stateActions}
+          Components={{
+            NodeInner: NodeInnerCustom,
+          }}
+          config={ {
+            onChangeRotation: this.onChangeRotation,
+          } as any }
+        />
+      </Page>
+    )
+  }
 }

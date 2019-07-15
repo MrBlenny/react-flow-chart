@@ -13,7 +13,6 @@ import { INodeDefaultProps, NodeDefault } from './Node.default'
 export interface INodeWrapperProps {
   config: IConfig
   node: INode
-  nodeProps?: any
   Component: React.FunctionComponent<INodeDefaultProps>
   offset: IPosition
   selected: ISelectedOrHovered | undefined
@@ -37,7 +36,6 @@ export interface INodeWrapperProps {
 export const NodeWrapper = ({
   config,
   node,
-  nodeProps,
   onDragNode,
   onNodeClick,
   isSelected,
@@ -128,7 +126,6 @@ export const NodeWrapper = ({
         }}
         isSelected={isSelected}
         node={node}
-        nodeProps={nodeProps}
       />
     </Draggable>
   )
