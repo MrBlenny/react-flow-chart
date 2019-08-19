@@ -69,7 +69,10 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
       onDeleteKey,
       onCanvasDrop,
     } = this.props
-
+    const {
+      offsetX,
+      offsetY,
+    } = this.state
     return (
       <CanvasContext.Provider value={{ offsetX: this.state.offsetX, offsetY: this.state.offsetY }}>
         <ComponentOuter ref={this.ref}>
@@ -91,8 +94,8 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
               onDrop={ (e) => {
                 const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
                 onCanvasDrop({ data, position: {
-                  x: e.clientX - position.x,
-                  y: e.clientY - position.y,
+                  x: e.clientX - (position.x + offsetX),
+                  y: e.clientY - (position.y + offsetY),
                 }})
               } }
               onDragOver={(e) => e.preventDefault()}
