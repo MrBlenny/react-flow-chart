@@ -1,7 +1,7 @@
 import { cloneDeep, mapValues } from 'lodash'
 import * as React from 'react'
 import styled from 'styled-components'
-import { FlowChart, IChart, INodeInnerDefaultProps } from '../src'
+import { FlowChart, INodeInnerDefaultProps } from '../src'
 import * as actions from '../src/container/actions'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
