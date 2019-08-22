@@ -49,6 +49,10 @@ export interface IFlowChartProps {
    * Custom components
    */
   Components?: IFlowChartComponents
+  /**
+   * Is Readonly Mode?
+   */
+  readonly?: boolean
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -82,6 +86,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
+    readonly = false,
   } = props
   const { links, nodes, selected, hovered, offset } = chart
 
@@ -118,6 +123,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
       onSizeChange={(width, height) => setCanvasSize({ width, height })}
+      readonly={readonly}
       {...canvasCallbacks}
     >
       { linksInView.map((linkId) => {
@@ -158,6 +164,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             NodeInner={NodeInner}
             Ports={Ports}
             Port={Port}
+            readonly={readonly}
             {...nodeCallbacks}
             {...portCallbacks}
           />

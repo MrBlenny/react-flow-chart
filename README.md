@@ -129,6 +129,9 @@ const Example = (
 ### With External State
 [stories/ExternalReactState.tsx](./stories/ExternalReactState.tsx)
 
+### Readonly Mode
+[stories/ReadonlyMode.tsx](./stories/ReadonlyMode.tsx)
+
 ### Other Demos
 [stories/ExternalReactState.tsx](./stories)
 

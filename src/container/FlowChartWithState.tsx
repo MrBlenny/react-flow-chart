@@ -6,6 +6,7 @@ import mapValues from './utils/mapValues'
 export interface IFlowChartWithStateProps {
   initialValue: IChart
   Components?: IFlowChartComponents
+  readonly?: boolean
 }
 
 /**
@@ -21,13 +22,14 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     this.state = props.initialValue
   }
   public render () {
-    const { Components } = this.props
+    const { Components, readonly } = this.props
 
     return (
       <FlowChart
         chart={this.state}
         callbacks={this.stateActions}
         Components={Components}
+        readonly={readonly}
       />
     )
   }
