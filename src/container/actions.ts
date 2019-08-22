@@ -142,7 +142,8 @@ export const onNodeSizeChange: IOnNodeSizeChange = ({ nodeId, size }) => (chart:
   chart.nodes[nodeId] = {
     ...chart.nodes[nodeId],
     size,
-  }
+  };
+  return chart;
 }
 
 export const onPortPositionChange: IOnPortPositionChange = (nodeToUpdate, port, position) =>
