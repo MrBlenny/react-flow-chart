@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { FlowChart, IChart, IFlowChartComponents } from '../'
+import { FlowChart, IChart, IConfig, IFlowChartComponents } from '../'
 import * as actions from './actions'
 import mapValues from './utils/mapValues'
 
 export interface IFlowChartWithStateProps {
   initialValue: IChart
   Components?: IFlowChartComponents
-  readonly?: boolean
+  config?: IConfig
 }
 
 /**
@@ -22,14 +22,14 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     this.state = props.initialValue
   }
   public render () {
-    const { Components, readonly } = this.props
+    const { Components, config } = this.props
 
     return (
       <FlowChart
         chart={this.state}
         callbacks={this.stateActions}
         Components={Components}
-        readonly={readonly}
+        config={config}
       />
     )
   }

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import {
-  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILink, ILinkDefaultProps,
-  INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
-  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered,
-  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
+  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
+  ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
+  IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
+  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
+  IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 
 export interface IFlowChartCallbacks {
@@ -50,9 +50,10 @@ export interface IFlowChartProps {
    */
   Components?: IFlowChartComponents
   /**
-   * Is Readonly Mode?
+   * Other config. This will be passed into all components and actions.
+   * Don't store state here as it may trigger re-renders
    */
-  readonly?: boolean
+  config?: IConfig
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -86,7 +87,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
-    readonly = false,
+    config = {},
   } = props
   const { links, nodes, selected, hovered, offset } = chart
 
@@ -119,11 +120,11 @@ export const FlowChart = (props: IFlowChartProps) => {
 
   return (
     <CanvasWrapper
+      config={config}
       position={chart.offset}
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
       onSizeChange={(width, height) => setCanvasSize({ width, height })}
-      readonly={readonly}
       {...canvasCallbacks}
     >
       { linksInView.map((linkId) => {
@@ -134,6 +135,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
         return (
           <LinkWrapper
+            config={config}
             key={linkId}
             link={links[linkId]}
             Component={Link}
@@ -152,6 +154,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
         return (
           <NodeWrapper
+            config={config}
             key={nodeId}
             Component={Node}
             node={nodes[nodeId]}
@@ -164,7 +167,6 @@ export const FlowChart = (props: IFlowChartProps) => {
             NodeInner={NodeInner}
             Ports={Ports}
             Port={Port}
-            readonly={readonly}
             {...nodeCallbacks}
             {...portCallbacks}
           />

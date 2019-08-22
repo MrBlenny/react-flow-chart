@@ -53,7 +53,7 @@ export class SelectedSidebar extends React.Component {
                 We can re-use the onDeleteKey action. This will delete whatever is selected.
                 Otherwise, we have access to the state here so we can do whatever we want.
               */}
-              <Button onClick={() => stateActions.onDeleteKey()}>Delete</Button>
+              <Button onClick={() => stateActions.onDeleteKey({})}>Delete</Button>
             </Message>
           : <Message>Click on a Node, Port or Link</Message> }
         </Sidebar>

@@ -1,14 +1,16 @@
 import { DraggableData } from 'react-draggable'
 import { INode, IPort } from './chart'
-import { IPosition, ISize } from './generics'
+import { IConfig } from './config'
+import { IOffset, IPosition, ISize } from './generics'
 
-export type IOnDragNode = (event: MouseEvent, dragData: DraggableData, id: string) => void
+export type IOnDragNode = (input: { config?: IConfig, event: MouseEvent, data: DraggableData, id: string }) => void
 
-export type IOnDragCanvas = (event: MouseEvent, dragData: DraggableData) => void
+export type IOnDragCanvas = (input: { config?: IConfig, event: MouseEvent, data: DraggableData }) => void
 
-export type IOnPortPositionChange = (node: INode, port: IPort, position: IPosition) => void
+export type IOnPortPositionChange = (input: { config?: IConfig, node: INode, port: IPort, el: HTMLDivElement, nodesEl: HTMLDivElement | IOffset }) => void
 
 export interface IOnLinkBaseEvent {
+  config?: IConfig
   linkId: string,
   startEvent: React.MouseEvent,
   fromNodeId: string,
@@ -33,18 +35,18 @@ export interface IOnLinkCompleteInput extends IOnLinkBaseEvent {
 }
 export type IOnLinkComplete = (input: IOnLinkCompleteInput) => void
 
-export type IOnLinkMouseEnter = ({ linkId }: { linkId: string }) => void
+export type IOnLinkMouseEnter = (input: { config?: IConfig, linkId: string }) => void
 
-export type IOnLinkMouseLeave = ({ linkId }: { linkId: string }) => void
+export type IOnLinkMouseLeave = (input: { config?: IConfig, linkId: string }) => void
 
-export type IOnLinkClick = ({ linkId }: { linkId: string }) => void
+export type IOnLinkClick = (input: { config?: IConfig, linkId: string }) => void
 
-export type IOnCanvasClick = () => void
+export type IOnCanvasClick = (input: { config?: IConfig }) => void
 
-export type IOnDeleteKey = () => void
+export type IOnDeleteKey = (input: { config?: IConfig }) => void
 
-export type IOnNodeClick = ({ nodeId }: { nodeId: string }) => void
+export type IOnNodeClick = (input: { config?: IConfig, nodeId: string }) => void
 
-export type IOnNodeSizeChange = (opts: { nodeId: string, size: ISize }) => void
+export type IOnNodeSizeChange = (input: { config?: IConfig, nodeId: string, size: ISize }) => void
 
-export type IOnCanvasDrop = ({ data, position }: { data: any, position: IPosition }) => void
+export type IOnCanvasDrop = (input: { config?: IConfig, data: any, position: IPosition }) => void

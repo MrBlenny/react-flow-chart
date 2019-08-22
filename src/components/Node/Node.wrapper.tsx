@@ -1,7 +1,9 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
+import ResizeObserver from 'react-resize-observer'
 import {
-  ILink, INode, INodeInnerDefaultProps, IOnDragNode,
+  IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
   IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
   IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
   IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
@@ -9,6 +11,7 @@ import {
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
+  config: IConfig
   node: INode
   Component: React.FunctionComponent<INodeDefaultProps>
   offset: IPosition
@@ -28,10 +31,10 @@ export interface INodeWrapperProps {
   onDragNode: IOnDragNode
   onNodeClick: IOnNodeClick
   onNodeSizeChange: IOnNodeSizeChange
-  readonly?: boolean
 }
 
 export const NodeWrapper = ({
+  config,
   node,
   onDragNode,
   onNodeClick,
@@ -51,7 +54,6 @@ export const NodeWrapper = ({
   onLinkMove,
   onLinkComplete,
   onLinkCancel,
-  readonly,
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
@@ -59,22 +61,29 @@ export const NodeWrapper = ({
 
   // TODO: probably should add an observer to track node component size changes
   React.useLayoutEffect(() => {
-    const el = compRef.current
+    const el = ReactDOM.findDOMNode(compRef.current) as HTMLInputElement
     if (el) {
       if (size.width !== el.offsetWidth || size.height !== el.offsetHeight) {
         const newSize = { width: el.offsetWidth, height: el.offsetHeight }
         setSize(newSize)
-        onNodeSizeChange({ nodeId: node.id, size: newSize })
+        onNodeSizeChange({ config, nodeId: node.id, size: newSize })
       }
     }
   }, [node, compRef.current, size.width, size.height])
 
   const children = (
     <>
-      <NodeInner node={node} />
-      <Ports>
+      <ResizeObserver
+        onResize={(rect) => {
+          const newSize = { width: rect.width, height: rect.height }
+          setSize(newSize)
+        }}
+      />
+      <NodeInner node={node} config={config} />
+      <Ports config={config}>
         { Object.keys(node.ports).map((portId) => (
           <PortWrapper
+            config={config}
             key={portId}
             offset={offset}
             selected={selected}
@@ -85,8 +94,8 @@ export const NodeWrapper = ({
             port={node.ports[portId]}
             Component={Port}
             onPortPositionChange={onPortPositionChange}
-            onLinkStart={readonly ? () => null : onLinkStart}
-            onLinkMove={readonly ? () => null : onLinkMove}
+            onLinkStart={config.readonly ? () => null : onLinkStart}
+            onLinkMove={config.readonly ? () => null : onLinkMove}
             onLinkComplete={onLinkComplete}
             onLinkCancel={onLinkCancel}
           />
@@ -105,14 +114,15 @@ export const NodeWrapper = ({
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
-      disabled={readonly}
-      onDrag={(e, dragData) => onDragNode(e, dragData, node.id)}
+      onDrag={(event, data) => onDragNode({ config, event, data, id: node.id })}
+      disabled={config.readonly}
     >
       <Component
+        config={config}
         ref={compRef}
         children={children}
         onClick={(e) => {
-          onNodeClick({ nodeId: node.id })
+          onNodeClick({ config, nodeId: node.id })
           e.stopPropagation()
         }}
         isSelected={isSelected}

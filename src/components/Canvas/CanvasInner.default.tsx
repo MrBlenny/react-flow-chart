@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import { IOnCanvasClick } from '../../'
+import { IConfig, IOnCanvasClick } from '../../'
 
 export interface ICanvasInnerDefaultProps {
+  config: IConfig
   children: any
   onClick: IOnCanvasClick
   tabIndex: number

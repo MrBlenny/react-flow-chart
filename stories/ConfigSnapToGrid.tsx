@@ -3,10 +3,15 @@ import { FlowChartWithState } from '../src'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
-export const ReadonlyMode = () => {
+export const ConfigSnapToGridDemo = () => {
   return (
     <Page>
-      <FlowChartWithState config={{ readonly: true }} initialValue={chartSimple}/>
+      <FlowChartWithState
+        initialValue={chartSimple}
+        config={{
+          snapToGrid: true,
+        }}
+      />
     </Page>
   )
 }

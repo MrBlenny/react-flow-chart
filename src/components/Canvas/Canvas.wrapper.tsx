@@ -1,11 +1,12 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
+import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
 
 export interface ICanvasWrapperProps {
+  config: IConfig
   position: {
     x: number
     y: number,
@@ -18,7 +19,6 @@ export interface ICanvasWrapperProps {
   ComponentOuter: React.FunctionComponent<ICanvasOuterDefaultProps>
   onSizeChange: (x: number, y: number) => void
   children: any
-  readonly: boolean
 }
 
 interface IState {
@@ -48,6 +48,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
       } else {
         window.addEventListener('resize', this.updateSize)
       }
+      window.addEventListener('scroll', this.updateSize)
     }
   }
 
@@ -57,10 +58,12 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
 
   public componentWillUnmount () {
     window.removeEventListener('resize', this.updateSize)
+    window.removeEventListener('scroll', this.updateSize)
   }
 
   public render () {
     const {
+      config,
       ComponentInner,
       ComponentOuter,
       position,
@@ -69,7 +72,6 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
       onCanvasClick,
       onDeleteKey,
       onCanvasDrop,
-      readonly,
     } = this.props
     const {
       offsetX,
@@ -77,21 +79,23 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
     } = this.state
     return (
       <CanvasContext.Provider value={{ offsetX: this.state.offsetX, offsetY: this.state.offsetY }}>
-        <ComponentOuter ref={this.ref}>
+        <ComponentOuter config={config} ref={this.ref}>
           <Draggable
             axis="both"
             position={position}
             grid={[1, 1]}
-            onDrag={(e, dragData) => onDragCanvas(e, dragData)}
-            disabled={readonly}
+            onDrag={(event, data) => onDragCanvas({ config, event, data })}
+            disabled={config.readonly}
           >
             <ComponentInner
+              config={config}
               children={children}
               onClick={onCanvasClick}
               tabIndex={0}
               onKeyDown={ (e: React.KeyboardEvent) => {
-                if (e.keyCode === 46) {
-                  onDeleteKey()
+                // delete or backspace keys
+                if (e.keyCode === 46 || e.keyCode === 8) {
+                  onDeleteKey({ config })
                 }
               }}
               onDrop={ (e) => {

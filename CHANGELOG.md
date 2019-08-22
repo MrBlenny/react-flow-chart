@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2019-08-22
+
+## Added
+
+- Readonly mode [yukai-w](https://github.com/MrBlenny/react-flow-chart/pull/39)
+- Offset position to dropped item position [phlickey](https://github.com/MrBlenny/react-flow-chart/pull/34)
+- `snapToGrid` and `gridSize` config options [msteinmn](https://github.com/MrBlenny/react-flow-chart/pull/23)
+- `validateLink` config function [msteinmn](https://github.com/MrBlenny/react-flow-chart/pull/23)
+- misc other fixes [msteinmn](https://github.com/MrBlenny/react-flow-chart/pull/23)
+- Config object that is accessible by all components and actions
+
+
 ## [0.0.6] - 2019-04-30
 
 ## Added
