@@ -13,6 +13,9 @@
 - misc other fixes [msteinmn](https://github.com/MrBlenny/react-flow-chart/pull/23)
 - Config object that is accessible by all components and actions
 
+## Breaking
+- Changed the callback type signatures so they are always objects rather than functions with params. If you use custom callbacks, these will need to be updated.
+
 
 ## [0.0.6] - 2019-04-30
 
