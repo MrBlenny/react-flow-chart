@@ -8,12 +8,15 @@ import { CustomPortDemo } from './CustomPort'
 import { DragAndDropSidebar } from './DragAndDropSidebar'
 import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
+import { ReadonlyMode } from './ReadonlyMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { StressTestDemo } from './StressTest'
 
 storiesOf('State', module)
   .add('Internal React State', InternalReactState)
   .add('External React State', () => <ExternalReactState />)
+storiesOf('Readonly Mode', module)
+  .add('default', ReadonlyMode)
 
 storiesOf('Custom Components', module)
   .add('Node', CustomNodeDemo)

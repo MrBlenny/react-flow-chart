@@ -18,6 +18,7 @@ export interface ICanvasWrapperProps {
   ComponentOuter: React.FunctionComponent<ICanvasOuterDefaultProps>
   onSizeChange: (x: number, y: number) => void
   children: any
+  readonly: boolean
 }
 
 interface IState {
@@ -68,6 +69,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
       onCanvasClick,
       onDeleteKey,
       onCanvasDrop,
+      readonly,
     } = this.props
     const {
       offsetX,
@@ -81,6 +83,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
             position={position}
             grid={[1, 1]}
             onDrag={(e, dragData) => onDragCanvas(e, dragData)}
+            disabled={readonly}
           >
             <ComponentInner
               children={children}

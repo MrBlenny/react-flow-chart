@@ -28,6 +28,7 @@ export interface INodeWrapperProps {
   onDragNode: IOnDragNode
   onNodeClick: IOnNodeClick
   onNodeSizeChange: IOnNodeSizeChange
+  readonly?: boolean
 }
 
 export const NodeWrapper = ({
@@ -50,6 +51,7 @@ export const NodeWrapper = ({
   onLinkMove,
   onLinkComplete,
   onLinkCancel,
+  readonly,
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
@@ -83,8 +85,8 @@ export const NodeWrapper = ({
             port={node.ports[portId]}
             Component={Port}
             onPortPositionChange={onPortPositionChange}
-            onLinkStart={onLinkStart}
-            onLinkMove={onLinkMove}
+            onLinkStart={readonly ? () => null : onLinkStart}
+            onLinkMove={readonly ? () => null : onLinkMove}
             onLinkComplete={onLinkComplete}
             onLinkCancel={onLinkCancel}
           />
@@ -103,6 +105,7 @@ export const NodeWrapper = ({
         // Stop propagation so the canvas does not move
         e.stopPropagation()
       }}
+      disabled={readonly}
       onDrag={(e, dragData) => onDragNode(e, dragData, node.id)}
     >
       <Component
