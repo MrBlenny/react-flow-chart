@@ -35,8 +35,8 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
         <br />
         <Input
           type="number"
-          onChange={(e) => (config as any).onChangeRotation(parseInt(e.target.value, 10),node.id)}
-          placeholder="Enter a number here to change rotation angle"
+          placeholder="Some Input"
+          onChange={(e) => console.log(e)}
           onClick={(e) => e.stopPropagation()}
           onMouseUp={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
@@ -48,10 +48,6 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
 
 export class CustomNodeInnerDemo extends React.Component {
   public state = cloneDeep(chartSimple)
-  public onChangeRotation = (val: number, nodeId: string) => this.setState((state: IChart) => {
-    state.nodes[nodeId].orientation = val
-    console.log('rotate', state)
-  })
   public render () {
     const chart = this.state
     const stateActions = mapValues(actions, (func: any) =>
@@ -65,9 +61,6 @@ export class CustomNodeInnerDemo extends React.Component {
           Components={{
             NodeInner: NodeInnerCustom,
           }}
-          config={ {
-            onChangeRotation: this.onChangeRotation,
-          } as any }
         />
       </Page>
     )
