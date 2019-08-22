@@ -11,7 +11,7 @@
 - [X] Stable NPM version
 - [ ] Scroll/Pinch canvas to zoom
 - [ ] Ctrl+z/Ctrl+y history
-- [ ] Read-only mode
+- [X] Read-only mode
 - [ ] Redux state container
 - [ ] Arrow heads on links
 - [ ] Docs
