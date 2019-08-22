@@ -1,13 +1,9 @@
 import { cloneDeep, mapValues } from 'lodash'
 import * as React from 'react'
-import ReactJson from 'react-json-view'
 import { FlowChart } from '../src'
 import * as actions from '../src/container/actions'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
-import { throttleRender } from './utils/throttleRender'
-
-const ReactJsonThrottled = throttleRender(200)(ReactJson)
 
 /**
  * State is external to the <FlowChart> Element
@@ -26,11 +22,6 @@ export class ExternalReactState extends React.Component {
         <FlowChart
           chart={chart}
           callbacks={stateActions}
-        />
-        <ReactJsonThrottled
-          src={chart}
-          enableClipboard={false}
-          style={{ overflowY: 'scroll', width: '400px' }}
         />
       </Page>
     )

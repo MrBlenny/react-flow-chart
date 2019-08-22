@@ -9,6 +9,7 @@ import { CustomPortDemo } from './CustomPort'
 import { DragAndDropSidebar } from './DragAndDropSidebar'
 import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
+import { ReadonlyMode } from './ReadonlyMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { StressTestDemo } from './StressTest'
 
@@ -31,4 +32,5 @@ storiesOf('Sidebar', module)
 
 storiesOf('Other Config', module)
   .add('Snap To Grid', ConfigSnapToGridDemo)
-  .add('Selected Sidebar', ConfigValidateLinkDemo)
+  .add('Link validation function', ConfigValidateLinkDemo)
+  .add('Read only mode', ReadonlyMode)

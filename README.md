@@ -11,7 +11,7 @@
 - [X] Stable NPM version
 - [ ] Scroll/Pinch canvas to zoom
 - [ ] Ctrl+z/Ctrl+y history
-- [ ] Read-only mode
+- [X] Read-only mode
 - [ ] Redux state container
 - [ ] Arrow heads on links
 - [ ] Docs
@@ -128,6 +128,9 @@ const Example = (
 
 ### With External State
 [stories/ExternalReactState.tsx](./stories/ExternalReactState.tsx)
+
+### Readonly Mode
+[stories/ReadonlyMode.tsx](./stories/ReadonlyMode.tsx)
 
 ### Other Demos
 [stories/ExternalReactState.tsx](./stories)

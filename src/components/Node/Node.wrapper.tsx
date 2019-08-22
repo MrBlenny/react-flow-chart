@@ -94,8 +94,8 @@ export const NodeWrapper = ({
             port={node.ports[portId]}
             Component={Port}
             onPortPositionChange={onPortPositionChange}
-            onLinkStart={onLinkStart}
-            onLinkMove={onLinkMove}
+            onLinkStart={config.readonly ? () => null : onLinkStart}
+            onLinkMove={config.readonly ? () => null : onLinkMove}
             onLinkComplete={onLinkComplete}
             onLinkCancel={onLinkCancel}
           />
@@ -115,6 +115,7 @@ export const NodeWrapper = ({
         e.stopPropagation()
       }}
       onDrag={(event, data) => onDragNode({ config, event, data, id: node.id })}
+      disabled={config.readonly}
     >
       <Component
         config={config}
