@@ -14,50 +14,75 @@ export const onDragNode: IOnDragNode = ({ config, event, data, id }) => (chart: 
   const nodechart = chart.nodes[id]
 
   if (nodechart) {
-    chart.nodes[id] = {
+    const chartToUpdate = {
       ...nodechart,
-      position: config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data,
-    }
+      position:
+        config && config.snapToGrid
+          ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 }
+          : data
+    };
+    return { ...chart, nodes: { ...chart.nodes, [id]: chartToUpdate } };
   }
 
   return chart
 }
 
 export const onDragCanvas: IOnDragCanvas = ({ config, event, data }) => (chart: IChart): IChart => {
-  chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
-  return chart
+  return {
+    ...chart,
+    offset:
+      config && config.snapToGrid
+        ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 }
+        : data
+  };
 }
 
 export const onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) => (chart: IChart): IChart => {
-  chart.links[linkId] = {
-    id: linkId,
-    from: {
-      nodeId: fromNodeId,
-      portId: fromPortId,
-    },
-    to: {},
-  }
-  return chart
+  return {
+    ...chart,
+    links: {
+      ...chart.links,
+      [linkId]: {
+        id: linkId,
+        from: {
+          nodeId: fromNodeId,
+          portId: fromPortId
+        },
+        to: {}
+      }
+    }
+  };
 }
 
 export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => (chart: IChart): IChart => {
-  const link = chart.links[linkId]
-  link.to.position = toPosition
-  chart.links[linkId] = { ...link }
-  return chart
+  const linkToUpdate = chart.links[linkId];
+  return {
+    ...chart,
+    links: {
+      ...chart.links,
+      [linkId]: { ...linkToUpdate, to: { position: toPosition } }
+    }
+  };
 }
 
 export const onLinkComplete: IOnLinkComplete = (props) => {
   const { linkId, fromNodeId, fromPortId, toNodeId, toPortId, config = {} } = props
   return (chart: IChart): IChart => {
     if ((config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
-      chart.links[linkId].to = {
-        nodeId: toNodeId,
-        portId: toPortId,
-      }
-    } else {
-      delete chart.links[linkId]
-    }
+      const linkToUpdate = chart.links[linkId];
+      return {
+        ...chart,
+        links: {
+          ...chart.links,
+          [linkId]: {
+            ...linkToUpdate,
+            to: { nodeId: toNodeId, portId: toPortId }
+          }
+        }
+      };
+    } 
+      
+    delete chart.links[linkId]
     return chart
   }
 }
@@ -73,10 +98,7 @@ export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (chart: IChar
   // Set the connected ports to hover
   if (link.to.nodeId && link.to.portId) {
     if (chart.hovered.type !== 'link' || chart.hovered.id !== linkId) {
-      chart.hovered = {
-        type: 'link',
-        id: linkId,
-      }
+      return { ...chart, hovered: { type: "link", id: linkId } };
     }
   }
   return chart
@@ -86,24 +108,21 @@ export const onLinkMouseLeave: IOnLinkMouseLeave = ({ linkId }) => (chart: IChar
   const link = chart.links[linkId]
   // Set the connected ports to hover
   if (link.to.nodeId && link.to.portId) {
-    chart.hovered = {}
+    return { ...chart, hovered: {} };
   }
   return chart
 }
 
 export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (chart: IChart) => {
   if (chart.selected.id !== linkId || chart.selected.type !== 'link') {
-    chart.selected = {
-      type: 'link',
-      id: linkId,
-    }
+    return { ...chart, selected: { type: "link", id: linkId } };
   }
   return chart
 }
 
 export const onCanvasClick: IOnCanvasClick = () => (chart: IChart) => {
   if (chart.selected.id) {
-    chart.selected = {}
+    return { ...chart, selected: {} };
   }
   return chart
 }
@@ -124,27 +143,30 @@ export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
     delete chart.links[chart.selected.id]
   }
   if (chart.selected) {
-    chart.selected = {}
+    return { ...chart, selected: {} };
   }
   return chart
 }
 
 export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
   if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
-    chart.selected = {
-      type: 'node',
-      id: nodeId,
-    }
+    return {
+      ...chart,
+      selected: {
+        type: "node",
+        id: nodeId
+      }
+    };
   }
   return chart
 }
 
 export const onNodeSizeChange: IOnNodeSizeChange = ({ nodeId, size }) => (chart: IChart) => {
-  chart.nodes[nodeId] = {
-    ...chart.nodes[nodeId],
-    size,
-  }
-  return chart
+  const nodeToUpdate = chart.nodes[nodeId];
+  return {
+    ...chart,
+    nodes: { ...chart.nodes, [nodeId]: { ...nodeToUpdate, size } }
+  };
 }
 
 export const onPortPositionChange: IOnPortPositionChange = ({ node: nodeToUpdate, port, el, nodesEl }) =>
@@ -157,12 +179,27 @@ export const onPortPositionChange: IOnPortPositionChange = ({ node: nodeToUpdate
       const position = rotate(center, current, angle)
 
       const node = chart.nodes[nodeToUpdate.id]
-      node.ports[port.id].position = {
-        x: position.x,
-        y: position.y,
-      }
+      const portToUpdate = node.ports[port.id];
 
-      chart.nodes[nodeToUpdate.id] = { ...node }
+      return {
+        ...chart,
+        nodes: {
+          ...chart.nodes,
+          [nodeToUpdate.id]: {
+            ...node,
+            ports: {
+              ...node.ports,
+              [port.id]: {
+                ...portToUpdate,
+                position: {
+                  x: position.x,
+                  y: position.y
+                }
+              }
+            }
+          }
+        }
+      };
     }
 
     return chart
@@ -170,13 +207,24 @@ export const onPortPositionChange: IOnPortPositionChange = ({ node: nodeToUpdate
 
 export const onCanvasDrop: IOnCanvasDrop = ({ config, data, position }) => (chart: IChart): IChart => {
   const id = v4()
-  chart.nodes[id] = {
-    id,
-    position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : position,
-    orientation: data.orientation || 0,
-    type: data.type,
-    ports: data.ports,
-    properties: data.properties,
-  }
-  return chart
+  return {
+    ...chart,
+    nodes: {
+      ...chart.nodes,
+      [id]: {
+        id,
+        position:
+          config && config.snapToGrid
+            ? {
+                x: Math.round(position.x / 20) * 20,
+                y: Math.round(position.y / 20) * 20
+              }
+            : position,
+        orientation: data.orientation || 0,
+        type: data.type,
+        ports: data.ports,
+        properties: data.properties
+      }
+    }
+  };
 }
