@@ -68,12 +68,13 @@ export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => (chart: IChar
 export const onLinkComplete: IOnLinkComplete = (props) => {
   const { linkId, fromNodeId, fromPortId, toNodeId, toPortId, config = {} } = props
   return (chart: IChart): IChart => {
+    const links = {...chart.links};
     if ((config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
-      const linkToUpdate = chart.links[linkId];
+      const linkToUpdate = links[linkId];
       return {
         ...chart,
         links: {
-          ...chart.links,
+          ...links,
           [linkId]: {
             ...linkToUpdate,
             to: { nodeId: toNodeId, portId: toPortId }
@@ -82,14 +83,15 @@ export const onLinkComplete: IOnLinkComplete = (props) => {
       };
     } 
       
-    delete chart.links[linkId]
-    return chart
+    delete links[linkId]
+    return { ...chart, links }
   }
 }
 
 export const onLinkCancel: IOnLinkCancel = ({ linkId }) => (chart: IChart) => {
-  delete chart.links[linkId]
-  return chart
+  const links = {...chart.links};
+  delete links[linkId]
+  return { ...chart, links }
 }
 
 export const onLinkMouseEnter: IOnLinkMouseEnter = ({ linkId }) => (chart: IChart) => {
@@ -128,24 +130,27 @@ export const onCanvasClick: IOnCanvasClick = () => (chart: IChart) => {
 }
 
 export const onDeleteKey: IOnDeleteKey = () => (chart: IChart) => {
+  const nodes = {...chart.nodes};
+  const links = {...chart.links};
+  let selected = chart.selected;
   if (chart.selected.type === 'node' && chart.selected.id) {
-    const node = chart.nodes[chart.selected.id]
+    const node = nodes[chart.selected.id]
     // Delete the connected links
-    Object.keys(chart.links).forEach((linkId) => {
-      const link = chart.links[linkId]
+    Object.keys(links).forEach((linkId) => {
+      const link = links[linkId]
       if (link.from.nodeId === node.id || link.to.nodeId === node.id) {
-        delete chart.links[link.id]
+        delete links[link.id]
       }
     })
     // Delete the node
-    delete chart.nodes[chart.selected.id]
+    delete nodes[chart.selected.id]
   } else if (chart.selected.type === 'link' && chart.selected.id) {
-    delete chart.links[chart.selected.id]
+    delete links[chart.selected.id]
   }
   if (chart.selected) {
-    return { ...chart, selected: {} };
+    selected = {};
   }
-  return chart
+  return { ...chart, nodes, links, selected }
 }
 
 export const onNodeClick: IOnNodeClick = ({ nodeId }) => (chart: IChart) => {
