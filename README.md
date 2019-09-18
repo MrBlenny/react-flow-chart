@@ -20,7 +20,7 @@
 
 ### [CodeSandbox Demo](https://codesandbox.io/s/4w46wv71o7)
 
-This project aims to build a highly customisable, declarative flow chart library. Critically, your control the state. Pick from Redux, MobX, React or any other state managment library - simply pass in the current state and hook up the callbacks.
+This project aims to build a highly customisable, declarative flow chart library. Critically, you control the state. Pick from Redux, MobX, React or any other state managment library - simply pass in the current state and hook up the callbacks.
 
 For example:
 
