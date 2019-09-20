@@ -122,8 +122,10 @@ export const NodeWrapper = ({
         ref={compRef}
         children={children}
         onClick={(e) => {
-          onNodeClick({ config, nodeId: node.id })
-          e.stopPropagation()
+          if (!config.readonly) {
+            onNodeClick({ config, nodeId: node.id })
+            e.stopPropagation()
+          }
         }}
         isSelected={isSelected}
         node={node}
