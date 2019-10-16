@@ -4,6 +4,7 @@ import { ConfigSnapToGridDemo } from './ConfigSnapToGrid'
 import { ConfigValidateLinkDemo } from './ConfigValidateLink'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
 import { CustomLinkDemo } from './CustomLink'
+import { CustomNodeDemo } from './CustomNode';
 import { CustomNodeInnerDemo } from './CustomNodeInner'
 import { CustomPortDemo } from './CustomPort'
 import { DragAndDropSidebar } from './DragAndDropSidebar'
@@ -19,6 +20,7 @@ storiesOf('State', module)
 
 storiesOf('Custom Components', module)
   .add('Node Inner', () => <CustomNodeInnerDemo />)
+  .add('Node', CustomNodeDemo)
   .add('Port', CustomPortDemo)
   .add('Canvas Outer', CustomCanvasOuterDemo)
   .add('Canvas Link', () => <CustomLinkDemo />)
