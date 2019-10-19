@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## Fixed
+
+- Readonly mode should prevent link edits [loonyuni](https://github.com/MrBlenny/react-flow-chart/pull/45)
+
 ## [0.0.7] - 2019-08-22
 
 ## Added
