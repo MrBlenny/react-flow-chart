@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { IConfig, ILink, INode, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick } from '../../'
+import { IConfig, ILink, INode, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave } from '../../'
+import { noop } from '../../utils'
 import { ILinkDefaultProps, LinkDefault } from './Link.default'
 import { getLinkPosition } from './utils'
-import { IOnLinkBaseEvent } from 'types'
 
 export interface ILinkWrapperProps {
   config: IConfig,
@@ -41,26 +41,15 @@ export const LinkWrapper = React.memo(({
     return null
   }
 
-  const onLinkClickWrapper = (input: IOnLinkBaseEvent ) => {
-    if (!config.readonly) {
-      return onLinkClick(input)
-    }
-  }
-  const onLinkMouseEnterWrapper = (input: IOnLinkBaseEvent ) => {
-    if (!config.readonly) {
-      return onLinkMouseEnter(input)
-    }
-  }
-
   return (
     <Component
       config={config}
       link={link}
       startPos={startPos}
       endPos={endPos}
-      onLinkMouseEnter={onLinkMouseEnterWrapper}
-      onLinkMouseLeave={onLinkMouseLeave}
-      onLinkClick={onLinkClickWrapper}
+      onLinkMouseEnter={config.readonly ? noop : onLinkMouseEnter}
+      onLinkMouseLeave={config.readonly ? noop : onLinkMouseLeave}
+      onLinkClick={config.readonly ? noop : onLinkClick}
       isSelected={isSelected}
       isHovered={isHovered}
     />

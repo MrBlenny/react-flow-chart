@@ -8,6 +8,7 @@ import {
   IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
   IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
 } from '../../'
+import { noop } from '../../utils'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
@@ -94,8 +95,8 @@ export const NodeWrapper = ({
             port={node.ports[portId]}
             Component={Port}
             onPortPositionChange={onPortPositionChange}
-            onLinkStart={config.readonly ? () => null : onLinkStart}
-            onLinkMove={config.readonly ? () => null : onLinkMove}
+            onLinkStart={config.readonly ? noop : onLinkStart}
+            onLinkMove={config.readonly ? noop : onLinkMove}
             onLinkComplete={onLinkComplete}
             onLinkCancel={onLinkCancel}
           />
