@@ -100,11 +100,13 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
               }}
               onDrop={ (e) => {
                 const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
-                onCanvasDrop({ data, position: {
-                  x: e.clientX - (position.x + offsetX),
-                  y: e.clientY - (position.y + offsetY),
-                }})
-              } }
+                if (data) {
+                  onCanvasDrop({ data, position: {
+                    x: e.clientX - (position.x + offsetX),
+                    y: e.clientY - (position.y + offsetY),
+                  }})
+                } }
+              }
               onDragOver={(e) => e.preventDefault()}
             />
           </Draggable>
