@@ -50,7 +50,7 @@ export const onLinkMove: IOnLinkMove = ({ linkId, toPosition }) => (chart: IChar
 export const onLinkComplete: IOnLinkComplete = (props) => {
   const { linkId, fromNodeId, fromPortId, toNodeId, toPortId, config = {} } = props
   return (chart: IChart): IChart => {
-    if ((config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
+    if (!config.readonly && (config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
       chart.links[linkId].to = {
         nodeId: toNodeId,
         portId: toPortId,
