@@ -105,8 +105,8 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                     x: e.clientX - (position.x + offsetX),
                     y: e.clientY - (position.y + offsetY),
                   }})
-                } }
-              }
+                }
+              } }
               onDragOver={(e) => e.preventDefault()}
             />
           </Draggable>
