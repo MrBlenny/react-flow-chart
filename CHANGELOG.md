@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Improve CustomNode storybook example [timbrunette](https://github.com/MrBlenny/react-flow-chart/pulls)
+
 ## [0.0.7] - 2019-08-22
 
 ## Added

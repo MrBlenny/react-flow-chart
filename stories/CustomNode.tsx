@@ -44,7 +44,7 @@ const NodeCustom = React.forwardRef(({ node, children, ...otherProps }: INodeDef
       </Circle>
     )
   }
-});
+})
 
 export const CustomNodeDemo = () => {
   return (
