@@ -2,11 +2,14 @@
 
 ## [Unreleased]
 
+## [0.0.8] - 2019-10-20
+
 ## Fixed
 
 - Readonly mode should prevent link edits [loonyuni](https://github.com/MrBlenny/react-flow-chart/pull/45)
 - Only call `onCanvasDrop` if data exists in drop event [loonyuni](https://github.com/MrBlenny/react-flow-chart/pull/51)
 - Improve CustomNode storybook example [timbrunette](https://github.com/MrBlenny/react-flow-chart/pulls)
+- Fixed an error that was being thown when creating links in readonly mode
 
 ## [0.0.7] - 2019-08-22
 
@@ -20,6 +23,7 @@
 - Config object that is accessible by all components and actions
 
 ## Breaking
+
 - Changed the callback type signatures so they are always objects rather than functions with params. If you use custom callbacks, these will need to be updated.
 
 

@@ -19,7 +19,8 @@
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"allowJs": false,
-		"declaration": true
+		"declaration": true,
+		"types": ["react"]
 	},
 	"include": ["src/index.ts"],
 	"exclude": ["node_modules", "build", "scripts", "config"]
