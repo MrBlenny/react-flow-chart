@@ -99,7 +99,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                 }
               }}
               onDrop={ (e) => {
-                const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
+                const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART) || "null")
                 if (data) {
                   onCanvasDrop({ data, position: {
                     x: e.clientX - (position.x + offsetX),
