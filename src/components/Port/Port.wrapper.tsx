@@ -45,19 +45,15 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
   private nodeRef = React.createRef<HTMLDivElement>()
 
+  public componentDidMount () {
+    this.updatePortPosition()
+  }
+
   public componentDidUpdate (prevProps: IPortWrapperProps) {
-    // Update port position after a re-render if node.size has changed
-    if (!isEqual(this.props.node.size, prevProps.node.size)) {
-      const el = ReactDOM.findDOMNode(this.nodeRef.current) as HTMLInputElement
-      if (el) {
-        // Ports component should be positions absolute
-        // Factor this in so we get position relative to the node
-        const nodesEl = el.parentElement
-          ? el.parentElement
-          : { offsetLeft: 0, offsetTop: 0 }
-        // update port position after node size has been determined
-        this.props.onPortPositionChange({ config: this.props.config, node: this.props.node, port: this.props.port, el, nodesEl })
-      }
+    // Update port position after a re-render if there are more ports on the same side
+    // or if node.size has changed
+    if (this.portsOfType(this.props) !== this.portsOfType(prevProps) || !isEqual(this.props.node.size, prevProps.node.size)) {
+      this.updatePortPosition()
     }
   }
 
@@ -160,5 +156,23 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         />
       </div>
     )
+  }
+
+  private updatePortPosition () {
+    const el = ReactDOM.findDOMNode(this.nodeRef.current) as HTMLInputElement
+    if (el) {
+      // Ports component should be positions absolute
+      // Factor this in so we get position relative to the node
+      const nodesEl = el.parentElement
+        ? el.parentElement
+        : { offsetLeft: 0, offsetTop: 0 }
+      // update port position after node size has been determined
+      this.props.onPortPositionChange({ config: this.props.config, node: this.props.node, port: this.props.port, el, nodesEl })
+    }
+  }
+
+  private portsOfType (props: IPortWrapperProps) {
+    const { port: { type }, node: { ports } } = props
+    return Object.values(ports).reduce((count, port) => port.type === type ? count + 1 : count, 0)
   }
 }
