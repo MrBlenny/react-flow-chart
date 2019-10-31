@@ -90,7 +90,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
             <ComponentInner
               config={config}
               children={children}
-              onClick={onCanvasClick}
+              onClick={() => onCanvasClick({ config })}
               tabIndex={0}
               onKeyDown={ (e: React.KeyboardEvent) => {
                 // delete or backspace keys
