@@ -6,6 +6,7 @@ import {
   IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
   IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
+import { getMatrix } from './utils/grid'
 
 export interface IFlowChartCallbacks {
   onDragNode: IOnDragNode
@@ -107,6 +108,8 @@ export const FlowChart = (props: IFlowChartProps) => {
       y + offset.y + size.height > 0 && y + offset.y < canvasSize.height
   })
 
+  const matrix = config.smartRouting ? getMatrix(chart.offset, Object.values(nodesInView.map(nodeId => nodes[nodeId]))) : undefined
+
   const linksInView = Object.keys(links).filter((linkId) => {
     const from = links[linkId].from
     const to = links[linkId].to
@@ -143,6 +146,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             isHovered={isHovered}
             fromNode={nodes[fromNodeId]}
             toNode={toNodeId ? nodes[toNodeId] : undefined}
+            matrix={matrix}
             {...linkCallbacks}
           />
         )
