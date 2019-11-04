@@ -5,7 +5,7 @@ import ResizeObserver from 'react-resize-observer'
 import {
   IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
   IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
-  IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
+  IOnNodeClick, IOnDragStop, IOnNodeSizeChange, IOnPortPositionChange,
   IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
 } from '../../'
 import { noop } from '../../utils'
@@ -31,6 +31,7 @@ export interface INodeWrapperProps {
   onLinkCancel: IOnLinkCancel
   onDragNode: IOnDragNode
   onNodeClick: IOnNodeClick
+  onDragStop: IOnDragStop
   onNodeSizeChange: IOnNodeSizeChange
 }
 
@@ -39,6 +40,7 @@ export const NodeWrapper = ({
   node,
   onDragNode,
   onNodeClick,
+  onDragStop,
   isSelected,
   Component = NodeDefault,
   onNodeSizeChange,
@@ -116,6 +118,7 @@ export const NodeWrapper = ({
         e.stopPropagation()
       }}
       onDrag={(event, data) => onDragNode({ config, event, data, id: node.id })}
+      onStop={(event, data) => onDragStop({ config, event, data, id: node.id })}
       disabled={config.readonly}
     >
       <Component

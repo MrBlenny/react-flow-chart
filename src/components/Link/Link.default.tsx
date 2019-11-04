@@ -25,26 +25,37 @@ export const LinkDefault = ({
   isSelected,
 }: ILinkDefaultProps) => {
   const points = generateCurvePath(startPos, endPos)
+  
+  let lineColor = "cornflowerblue";
+  let className = '';
+  if (link && link.properties) {
+    if (link.properties.lineColor) {
+      lineColor = link.properties.lineColor;
+    }
+    if (!!link.properties.isInvalid) {
+      className = 'link__invalid'
+    }
+  }
 
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
+    <svg className={className} style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
       <circle
         r="4"
         cx={startPos.x}
         cy={startPos.y}
-        fill="cornflowerblue"
+        fill={lineColor}
       />
       {/* Main line */}
       <path
         d={points}
-        stroke="cornflowerblue"
+        stroke={lineColor}
         strokeWidth="3"
         fill="none"
       />
       {/* Thick line to make selection easier */}
       <path
         d={points}
-        stroke="cornflowerblue"
+        stroke={lineColor}
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
@@ -60,7 +71,7 @@ export const LinkDefault = ({
         r="4"
         cx={endPos.x}
         cy={endPos.y}
-        fill="cornflowerblue"
+        fill={lineColor}
       />
     </svg>
   )

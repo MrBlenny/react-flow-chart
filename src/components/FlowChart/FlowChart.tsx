@@ -2,13 +2,14 @@ import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
   ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
-  IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
+  IOnDragNode, IOnDragStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
   IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
   IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 
 export interface IFlowChartCallbacks {
   onDragNode: IOnDragNode
+  onDragStop: IOnDragStop
   onDragCanvas: IOnDragCanvas
   onCanvasDrop: IOnCanvasDrop
   onLinkStart: IOnLinkStart
@@ -63,6 +64,7 @@ export const FlowChart = (props: IFlowChartProps) => {
     chart,
     callbacks: {
       onDragNode,
+      onDragStop,
       onDragCanvas,
       onCanvasDrop,
       onLinkStart,
@@ -93,7 +95,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
   const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
-  const nodeCallbacks = { onDragNode, onNodeClick, onNodeSizeChange }
+  const nodeCallbacks = { onDragNode, onDragStop, onNodeClick, onNodeSizeChange }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
 
   const nodesInView = Object.keys(nodes).filter((nodeId) => {

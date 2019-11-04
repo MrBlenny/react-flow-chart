@@ -98,6 +98,7 @@ export const chartSimple: IChart = {
       },
       properties: {
         label: 'example link label',
+        lineColor: 'red'
       },
     },
     link2: {
@@ -112,6 +113,7 @@ export const chartSimple: IChart = {
       },
       properties: {
         label: 'another example link label',
+        lineColor: 'red',
       },
     },
     link3: {

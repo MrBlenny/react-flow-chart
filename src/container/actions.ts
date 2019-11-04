@@ -23,6 +23,10 @@ export const onDragNode: IOnDragNode = ({ config, event, data, id }) => (chart: 
   return chart
 }
 
+export const onDragStop: IOnDragNode = ({ config, event, data, id }) => (chart: IChart) => {
+  return chart
+}
+
 export const onDragCanvas: IOnDragCanvas = ({ config, event, data }) => (chart: IChart): IChart => {
   chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
   return chart
