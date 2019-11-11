@@ -63,9 +63,16 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
   public onMouseDown = (startEvent: React.MouseEvent) => {
     const { offset, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove, config } = this.props
-    const linkId = v4()
-    const fromNodeId = node.id
-    const fromPortId = port.id
+    let linkId = v4()
+    let fromNodeId = node.id
+    let fromPortId = port.id
+
+    if (config.getPortInfo) {
+      const portInfo = config.getPortInfo()
+      if (portInfo.linkId) linkId = portInfo.linkId
+      if (portInfo.fromNodeId) fromNodeId = portInfo.fromNodeId
+      if (portInfo.fromPortId) fromPortId = portInfo.fromPortId
+    }
 
     // Create the move handler
     // This will update the position as the mouse moves

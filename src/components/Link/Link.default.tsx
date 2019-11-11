@@ -59,7 +59,7 @@ export const LinkDefault = ({
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
-        strokeOpacity={(isHovered || isSelected) ? 0.1 : 0}
+        strokeOpacity={(isHovered || isSelected) ? 0.4 : 0}
         onMouseEnter={() => onLinkMouseEnter({ config, linkId: link.id })}
         onMouseLeave={() => onLinkMouseLeave({ config, linkId: link.id })}
         onClick={(e) => {
