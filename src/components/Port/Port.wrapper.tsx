@@ -68,7 +68,12 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     let fromPortId = port.id
 
     if (config.getPortInfo) {
-      const portInfo = config.getPortInfo()
+      const portInfo = config.getPortInfo({ fromNodeId, fromPortId })
+      if (!portInfo.isPortValid) {
+        startEvent.preventDefault()
+        startEvent.stopPropagation()
+        return
+      }
       if (portInfo.linkId) linkId = portInfo.linkId
       if (portInfo.fromNodeId) fromNodeId = portInfo.fromNodeId
       if (portInfo.fromPortId) fromPortId = portInfo.fromPortId
