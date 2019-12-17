@@ -19,3 +19,6 @@ publish:
 publish-prod:
 	npm run-script build
 	npm publish dist --access public
+
+storybook:
+	npm run start:storybook

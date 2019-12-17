@@ -18,6 +18,7 @@ export interface IChart {
 export interface ISelectedOrHovered {
   type?: 'link' | 'node' | 'port',
   id?: string
+  nodeId?: string
 }
 
 export interface INode {
@@ -36,6 +37,7 @@ export interface INode {
 export interface IPort {
   id: string
   type: string
+  nodeId?: string
   value?: string
   properties?: any
   /** System Temp */
@@ -47,6 +49,8 @@ export interface ILink {
   from: {
     nodeId: string
     portId: string,
+    /** System Temp */
+    position?: IPosition,
   }
   to: {
     nodeId?: string

@@ -29,8 +29,10 @@ export const LinkWrapper = React.memo(({
   fromNode,
   toNode,
 }: ILinkWrapperProps) => {
-  const startPos = getLinkPosition(fromNode, link.from.portId)
-
+  const startPos = link.from.position
+    ? link.from.position
+    : getLinkPosition(fromNode, link.from.portId)
+  
   const endPos = toNode && link.to.portId
     ? getLinkPosition(toNode, link.to.portId)
     : link.to.position

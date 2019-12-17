@@ -78,7 +78,6 @@ export const DragAndDropSidebar = () => (
           port1: {
             id: 'port1',
             type: 'left',
-
           },
           port2: {
             id: 'port2',

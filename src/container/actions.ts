@@ -2,7 +2,7 @@ import { v4 } from 'uuid'
 import {
   IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
   IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick,
-  IOnNodeSizeChange, IOnPortPositionChange,
+  IOnNodeSizeChange, IOnPortPositionChange, IOnPortMouseEnter
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -181,6 +181,16 @@ export const onCanvasDrop: IOnCanvasDrop = ({ config, data, position }) => (char
     type: data.type,
     ports: data.ports,
     properties: data.properties,
+  }
+  return chart
+}
+
+export const onPortEnter: IOnPortMouseEnter = ({ config, port, node }) => (chart: IChart): IChart => {
+  if (chart.hovered.type !== 'port' || chart.hovered.id !== port.id) {
+    chart.hovered = {
+      type: 'port',
+      id: port.id,
+    }
   }
   return chart
 }
