@@ -6,6 +6,7 @@ export interface IPortDefaultProps {
   config: IConfig
   node: INode
   port: IPort
+  isNodeSelected: boolean
   isSelected: boolean
   isHovered: boolean
   isLinkSelected: boolean

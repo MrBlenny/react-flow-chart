@@ -189,6 +189,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
           config={config}
           node={node}
           port={port}
+          isNodeSelected={!!selected && selected.type === 'node' && selected.id === node.id}
           isSelected={!!selected && selected.type === 'port' && selected.id === port.id}
           isHovered={!!hovered && hovered.type === 'port' && hovered.id === port.id && hovered.nodeId === node.id}
           isLinkSelected={ selectedLink
