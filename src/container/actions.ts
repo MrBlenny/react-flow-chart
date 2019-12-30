@@ -16,7 +16,7 @@ export const onDragNode: IOnDragNode = ({ config, event, data, id }) => (chart: 
   if (nodechart) {
     chart.nodes[id] = {
       ...nodechart,
-      position: config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data,
+      position: config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : { x: data.x, y: data.y },
     }
   }
 
@@ -24,7 +24,7 @@ export const onDragNode: IOnDragNode = ({ config, event, data, id }) => (chart: 
 }
 
 export const onDragCanvas: IOnDragCanvas = ({ config, event, data }) => (chart: IChart): IChart => {
-  chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
+  chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : { x: data.x, y: data.y }
   return chart
 }
 
@@ -172,7 +172,7 @@ export const onCanvasDrop: IOnCanvasDrop = ({ config, data, position }) => (char
   const id = v4()
   chart.nodes[id] = {
     id,
-    position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : position,
+    position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : { x: position.x, y: position.y },
     orientation: data.orientation || 0,
     type: data.type,
     ports: data.ports,
