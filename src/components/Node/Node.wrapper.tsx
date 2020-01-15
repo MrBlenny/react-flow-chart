@@ -70,9 +70,11 @@ export const NodeWrapper = ({
   }, [onDragNode, config, node.id]);
 
   const onClick = React.useCallback((e: React.MouseEvent) => {
-    if (!config.readonly && !isDragging.current) {
-      onNodeClick({ config, nodeId: node.id })
+    if (!config.readonly) {
       e.stopPropagation()
+      if (!isDragging.current) {
+        onNodeClick({ config, nodeId: node.id })
+      }
     }
   }, [config, node.id])
 
