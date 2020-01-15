@@ -8,8 +8,8 @@ export const getLinkPosition = (node: INode, portId: string): IPosition => {
       y: node.position.y + (port.position ? port.position.y : 0)
     }
   }
-  console.error(`Can't find ${portId} on Node ${node.id}`)
-  console.log(node)
+  // console.error(`Can't find ${portId} on Node ${node.id}`)
+  // console.log(node)
   if (node && node.position) {
     return {
       x: node.position.x,
