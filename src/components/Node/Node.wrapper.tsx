@@ -84,25 +84,33 @@ export const NodeWrapper = ({
       />
       <NodeInner node={node} config={config} />
       <Ports config={config}>
-        { Object.keys(node.ports).map((portId) => (
-          <PortWrapper
-            config={config}
-            key={portId}
-            offset={offset}
-            selected={selected}
-            selectedLink={selectedLink}
-            hoveredLink={hoveredLink}
-            hovered={hovered}
-            node={node}
-            port={node.ports[portId]}
-            Component={Port}
-            onPortPositionChange={onPortPositionChange}
-            onLinkStart={config.readonly ? noop : onLinkStart}
-            onLinkMove={config.readonly ? noop : onLinkMove}
-            onLinkComplete={onLinkComplete}
-            onLinkCancel={onLinkCancel}
-          />
-        )) }
+        { Object.keys(node.ports).map((portId) => {
+          let style = {}
+          if (node.ports[portId].position) {
+            style['left'] = node.ports[portId].position!.x;
+            style['top'] = node.ports[portId].position!.y;
+          }
+          return (
+            <PortWrapper
+              config={config}
+              style={style}
+              key={portId}
+              offset={offset}
+              selected={selected}
+              selectedLink={selectedLink}
+              hoveredLink={hoveredLink}
+              hovered={hovered}
+              node={node}
+              port={node.ports[portId]}
+              Component={Port}
+              onPortPositionChange={onPortPositionChange}
+              onLinkStart={config.readonly ? noop : onLinkStart}
+              onLinkMove={config.readonly ? noop : onLinkMove}
+              onLinkComplete={onLinkComplete}
+              onLinkCancel={onLinkCancel}
+            />
+          )
+        }) }
       </Ports>
     </>
   )

@@ -146,6 +146,13 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       config,
     } = this.props
 
+    // TODO: Need to set position of port...
+    // if (port.position.x) {
+    //   style.left = port.position.x
+    // }
+
+    // style = { top:  }
+
     return (
       <div
         data-port-id={port.id}
@@ -157,6 +164,8 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
         <Component
           config={config}
           port={port}
+          node={node}
+          isNodeSelected={!!selected && selected.type === 'node' && selected.id === node.id}
           isSelected={!!selected && selected.type === 'port' && selected.id === port.id}
           isHovered={!!hovered && hovered.type === 'port' && hovered.id === port.id}
           isLinkSelected={ selectedLink
