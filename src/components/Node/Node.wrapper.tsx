@@ -58,16 +58,18 @@ export const NodeWrapper = ({
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
-  const isDragging = React.useRef(false);
+  const isDragging = React.useRef(false)
+
   const onStart = React.useCallback((e: MouseEvent) => {
     // Stop propagation so the canvas does not move
     e.stopPropagation()
     isDragging.current = false
-  },[]);
+  },[])
+
   const onDrag = React.useCallback((event: MouseEvent, data: DraggableData) => {
     isDragging.current = true
     onDragNode({ config, event, data, id: node.id })
-  }, [onDragNode, config, node.id]);
+  }, [onDragNode, config, node.id])
 
   const onClick = React.useCallback((e: React.MouseEvent) => {
     if (!config.readonly) {
