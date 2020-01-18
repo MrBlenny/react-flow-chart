@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [0.0.9] - 2020-01-18
+
+## Fixed
+
+- The `onNodeClick` action will no longer be called when dragging [fenech](https://github.com/MrBlenny/react-flow-chart/pull/78/files)
+- Fix data consistency when `snapToGrid` is on/off [sinan](https://github.com/MrBlenny/react-flow-chart/pull/72)
+- Update node size when size changes in the DOM [zetavg](https://github.com/MrBlenny/react-flow-chart/pull/71)
+
+## Breaking
+
+- Updated styled components to `^5.0.0` [yuyokk](https://github.com/MrBlenny/react-flow-chart/pull/76/files)
+
 ## [0.0.8] - 2019-10-20
 
 ## Fixed
