@@ -64,7 +64,10 @@ export const NodeWrapper = ({
   React.useLayoutEffect(() => {
     const el = ReactDOM.findDOMNode(compRef.current) as HTMLInputElement
     if (el) {
-      if (size.width !== el.offsetWidth || size.height !== el.offsetHeight) {
+      if (
+        (node.size && node.size.width) !== el.offsetWidth ||
+        (node.size && node.size.height) !== el.offsetHeight
+      ) {
         const newSize = { width: el.offsetWidth, height: el.offsetHeight }
         setSize(newSize)
         onNodeSizeChange({ config, nodeId: node.id, size: newSize })
