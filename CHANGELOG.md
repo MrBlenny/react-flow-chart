@@ -9,6 +9,7 @@
 - The `onNodeClick` action will no longer be called when dragging [fenech](https://github.com/MrBlenny/react-flow-chart/pull/78/files)
 - Fix data consistency when `snapToGrid` is on/off [sinan](https://github.com/MrBlenny/react-flow-chart/pull/72)
 - Update node size when size changes in the DOM [zetavg](https://github.com/MrBlenny/react-flow-chart/pull/71)
+- Prevent links and ports displaying as active when in readonly mode.
 
 ## Breaking
 
