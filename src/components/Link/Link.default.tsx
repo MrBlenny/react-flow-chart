@@ -24,11 +24,6 @@ export const LinkDefault = ({
   isHovered,
   isSelected,
 }: ILinkDefaultProps) => {
-
-  startPos.x = startPos.x + 2;
-  startPos.y = startPos.y + 2;
-  endPos.x = endPos.x + 2;
-  endPos.y = endPos.y + 2;
   
   const points = generateCurvePath(startPos, endPos)
   
@@ -41,11 +36,15 @@ export const LinkDefault = ({
     if (!!link.properties.isInvalid) {
       className = 'link__invalid'
     }
+    if (!!link.properties.isPreview) {
+      className = 'link__preview'
+    }
   }
 
   return (
-    <svg className={className} style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
+    <svg data-link className={className} style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
       <circle
+        data-link-circle
         r="4"
         cx={startPos.x}
         cy={startPos.y}
@@ -53,6 +52,7 @@ export const LinkDefault = ({
       />
       {/* Main line */}
       <path
+        data-link-line
         d={points}
         stroke={lineColor}
         strokeWidth="3"
@@ -74,6 +74,7 @@ export const LinkDefault = ({
         } }
       />
       <circle
+        data-link-circle
         r="4"
         cx={endPos.x}
         cy={endPos.y}

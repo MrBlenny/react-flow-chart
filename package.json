@@ -1,6 +1,6 @@
 {
   "name": "@sublet/react-flow-chart",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A flexible, stateless flow chart library for react.",
   "main": "src/index.js",
   "repository": "git@github.com:sublet/react-flow-chart.git",

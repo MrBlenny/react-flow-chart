@@ -151,8 +151,6 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
   public onMouseOut = (startEvent: React.MouseEvent) => {
     const { config, node, port, onPortEnter } = this.props
-    
-    console.log("Triggering mouse out!")
 
     // Notify state of link start
     onPortEnter({ config, node, port, isHovering: false })
