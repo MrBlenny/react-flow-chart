@@ -24,6 +24,13 @@ export const LinkDefault = ({
   isHovered,
   isSelected,
 }: ILinkDefaultProps) => {
+
+  // Bleh...this sucks
+  startPos.x = startPos.x + 11
+  startPos.y = startPos.y + 1
+  endPos.x = endPos.x - 6
+  endPos.y = endPos.y + 1
+  
   const points = generateCurvePath(startPos, endPos)
   
   let lineColor = "cornflowerblue";

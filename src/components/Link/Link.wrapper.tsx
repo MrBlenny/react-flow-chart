@@ -29,11 +29,21 @@ export const LinkWrapper = React.memo(({
   fromNode,
   toNode,
 }: ILinkWrapperProps) => {
-  const startPos = getLinkPosition(fromNode, link.from.portId)
 
-  const endPos = toNode && link.to.portId
-    ? getLinkPosition(toNode, link.to.portId)
-    : link.to.position
+  // TODO: Pull in Link position.
+
+  let startPos = getLinkPosition(fromNode, link.from.portId)
+
+  let endPos = toNode && link.to.portId ? getLinkPosition(toNode, link.to.portId) : link.to.position
+
+  // if (link.id === '0017517a-7804-4390-a320-368bfc576f7c') {
+  //   console.log('startPos: ', startPos)
+  //   console.log('endPos: ', endPos)
+  //   console.log('fromNode: ', fromNode)
+  //   console.log('toNode: ', toNode)
+  //   console.log('fromNode Port: ', fromNode.ports[link.from.portId])
+  //   if (toNode && link.to.portId) console.log('toNode Port: ', toNode.ports[link.to.portId])
+  // }
 
   // Don't render the link yet if there is no end pos
   // This will occur if the link was just created

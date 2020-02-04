@@ -86,10 +86,10 @@ export const NodeWrapper = ({
       <Ports config={config}>
         { Object.keys(node.ports).map((portId) => {
           let style = {}
-          if (node.ports[portId].position) {
-            style['left'] = node.ports[portId].position!.x;
-            style['top'] = node.ports[portId].position!.y;
-          }
+          // if (node.ports[portId].position) {
+          //   style['left'] = node.ports[portId].position!.x;
+          //   style['top'] = node.ports[portId].position!.y;
+          // }
           return (
             <PortWrapper
               config={config}

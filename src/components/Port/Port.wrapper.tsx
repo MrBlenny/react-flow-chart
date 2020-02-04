@@ -146,13 +146,6 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       config,
     } = this.props
 
-    // TODO: Need to set position of port...
-    // if (port.position.x) {
-    //   style.left = port.position.x
-    // }
-
-    // style = { top:  }
-
     return (
       <div
         data-port-id={port.id}
