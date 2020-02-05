@@ -66,7 +66,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
 
   public onMouseDown = (startEvent: React.MouseEvent) => {
     const { offset, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove, config, hovered } = this.props
-    
+
     let linkId = v4()
     let fromNodeId = node.id
     let fromPortId = port.id
@@ -160,6 +160,10 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     startEvent.stopPropagation()
   }
 
+  public onMouseDownCatch = () => {
+    console.log('Silence is golden!')
+  }
+
   public render () {
     const {
       selected,
@@ -177,7 +181,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       <div
         data-port-id={port.id}
         data-node-id={node.id}
-        onMouseDown={this.onMouseDown}
+        onMouseDown={(!config.propagatePortClick) ? this.onMouseDown : this.onMouseDownCatch}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
         ref={this.nodeRef}
@@ -187,6 +191,8 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
           config={config}
           node={node}
           port={port}
+          context={this.context}
+          onMouseDown={(config.propagatePortClick) ? this.onMouseDown : this.onMouseDownCatch}
           isNodeSelected={!!selected && selected.type === 'node' && selected.id === node.id}
           isSelected={!!selected && selected.type === 'port' && selected.id === port.id}
           isHovered={!!hovered && hovered.type === 'port' && hovered.id === port.id && hovered.nodeId === node.id}
