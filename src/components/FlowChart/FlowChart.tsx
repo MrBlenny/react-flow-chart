@@ -2,15 +2,17 @@ import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
   ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
-  IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
-  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
-  IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
+  IOnDragCanvasStop, IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkClick,
+  IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange,
+  IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 
 export interface IFlowChartCallbacks {
   onDragNode: IOnDragNode
+  onDragNodeStop: IOnDragNodeStop
   onDragCanvas: IOnDragCanvas
   onCanvasDrop: IOnCanvasDrop
+  onDragCanvasStop: IOnDragCanvasStop
   onLinkStart: IOnLinkStart
   onLinkMove: IOnLinkMove
   onLinkComplete: IOnLinkComplete
@@ -63,7 +65,9 @@ export const FlowChart = (props: IFlowChartProps) => {
     chart,
     callbacks: {
       onDragNode,
+      onDragNodeStop,
       onDragCanvas,
+      onDragCanvasStop,
       onCanvasDrop,
       onLinkStart,
       onLinkMove,
@@ -91,9 +95,9 @@ export const FlowChart = (props: IFlowChartProps) => {
   } = props
   const { links, nodes, selected, hovered, offset } = chart
 
-  const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
+  const canvasCallbacks = { onDragCanvas, onDragCanvasStop, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
-  const nodeCallbacks = { onDragNode, onNodeClick, onNodeSizeChange }
+  const nodeCallbacks = { onDragNode, onDragNodeStop, onNodeClick, onNodeSizeChange }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
 
   const nodesInView = Object.keys(nodes).filter((nodeId) => {

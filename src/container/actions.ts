@@ -1,8 +1,8 @@
 import { v4 } from 'uuid'
 import {
-  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
-  IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick,
-  IOnNodeSizeChange, IOnPortPositionChange,
+  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnDragNode,
+  IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
+  IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, noop,
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -23,10 +23,14 @@ export const onDragNode: IOnDragNode = ({ config, event, data, id }) => (chart: 
   return chart
 }
 
+export const onDragNodeStop: IOnDragNodeStop = noop
+
 export const onDragCanvas: IOnDragCanvas = ({ config, event, data }) => (chart: IChart): IChart => {
   chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : { x: data.x, y: data.y }
   return chart
 }
+
+export const onDragCanvasStop: IOnDragCanvasStop = noop
 
 export const onLinkStart: IOnLinkStart = ({ linkId, fromNodeId, fromPortId }) => (chart: IChart): IChart => {
   chart.links[linkId] = {

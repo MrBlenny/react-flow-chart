@@ -4,9 +4,10 @@ import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import {
   IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
-  IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
-  IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
-  IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
+  IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
+  IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
+  IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered,
+  ISize, PortWrapper,
 } from '../../'
 import { noop } from '../../utils'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
@@ -30,6 +31,7 @@ export interface INodeWrapperProps {
   onLinkComplete: IOnLinkComplete
   onLinkCancel: IOnLinkCancel
   onDragNode: IOnDragNode
+  onDragNodeStop: IOnDragNodeStop
   onNodeClick: IOnNodeClick
   onNodeSizeChange: IOnNodeSizeChange
 }
@@ -38,6 +40,7 @@ export const NodeWrapper = ({
   config,
   node,
   onDragNode,
+  onDragNodeStop,
   onNodeClick,
   isSelected,
   Component = NodeDefault,
@@ -70,6 +73,11 @@ export const NodeWrapper = ({
     isDragging.current = true
     onDragNode({ config, event, data, id: node.id })
   }, [onDragNode, config, node.id])
+
+  const onStop = React.useCallback((event: MouseEvent, data: DraggableData) => {
+    isDragging.current = false
+    onDragNodeStop({ config, event, data, id: node.id })
+  }, [onDragNodeStop, config, node.id])
 
   const onClick = React.useCallback((e: React.MouseEvent) => {
     if (!config.readonly) {
@@ -138,6 +146,7 @@ export const NodeWrapper = ({
       grid={[1,1]}
       onStart={onStart}
       onDrag={onDrag}
+      onStop={onStop}
       disabled={config.readonly}
     >
       <Component
