@@ -1,8 +1,10 @@
 import { v4 } from 'uuid'
 import {
-  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnDragNode,
-  IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, noop,
+  IChart, IOnCanvasClick, IOnCanvasDrop,
+  IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnDragNode,
+  IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart,
+  IOnNodeClick, IOnNodeMouseEnter, IOnNodeMouseLeave,
+  IOnNodeSizeChange, IOnPortPositionChange, noop,
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -108,6 +110,23 @@ export const onLinkClick: IOnLinkMouseLeave = ({ linkId }) => (chart: IChart) =>
 export const onCanvasClick: IOnCanvasClick = () => (chart: IChart) => {
   if (chart.selected.id) {
     chart.selected = {}
+  }
+  return chart
+}
+
+export const onNodeMouseEnter: IOnNodeMouseEnter = ({ nodeId }) => (chart: IChart) => {
+  return {
+    ...chart,
+    hovered: {
+      type: 'node',
+      id: nodeId,
+    },
+  }
+}
+
+export const onNodeMouseLeave: IOnNodeMouseLeave = ({ nodeId }) => (chart: IChart) => {
+  if (chart.hovered.type === 'node' && chart.hovered.id === nodeId) {
+    return { ...chart, hovered: {} }
   }
   return chart
 }
