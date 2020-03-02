@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { IConfig, PortsGroupDefault } from '../../'
+import { IConfig, INode, PortsGroupDefault } from '../../'
 
 export interface IPortsDefaultProps {
   config: IConfig
+  node: INode
   children: Array<React.ReactElement<any>>
 }
 
