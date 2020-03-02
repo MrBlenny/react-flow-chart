@@ -90,6 +90,10 @@ export interface IOnNodeSizeChangeInput extends INodeBaseInput {
 
 export type IOnNodeSizeChange = (input: IOnNodeSizeChangeInput) => void
 
+export type IOnNodeMouseEnter = (input: INodeBaseInput) => void
+
+export type IOnNodeMouseLeave = (input: INodeBaseInput) => void
+
 export interface IOnCanvasDropInput {
   config?: IConfig
   data: any
