@@ -20,11 +20,11 @@ export interface IOnDragCanvasInput {
 
 export type IOnDragCanvas = (input: IOnDragCanvasInput) => void
 
-export interface IOnDragNodeStopInput  { config?: IConfig, event: MouseEvent, data: DraggableData, id: string }
+export interface IOnDragNodeStopInput { config?: IConfig, event: MouseEvent, data: DraggableData, id: string }
 
 export type IOnDragNodeStop = (input: IOnDragNodeStopInput) => void
 
-export interface IOnDragCanvasStopInput  { config?: IConfig, event: MouseEvent, data: DraggableData }
+export interface IOnDragCanvasStopInput { config?: IConfig, event: MouseEvent, data: DraggableData }
 
 export type IOnDragCanvasStop = (input: IOnDragCanvasStopInput) => void
 
