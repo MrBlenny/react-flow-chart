@@ -114,7 +114,7 @@ export const NodeWrapper = ({
         }}
       />
       <NodeInner node={node} config={config} />
-      <Ports config={config}>
+      <Ports node={node} config={config}>
         { Object.keys(node.ports).map((portId) => (
           <PortWrapper
             config={config}
