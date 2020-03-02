@@ -6,7 +6,10 @@
 
 ## Added
 
-- smartRouting mode [dmitrygalperin](https://github.com/MrBlenny/react-flow-chart/pull/89)
+- `smartRouting` mode [dmitrygalperin](https://github.com/MrBlenny/react-flow-chart/pull/89)
+- Pass node into ports to enable customisation [fenech](https://github.com/MrBlenny/react-flow-chart/pull/85)
+- Add `nodeMouseEnter` and `nodeMouseLeave` callbacks [fenech](https://github.com/MrBlenny/react-flow-chart/pull/84)
+- Add `onDragCanvasStop` and `onDragNodeStop` callbacks [lordi](https://github.com/MrBlenny/react-flow-chart/pull/88)
 
 ## [0.0.9] - 2020-01-18
 
