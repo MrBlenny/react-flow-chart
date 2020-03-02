@@ -33,10 +33,10 @@ const PortDefaultInner = styled.div<{ active: boolean }>`
   cursor: pointer;
 `
 
-export const PortDefault = ({ isLinkSelected, isLinkHovered }: IPortDefaultProps) => (
+export const PortDefault = ({ isLinkSelected, isLinkHovered, config }: IPortDefaultProps) => (
   <PortDefaultOuter>
     <PortDefaultInner
-      active={isLinkSelected || isLinkHovered}
+      active={!config.readonly && (isLinkSelected || isLinkHovered)}
     />
   </PortDefaultOuter>
 )

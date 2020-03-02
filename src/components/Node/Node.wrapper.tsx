@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import Draggable from 'react-draggable'
+import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import {
   IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
@@ -58,13 +58,38 @@ export const NodeWrapper = ({
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
+  const isDragging = React.useRef(false)
+
+  const onStart = React.useCallback((e: MouseEvent) => {
+    // Stop propagation so the canvas does not move
+    e.stopPropagation()
+    isDragging.current = false
+  },[])
+
+  const onDrag = React.useCallback((event: MouseEvent, data: DraggableData) => {
+    isDragging.current = true
+    onDragNode({ config, event, data, id: node.id })
+  }, [onDragNode, config, node.id])
+
+  const onClick = React.useCallback((e: React.MouseEvent) => {
+    if (!config.readonly) {
+      e.stopPropagation()
+      if (!isDragging.current) {
+        onNodeClick({ config, nodeId: node.id })
+      }
+    }
+  }, [config, node.id])
+
   const compRef = React.useRef<HTMLElement>(null)
 
   // TODO: probably should add an observer to track node component size changes
   React.useLayoutEffect(() => {
     const el = ReactDOM.findDOMNode(compRef.current) as HTMLInputElement
     if (el) {
-      if (size.width !== el.offsetWidth || size.height !== el.offsetHeight) {
+      if (
+        (node.size && node.size.width) !== el.offsetWidth ||
+        (node.size && node.size.height) !== el.offsetHeight
+      ) {
         const newSize = { width: el.offsetWidth, height: el.offsetHeight }
         setSize(newSize)
         onNodeSizeChange({ config, nodeId: node.id, size: newSize })
@@ -111,23 +136,15 @@ export const NodeWrapper = ({
       axis="both"
       position={node.position}
       grid={[1,1]}
-      onStart={ (e) => {
-        // Stop propagation so the canvas does not move
-        e.stopPropagation()
-      }}
-      onDrag={(event, data) => onDragNode({ config, event, data, id: node.id })}
+      onStart={onStart}
+      onDrag={onDrag}
       disabled={config.readonly}
     >
       <Component
         config={config}
         ref={compRef}
         children={children}
-        onClick={(e) => {
-          if (!config.readonly) {
-            onNodeClick({ config, nodeId: node.id })
-            e.stopPropagation()
-          }
-        }}
+        onClick={onClick}
         isSelected={isSelected}
         node={node}
       />

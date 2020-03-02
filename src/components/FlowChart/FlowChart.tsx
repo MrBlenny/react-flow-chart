@@ -131,8 +131,8 @@ export const FlowChart = (props: IFlowChartProps) => {
       {...canvasCallbacks}
     >
       { linksInView.map((linkId) => {
-        const isSelected = selected.type === 'link' && selected.id === linkId
-        const isHovered = hovered.type === 'link' && hovered.id === linkId
+        const isSelected = !config.readonly && selected.type === 'link' && selected.id === linkId
+        const isHovered = !config.readonly && hovered.type === 'link' && hovered.id === linkId
         const fromNodeId = links[linkId].from.nodeId
         const toNodeId = links[linkId].to.nodeId
 
