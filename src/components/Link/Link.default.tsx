@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { generateCurvePath, generateSmartPath, generateRightAnglePath, IConfig, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition, IPort } from '../../'
+import { generateCurvePath, generateRightAnglePath, generateSmartPath, IConfig, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPort, IPosition } from '../../'
 
 export interface ILinkDefaultProps {
   config: IConfig
@@ -31,8 +31,8 @@ export const LinkDefault = ({
   matrix,
 }: ILinkDefaultProps) => {
 
-  const points = config.smartRouting ? 
-    !!toPort && !!matrix ? generateSmartPath(matrix, startPos, endPos, fromPort, toPort) : generateRightAnglePath(startPos, endPos) 
+  const points = config.smartRouting ?
+    !!toPort && !!matrix ? generateSmartPath(matrix, startPos, endPos, fromPort, toPort) : generateRightAnglePath(startPos, endPos)
     : generateCurvePath(startPos, endPos)
 
   return (

@@ -1,6 +1,6 @@
-import { IPosition, IPort } from '../../../'
-import { MATRIX_PADDING } from '../../FlowChart/utils/grid'
 import * as PF from 'pathfinding'
+import { IPort, IPosition } from '../../../'
+import { MATRIX_PADDING } from '../../FlowChart/utils/grid'
 
 export const generateCurvePath = (startPos: IPosition, endPos: IPosition): string => {
   const width = Math.abs(startPos.x - endPos.x)
@@ -28,11 +28,10 @@ export const generateCurvePath = (startPos: IPosition, endPos: IPosition): strin
 
 const finder = PF.JumpPointFinder({
   heuristic: PF.Heuristic.manhattan,
-  diagonalMovement: PF.DiagonalMovement.Never
-});
+  diagonalMovement: PF.DiagonalMovement.Never,
+})
 
-
-export const generateRightAnglePath =  (startPos: IPosition, endPos: IPosition) => {
+export const generateRightAnglePath = (startPos: IPosition, endPos: IPosition) => {
   const width = Math.abs(startPos.x - endPos.x)
   const height = Math.abs(startPos.y - endPos.y)
   const leftToRight = startPos.x < endPos.x
@@ -55,22 +54,22 @@ export const generateRightAnglePath =  (startPos: IPosition, endPos: IPosition) 
 }
 
 const setWalkableAtPorts = (start: { pos: IPosition, port: IPort }, end: { pos: IPosition, port: IPort }, grid: PF.Grid) => {
-([start, end]).forEach(point => {
-    if(['input', 'top'].includes(point.port.type)) {
-      for(let i = point.pos.y; i >= Math.max(point.pos.y - MATRIX_PADDING, 0); i--) {
-          grid.setWalkableAt(point.pos.x, i, true)
+  ([start, end]).forEach((point) => {
+    if (['input', 'top'].includes(point.port.type)) {
+      for (let i = point.pos.y; i >= Math.max(point.pos.y - MATRIX_PADDING, 0); i--) {
+        grid.setWalkableAt(point.pos.x, i, true)
       }
-    } else if(['output', 'bottom'].includes(point.port.type)) {
-      for(let i = point.pos.y; i <= Math.min(point.pos.y + MATRIX_PADDING, grid.height); i++) {
-          grid.setWalkableAt(point.pos.x, i, true)
+    } else if (['output', 'bottom'].includes(point.port.type)) {
+      for (let i = point.pos.y; i <= Math.min(point.pos.y + MATRIX_PADDING, grid.height); i++) {
+        grid.setWalkableAt(point.pos.x, i, true)
       }
-    } else if(['right'].includes(point.port.type)) {
-      for(let i = point.pos.x; i <= Math.max(point.pos.x + MATRIX_PADDING, grid.width); i++) {
-          grid.setWalkableAt(i, point.pos.y, true)
+    } else if (['right'].includes(point.port.type)) {
+      for (let i = point.pos.x; i <= Math.max(point.pos.x + MATRIX_PADDING, grid.width); i++) {
+        grid.setWalkableAt(i, point.pos.y, true)
       }
-    } else if(['left'].includes(point.port.type)) {
-      for(let i = point.pos.x; i >= Math.max(point.pos.x - MATRIX_PADDING, 0); i--) {
-          grid.setWalkableAt(i, point.pos.y, true)
+    } else if (['left'].includes(point.port.type)) {
+      for (let i = point.pos.x; i >= Math.max(point.pos.x - MATRIX_PADDING, 0); i--) {
+        grid.setWalkableAt(i, point.pos.y, true)
       }
     }
   })
@@ -84,7 +83,7 @@ export const generateSmartPath = (matrix: number[][], startPos: IPosition, endPo
 
   try {
     // try to find a smart path. use right angle path as a fallback
-    setWalkableAtPorts({ pos :startPosScaled, port: fromPort }, { pos :endPosScaled, port: toPort }, grid)
+    setWalkableAtPorts({ pos : startPosScaled, port: fromPort }, { pos : endPosScaled, port: toPort }, grid)
 
     const path = PF.Util.compressPath(
       finder.findPath(
@@ -93,17 +92,17 @@ export const generateSmartPath = (matrix: number[][], startPos: IPosition, endPo
         endPosScaled.x,
         endPosScaled.y,
         grid,
-      )
-    );
+      ),
+    )
 
     if (!path.length) return generateRightAnglePath(startPos, endPos)
-    let [first, ...rest] = path;
-    let d = `M${first[0] * 5} ${first[1] * 5}`;
+    const [first, ...rest] = path
+    let d = `M${first[0] * 5} ${first[1] * 5}`
     rest.forEach(([x, y]) => {
-      d += ` L${x * 5} ${y * 5}`;
-    });
-    return d;
-  } catch(e) {
+      d += ` L${x * 5} ${y * 5}`
+    })
+    return d
+  } catch (e) {
     return generateRightAnglePath(startPos, endPos)
   }
 }

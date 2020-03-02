@@ -39,7 +39,6 @@ export const LinkWrapper = React.memo(({
     : link.to.position
   const toPort = toNode && link.to.portId ? toNode.ports[link.to.portId] : undefined
 
-
   // Don't render the link yet if there is no end pos
   // This will occur if the link was just created
   if (!endPos) {

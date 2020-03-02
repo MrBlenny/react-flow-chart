@@ -108,7 +108,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       y + offset.y + size.height > 0 && y + offset.y < canvasSize.height
   })
 
-  const matrix = config.smartRouting ? getMatrix(chart.offset, Object.values(nodesInView.map(nodeId => nodes[nodeId]))) : undefined
+  const matrix = config.smartRouting ? getMatrix(chart.offset, Object.values(nodesInView.map((nodeId) => nodes[nodeId]))) : undefined
 
   const linksInView = Object.keys(links).filter((linkId) => {
     const from = links[linkId].from
