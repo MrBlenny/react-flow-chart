@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.0.10] - 2020-03-02
+
+## Added
+
+- smartRouting mode [dmitrygalperin](https://github.com/MrBlenny/react-flow-chart/pull/89)
+
 ## [0.0.9] - 2020-01-18
 
 ## Fixed
