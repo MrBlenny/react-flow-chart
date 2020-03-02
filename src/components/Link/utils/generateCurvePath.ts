@@ -9,8 +9,8 @@ export const generateCurvePath = (startPos: IPosition, endPos: IPosition): strin
   const topToBottom = startPos.y < endPos.y
   const isHorizontal = width > height
 
-  let start
-  let end
+  let start: IPosition
+  let end: IPosition
   if (isHorizontal) {
     start = leftToRight ? startPos : endPos
     end = leftToRight ? endPos : startPos
@@ -38,8 +38,8 @@ export const generateRightAnglePath = (startPos: IPosition, endPos: IPosition) =
   const topToBottom = startPos.y < endPos.y
   const isHorizontal = width > height
 
-  let start
-  let end
+  let start: IPosition
+  let end: IPosition
   if (isHorizontal) {
     start = leftToRight ? startPos : endPos
     end = leftToRight ? endPos : startPos
