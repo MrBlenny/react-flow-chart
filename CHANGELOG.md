@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.0.11] - 2020-03-02
+
+## Fixed
+
+- Fixed an issue with onDrag [errors](https://github.com/MrBlenny/react-flow-chart/pull/88#issuecomment-593213248)
+
 ## [0.0.10] - 2020-03-02
 
 ## Added
