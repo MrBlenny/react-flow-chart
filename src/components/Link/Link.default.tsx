@@ -35,25 +35,27 @@ export const LinkDefault = ({
     !!toPort && !!matrix ? generateSmartPath(matrix, startPos, endPos, fromPort, toPort) : generateRightAnglePath(startPos, endPos)
     : generateCurvePath(startPos, endPos)
 
+  const linkColor: string = (fromPort.properties && fromPort.properties.linkColor) || 'cornflowerblue'
+
   return (
     <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
       <circle
         r="4"
         cx={startPos.x}
         cy={startPos.y}
-        fill="cornflowerblue"
+        fill={linkColor}
       />
       {/* Main line */}
       <path
         d={points}
-        stroke="cornflowerblue"
+        stroke={linkColor}
         strokeWidth="3"
         fill="none"
       />
       {/* Thick line to make selection easier */}
       <path
         d={points}
-        stroke="cornflowerblue"
+        stroke={linkColor}
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
@@ -69,7 +71,7 @@ export const LinkDefault = ({
         r="4"
         cx={endPos.x}
         cy={endPos.y}
-        fill="cornflowerblue"
+        fill={linkColor}
       />
     </svg>
   )
