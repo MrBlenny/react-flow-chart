@@ -6,7 +6,7 @@ import {
   IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
   IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
   IOnNodeClick, IOnDragStop, IOnNodeSizeChange, IOnPortPositionChange,
-  IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
+  IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper, IOnPortMouseEnter,
 } from '../../'
 import { noop } from '../../utils'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
@@ -33,6 +33,7 @@ export interface INodeWrapperProps {
   onNodeClick: IOnNodeClick
   onDragStop: IOnDragStop
   onNodeSizeChange: IOnNodeSizeChange
+  onPortEnter: IOnPortMouseEnter
 }
 
 export const NodeWrapper = ({
@@ -57,6 +58,7 @@ export const NodeWrapper = ({
   onLinkMove,
   onLinkComplete,
   onLinkCancel,
+  onPortEnter,
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
@@ -108,6 +110,7 @@ export const NodeWrapper = ({
               onLinkMove={config.readonly ? noop : onLinkMove}
               onLinkComplete={onLinkComplete}
               onLinkCancel={onLinkCancel}
+              onPortEnter={onPortEnter}
             />
           )
         }) }
@@ -141,6 +144,7 @@ export const NodeWrapper = ({
         }}
         isSelected={isSelected}
         node={node}
+        hovered={hovered}
       />
     </Draggable>
   )

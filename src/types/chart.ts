@@ -18,6 +18,7 @@ export interface IChart {
 export interface ISelectedOrHovered {
   type?: 'link' | 'node' | 'port',
   id?: string
+  nodeId?: string
 }
 
 export interface INode {

@@ -37,6 +37,8 @@ export interface IOnLinkCompleteInput extends IOnLinkBaseEvent {
 }
 export type IOnLinkComplete = (input: IOnLinkCompleteInput) => void
 
+export type IOnPortMouseEnter = (input: { config?: IConfig, port: IPort, node: INode, isHovering: boolean }) => void
+
 export type IOnLinkMouseEnter = (input: { config?: IConfig, linkId: string }) => void
 
 export type IOnLinkMouseLeave = (input: { config?: IConfig, linkId: string }) => void

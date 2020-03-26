@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom'
 import { v4 } from 'uuid'
 import {
   IConfig, ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove,
-  IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered,
+  IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered, IOnPortMouseEnter,
 } from '../../'
 import CanvasContext from '../Canvas/CanvasContext'
 import { IPortDefaultProps, PortDefault } from './Port.default'
@@ -37,13 +37,16 @@ export interface IPortWrapperProps {
   onLinkMove: IOnLinkMove
   onLinkCancel: IOnLinkCancel
   onLinkComplete: IOnLinkComplete
+  onPortEnter: IOnPortMouseEnter
 }
 
 export class PortWrapper extends React.Component<IPortWrapperProps> {
+
   public static contextType = CanvasContext
   public context!: React.ContextType<typeof CanvasContext>
 
   private nodeRef = React.createRef<HTMLDivElement>()
+
 
   public componentDidUpdate (prevProps: IPortWrapperProps) {
     // Update port position after a re-render if node.size has changed
@@ -62,13 +65,14 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   }
 
   public onMouseDown = (startEvent: React.MouseEvent) => {
-    const { offset, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove, config } = this.props
+    const { offset, node, port, onLinkStart, onLinkCancel, onLinkComplete, onLinkMove, config, hovered } = this.props
+
     let linkId = v4()
     let fromNodeId = node.id
     let fromPortId = port.id
 
     if (config.getPortInfo) {
-      const portInfo = config.getPortInfo({ fromNodeId, fromPortId })
+      const portInfo = config.getPortInfo({ fromNodeId, fromPortId, hovered })
       if (!portInfo.isPortValid) {
         startEvent.preventDefault()
         startEvent.stopPropagation()
@@ -133,6 +137,33 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     startEvent.preventDefault()
     startEvent.stopPropagation()
   }
+
+  public onMouseOver = (startEvent: React.MouseEvent) => {
+    const { config, node, port, onPortEnter } = this.props
+
+    // Notify state of link start
+    onPortEnter({ config, node, port, isHovering: true })
+
+    // Prevent default and stop propagation to prevent text selection
+    startEvent.preventDefault()
+    startEvent.stopPropagation()
+  }
+
+  public onMouseOut = (startEvent: React.MouseEvent) => {
+    const { config, node, port, onPortEnter } = this.props
+
+    // Notify state of link start
+    onPortEnter({ config, node, port, isHovering: false })
+
+    // Prevent default and stop propagation to prevent text selection
+    startEvent.preventDefault()
+    startEvent.stopPropagation()
+  }
+
+  public onMouseDownCatch = () => {
+    console.log('Art wears women clothes!')
+  }
+
   public render () {
     const {
       selected,
@@ -145,22 +176,26 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       Component = PortDefault,
       config,
     } = this.props
-
+    
     return (
       <div
         data-port-id={port.id}
         data-node-id={node.id}
-        onMouseDown={this.onMouseDown}
+        onMouseDown={(!config.propagatePortClick) ? this.onMouseDown : this.onMouseDownCatch}
+        onMouseOver={this.onMouseOver}
+        onMouseOut={this.onMouseOut}
         ref={this.nodeRef}
         style={style}
       >
         <Component
           config={config}
-          port={port}
           node={node}
+          port={port}
+          context={this.context}
+          onMouseDown={(config.propagatePortClick) ? this.onMouseDown : this.onMouseDownCatch}
           isNodeSelected={!!selected && selected.type === 'node' && selected.id === node.id}
           isSelected={!!selected && selected.type === 'port' && selected.id === port.id}
-          isHovered={!!hovered && hovered.type === 'port' && hovered.id === port.id}
+          isHovered={!!hovered && hovered.type === 'port' && hovered.id === port.id && hovered.nodeId === node.id}
           isLinkSelected={ selectedLink
             ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) ||
                (selectedLink.to.portId === port.id && selectedLink.to.nodeId === node.id))

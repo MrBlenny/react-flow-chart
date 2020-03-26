@@ -6,6 +6,8 @@ export interface IPortDefaultProps {
   config: IConfig
   node: INode
   port: IPort
+  context: any // TODO: BAD
+  onMouseDown: any // TODO: BAD
   isNodeSelected: boolean
   isSelected: boolean
   isHovered: boolean
