@@ -161,7 +161,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   }
 
   public onMouseDownCatch = () => {
-    console.log('Silence is golden!')
+    console.log('Art wears women clothes!')
   }
 
   public render () {

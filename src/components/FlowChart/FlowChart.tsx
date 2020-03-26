@@ -175,7 +175,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             node={nodes[nodeId]}
             offset={chart.offset}
             isSelected={isSelected}
-            selected={selectedLink ? selected : undefined}
+            selected={(selectedLink || isSelected) ? selected : undefined}
             hovered={isHovered}
             selectedLink={selectedLink}
             hoveredLink={hoveredLink}

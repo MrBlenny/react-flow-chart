@@ -39,6 +39,9 @@ export const LinkDefault = ({
     if (!!link.properties.isPreview) {
       className = 'link__preview'
     }
+    if (!!link.properties.isExistingPreview) {
+      className = 'link__existingPreview'
+    }
   }
 
   return (
