@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
-  ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
+  ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnZoomCanvas, IOnDragCanvas,
   IOnDragNode, IOnDragStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnPortMouseEnter,
   IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps,
   IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
@@ -11,6 +11,7 @@ export interface IFlowChartCallbacks {
   onDragNode: IOnDragNode
   onDragStop: IOnDragStop
   onDragCanvas: IOnDragCanvas
+  onZoomCanvas: IOnZoomCanvas
   onCanvasDrop: IOnCanvasDrop
   onLinkStart: IOnLinkStart
   onLinkMove: IOnLinkMove
@@ -67,6 +68,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       onDragNode,
       onDragStop,
       onDragCanvas,
+      onZoomCanvas,
       onCanvasDrop,
       onLinkStart,
       onLinkMove,
@@ -95,7 +97,7 @@ export const FlowChart = (props: IFlowChartProps) => {
   } = props
   const { links, nodes, selected, hovered } = chart
 
-  const canvasCallbacks = { onDragCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
+  const canvasCallbacks = { onDragCanvas, onZoomCanvas, onCanvasClick, onDeleteKey, onCanvasDrop }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
   const nodeCallbacks = { onDragNode, onDragStop, onNodeClick, onNodeSizeChange }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel, onPortEnter }
@@ -103,32 +105,11 @@ export const FlowChart = (props: IFlowChartProps) => {
   const nodesInView = Object.keys(nodes)
   const linksInView = Object.keys(links)
 
-  // const nodesInView = Object.keys(nodes).filter((nodeId) => {
-  //   // TODO: define this in chart?
-  //   const defaultNodeSize = { width: 500, height: 500 }
-
-  //   const { x, y } = nodes[nodeId].position
-  //   const size = nodes[nodeId].size || defaultNodeSize
-
-  //   return x + offset.x + size.width > 0 && x + offset.x < canvasSize.width &&
-  //     y + offset.y + size.height > 0 && y + offset.y < canvasSize.height
-  // })
-
-  // const linksInView = Object.keys(links).filter((linkId) => {
-  //   const from = links[linkId].from
-  //   const to = links[linkId].to
-
-  //   return (
-  //     !to.nodeId ||
-  //     nodesInView.indexOf(from.nodeId) !== -1 ||
-  //     nodesInView.indexOf(to.nodeId) !== -1
-  //   )
-  // })
-
   return (
     <CanvasWrapper
       config={config}
       position={chart.offset}
+      zoom={chart.zoom}
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
       onSizeChange={(width, height) => {}}

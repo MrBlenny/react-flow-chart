@@ -7,7 +7,9 @@ export type IOnDragNode = (input: { config?: IConfig, event: MouseEvent, data: D
 
 export type IOnDragStop = (input: { config?: IConfig, event: MouseEvent, data: DraggableData, id: string }) => void
 
-export type IOnDragCanvas = (input: { config?: IConfig, event: MouseEvent, data: DraggableData }) => void
+export type IOnZoomCanvas = (input: { config?: IConfig, data: any }) => void
+
+export type IOnDragCanvas = (input: { config?: IConfig, data: any }) => void
 
 export type IOnPortPositionChange = (input: { config?: IConfig, node: INode, port: IPort, el: HTMLDivElement, nodesEl: HTMLDivElement | IOffset }) => void
 

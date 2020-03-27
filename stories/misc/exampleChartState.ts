@@ -5,6 +5,7 @@ export const chartSimple: IChart = {
     x: 0,
     y: 0,
   },
+  zoom: 1,
   nodes: {
     node1: {
       id: 'node1',

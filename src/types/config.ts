@@ -5,6 +5,7 @@ export interface IConfig {
   defaultPosition?: any
   grid?: any
   positionOffset?: any
+  zoomScale?: any
   readonly?: boolean
   disableCanvas?: boolean
   snapToGrid?: boolean

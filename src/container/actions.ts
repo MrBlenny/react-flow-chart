@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 import {
-  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel,
+  IChart, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnZoomCanvas, IOnDragNode, IOnLinkCancel,
   IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick,
   IOnNodeSizeChange, IOnPortPositionChange, IOnPortMouseEnter
 } from '../'
@@ -27,8 +27,18 @@ export const onDragStop: IOnDragNode = ({ config, event, data, id }) => (chart: 
   return chart
 }
 
-export const onDragCanvas: IOnDragCanvas = ({ config, event, data }) => (chart: IChart): IChart => {
-  chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : data
+export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (chart: IChart): IChart => {
+  console.log('BEFORE: ', chart.zoom, data.scale)
+  chart.zoom = data.scale
+  console.log('AFTER: ', chart.zoom, data.scale)
+  return chart
+}
+
+export const onDragCanvas: IOnDragCanvas = ({ config, data }) => (chart: IChart): IChart => {
+  chart.offset = { x: data.x, y: data.y }
+  if (config && config.snapToGrid) {
+    chart.offset = { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 }
+  }
   return chart
 }
 

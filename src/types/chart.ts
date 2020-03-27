@@ -8,6 +8,7 @@ export interface IChart {
   links: {
     [id: string]: ILink,
   }
+  zoom: number
   properties?: any
 
   /** System Temp */

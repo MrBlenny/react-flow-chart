@@ -6,7 +6,7 @@ lint:
 
 clean:
 	rm -rf node_modules
-	npm cache clean
+	npm cache clean --force
 	npm install
 
 build:
