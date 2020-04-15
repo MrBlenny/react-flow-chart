@@ -41,10 +41,10 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
         chart={this.state}
         callbacks={{
           ...this.stateActions, 
-          onNodeClick:(nodeId)=>{this.props.onNodeClick(nodeId); return this.stateActions.onNodeClick(nodeId)}, onDeleteKey:(x)=>console.log(x),
+          onNodeClick:(nodeId)=>{this.props.onNodeClick(nodeId); return this.stateActions.onNodeClick(nodeId)},
           onLinkClick:(linkId)=>{this.props.onNodeClick(linkId); return this.stateActions.onLinkClick(linkId)},
           ...this.props.callbacks
-        }} //...this.props.callbacks 
+        }}
         Components={Components}
         config={config}
       />
