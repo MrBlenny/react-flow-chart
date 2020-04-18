@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Draggable from 'react-draggable'
-import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, REACT_FLOW_CHART } from '../../'
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
+import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnZoomCanvas, IZoom, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
@@ -11,6 +11,8 @@ export interface ICanvasWrapperProps {
     x: number
     y: number,
   }
+  zoom: IZoom
+  onZoomCanvas: IOnZoomCanvas
   onDragCanvas: IOnDragCanvas
   onDragCanvasStop: IOnDragCanvasStop
   onDeleteKey: IOnDeleteKey
@@ -74,45 +76,79 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
       onCanvasClick,
       onDeleteKey,
       onCanvasDrop,
+      zoom,
+      onZoomCanvas,
     } = this.props
-    const {
-      offsetX,
-      offsetY,
-    } = this.state
+    const { offsetX, offsetY } = this.state
+
+    const options = {
+      transformEnabled: zoom.transformEnabled || true,
+      minScale: zoom.minScale || 0.25,
+      maxScale: zoom.maxScale || 2,
+      limitToBounds: false,
+      limitToWrapper: false,
+      centerContent: false,
+    }
+
+    const doubleClickMode = config.readonly ? 'zoomOut' : 'zoomIn'
+
     return (
-      <CanvasContext.Provider value={{ offsetX: this.state.offsetX, offsetY: this.state.offsetY }}>
+      <CanvasContext.Provider
+        value={{
+          offsetX: this.state.offsetX,
+          offsetY: this.state.offsetY,
+          zoomScale: zoom.scale,
+        }}
+      >
         <ComponentOuter config={config} ref={this.ref}>
-          <Draggable
-            axis="both"
-            position={position}
-            grid={[1, 1]}
-            onDrag={(event, data) => onDragCanvas({ config, event, data })}
-            onStop={(event, data) => onDragCanvasStop({ config, event, data })}
-            disabled={config.readonly}
+          <TransformWrapper
+            defaultPositionX={position.x}
+            defaultPositionY={position.y}
+            positionX={position.x}
+            positionY={position.y}
+            scale={zoom.scale}
+            options={options}
+            zoomIn={zoom.zoomIn || { step: 300 }}
+            zoomOut={zoom.zoomOut || { step: 300 }}
+            pan={zoom.pan || { disabled: false }}
+            wheel={zoom.wheel || { disabled: false, step: 75 }}
+            doubleClick={{ disabled: true, step: 10, mode: doubleClickMode }}
+            pinch={{ disabled: false }}
+            onWheel={(data: any) => onZoomCanvas({ config, data })}
+            onWheelStop={(data: any) => onZoomCanvas({ config, data })}
+            onPanning={(data: any) => onDragCanvas({ config, data })}
+            onPanningStop={(data: any) => onDragCanvasStop({ config, data })}
           >
-            <ComponentInner
-              config={config}
-              children={children}
-              onClick={onCanvasClick}
-              tabIndex={0}
-              onKeyDown={ (e: React.KeyboardEvent) => {
-                // delete or backspace keys
-                if (e.keyCode === 46 || e.keyCode === 8) {
-                  onDeleteKey({ config })
-                }
-              }}
-              onDrop={ (e) => {
-                const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
-                if (data) {
-                  onCanvasDrop({ data, position: {
-                    x: e.clientX - (position.x + offsetX),
-                    y: e.clientY - (position.y + offsetY),
-                  }})
-                }
-              } }
-              onDragOver={(e) => e.preventDefault()}
-            />
-          </Draggable>
+            <TransformComponent>
+              <ComponentInner
+                config={config}
+                children={children}
+                onClick={onCanvasClick}
+                tabIndex={0}
+                onKeyDown={(e: React.KeyboardEvent) => {
+                  // delete or backspace keys
+                  if (e.keyCode === 46 || e.keyCode === 8) {
+                    onDeleteKey({ config })
+                  }
+                }}
+                onDrop={(e) => {
+                  const data = JSON.parse(
+                    e.dataTransfer.getData(REACT_FLOW_CHART),
+                  )
+                  if (data) {
+                    onCanvasDrop({
+                      data,
+                      position: {
+                        x: e.clientX - (position.x + offsetX),
+                        y: e.clientY - (position.y + offsetY),
+                      },
+                    })
+                  }
+                }}
+                onDragOver={(e) => e.preventDefault()}
+              />
+            </TransformComponent>
+          </TransformWrapper>
         </ComponentOuter>
       </CanvasContext.Provider>
     )

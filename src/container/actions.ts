@@ -4,9 +4,24 @@ import {
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
   IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
   IOnLinkStart, IOnNodeClick, IOnNodeMouseEnter,
-  IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IStateCallback,
+  IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IOnZoomCanvas, IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
+
+function getOffset (config: any, data: any, zoom?: number) {
+  let offset = { x: data.x, y: data.y }
+  if (config && config.snapToGrid) {
+    offset = {
+      x: Math.round(data.x / 20) * 20,
+      y: Math.round(data.y / 20) * 20,
+    }
+  }
+  if (zoom) {
+    offset.x = offset.x / zoom
+    offset.y = offset.y / zoom
+  }
+  return offset
+}
 
 /**
  * This file contains actions for updating state after each of the required callbacks
@@ -16,9 +31,10 @@ export const onDragNode: IStateCallback<IOnDragNode> = ({ config, event, data, i
   const nodechart = chart.nodes[id]
 
   if (nodechart) {
+    const position = getOffset(config, data)
     chart.nodes[id] = {
       ...nodechart,
-      position: config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : { x: data.x, y: data.y },
+      position,
     }
   }
 
@@ -27,12 +43,13 @@ export const onDragNode: IStateCallback<IOnDragNode> = ({ config, event, data, i
 
 export const onDragNodeStop: IStateCallback<IOnDragNodeStop> = () => identity
 
-export const onDragCanvas: IStateCallback<IOnDragCanvas> = ({ config, event, data }) => (chart: IChart): IChart => {
-  chart.offset = config && config.snapToGrid ? { x: Math.round(data.x / 20) * 20, y: Math.round(data.y / 20) * 20 } : { x: data.x, y: data.y }
+export const onDragCanvas: IOnDragCanvas = ({ config, data }) => (chart: IChart): IChart => {
+  chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
   return chart
 }
 
-export const onDragCanvasStop: IStateCallback<IOnDragCanvasStop> = () => identity
+export const onDragCanvasStop: IStateCallback<IOnDragCanvasStop> = () =>
+  identity
 
 export const onLinkStart: IStateCallback<IOnLinkStart> = ({ linkId, fromNodeId, fromPortId }) => (chart: IChart): IChart => {
   chart.links[linkId] = {
@@ -55,6 +72,7 @@ export const onLinkMove: IStateCallback<IOnLinkMove> = ({ linkId, toPosition }) 
 
 export const onLinkComplete: IStateCallback<IOnLinkComplete> = (props) => {
   const { linkId, fromNodeId, fromPortId, toNodeId, toPortId, config = {} } = props
+
   return (chart: IChart): IChart => {
     if (!config.readonly && (config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
       chart.links[linkId].to = {
@@ -170,36 +188,64 @@ export const onNodeSizeChange: IStateCallback<IOnNodeSizeChange> = ({ nodeId, si
   return chart
 }
 
-export const onPortPositionChange: IStateCallback<IOnPortPositionChange> = ({ node: nodeToUpdate, port, el, nodesEl }) =>
-  (chart: IChart): IChart => {
-    if (nodeToUpdate.size) {
-      // rotate the port's position based on the node's orientation prop (angle)
-      const center = { x: nodeToUpdate.size.width / 2, y: nodeToUpdate.size.height / 2 }
-      const current = { x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2, y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2 }
-      const angle = nodeToUpdate.orientation || 0
-      const position = rotate(center, current, angle)
+export const onPortPositionChange: IStateCallback<IOnPortPositionChange> = ({
+  node: nodeToUpdate,
+  port,
+  el,
+  nodesEl,
+}) => (chart: IChart): IChart => {
+  if (nodeToUpdate.size) {
+    // rotate the port's position based on the node's orientation prop (angle)
+    const center = {
+      x: nodeToUpdate.size.width / 2,
+      y: nodeToUpdate.size.height / 2,
+    }
+    const current = {
+      x: el.offsetLeft + nodesEl.offsetLeft + el.offsetWidth / 2,
+      y: el.offsetTop + nodesEl.offsetTop + el.offsetHeight / 2,
+    }
+    const angle = nodeToUpdate.orientation || 0
+    const position = rotate(center, current, angle)
 
-      const node = chart.nodes[nodeToUpdate.id]
-      node.ports[port.id].position = {
-        x: position.x,
-        y: position.y,
-      }
-
-      chart.nodes[nodeToUpdate.id] = { ...node }
+    const node = chart.nodes[nodeToUpdate.id]
+    node.ports[port.id].position = {
+      x: position.x,
+      y: position.y,
     }
 
-    return chart
+    chart.nodes[nodeToUpdate.id] = { ...node }
   }
 
-export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({ config, data, position }) => (chart: IChart): IChart => {
+  return chart
+}
+
+export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
+  config,
+  data,
+  position,
+}) => (chart: IChart): IChart => {
   const id = v4()
   chart.nodes[id] = {
     id,
-    position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : { x: position.x, y: position.y },
+    position:
+      config && config.snapToGrid
+        ? {
+          x: Math.round(position.x / 20) * 20,
+          y: Math.round(position.y / 20) * 20,
+        }
+        : { x: position.x, y: position.y },
     orientation: data.orientation || 0,
     type: data.type,
     ports: data.ports,
     properties: data.properties,
   }
+  return chart
+}
+
+export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (
+  chart: IChart,
+): IChart => {
+  chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
+  chart.zoom.scale = data.scale
   return chart
 }

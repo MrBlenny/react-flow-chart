@@ -14,6 +14,7 @@ import { ReadonlyMode } from './ReadonlyMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { SmartRouting } from './SmartRouting'
 import { StressTestDemo } from './StressTest'
+import { Zoom } from './Zoom'
 
 storiesOf('State', module)
   .add('Internal React State', InternalReactState)
@@ -37,3 +38,4 @@ storiesOf('Other Config', module)
   .add('Link validation function', ConfigValidateLinkDemo)
   .add('Read only mode', ReadonlyMode)
   .add('Smart link routing', SmartRouting)
+  .add('Zoom', () => <Zoom />)
