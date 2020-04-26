@@ -3,7 +3,7 @@ import {
   IChart, identity, IOnCanvasClick,
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
   IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick,IOnNodeDoubleClick, IOnNodeMouseEnter,
+  IOnLinkStart, IOnNodeClick,IOnNodeDoubleClick, IOnNodeMouseEnter, IOnLinkClick,
   IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
@@ -97,7 +97,7 @@ export const onLinkMouseLeave: IStateCallback<IOnLinkMouseLeave> = ({ linkId }) 
   return chart
 }
 
-export const onLinkClick: IStateCallback<IOnLinkMouseLeave> = ({ linkId }) => (chart: IChart) => {
+export const onLinkClick: IStateCallback<IOnLinkClick> = ({ linkId }) => (chart: IChart) => {
   if (chart.selected.id !== linkId || chart.selected.type !== 'link') {
     chart.selected = {
       type: 'link',
