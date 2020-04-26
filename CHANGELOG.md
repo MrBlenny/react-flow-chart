@@ -12,11 +12,14 @@
 - Use the data.id if it exists on the drag and drop data transfer object [NoyTse](https://github.com/MrBlenny/react-flow-chart/pull/96)
 - Add an onNodeDoubkeClick handler [jetmar](https://github.com/MrBlenny/react-flow-chart/pull/99)
 - Add properties.linkColor support to the default link component [ielijose](https://github.com/MrBlenny/react-flow-chart/pull/103)
+- Zoom support! [ielijose](https://github.com/MrBlenny/react-flow-chart/pull/125)
 
 ## Breaking
 
 - Readonly mode will no longer disable canvas drag [parasg1999](https://github.com/MrBlenny/react-flow-chart/pull/112)
 - Updated styled components to `^5.1.0` [ophirg](https://github.com/MrBlenny/react-flow-chart/pull/118)
+- Zoom is enabled by default
+- Chart state must have now have a scale property
 
 ## [0.0.11] - 2020-03-02
 

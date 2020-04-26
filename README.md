@@ -9,7 +9,7 @@
 - [X] Update state on Select/Hover nodes, ports and links
 - [x] Base functionality complete
 - [X] Stable NPM version
-- [ ] Scroll/Pinch canvas to zoom
+- [X] Scroll/Pinch canvas to zoom
 - [ ] Ctrl+z/Ctrl+y history
 - [X] Read-only mode
 - [ ] Redux state container
