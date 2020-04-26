@@ -2,8 +2,8 @@ import { v4 } from 'uuid'
 import {
   IChart, identity, IOnCanvasClick,
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
-  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick,IOnNodeDoubleClick, IOnNodeMouseEnter, IOnLinkClick,
+  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave,
+  IOnLinkMove, IOnLinkStart,IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter,
   IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
