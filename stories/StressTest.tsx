@@ -12,9 +12,7 @@ const getChart = (rows: number, cols: number) => {
       x: 0,
       y: 0,
     },
-    zoom:{
-      scale: 1,
-    },
+    scale: 1,
     nodes: keyBy(xyGrid.map(({ x, y }) => ({
       id: `node-${x}-${y}`,
       type: 'default',

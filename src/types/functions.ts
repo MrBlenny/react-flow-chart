@@ -5,7 +5,7 @@ import { IOffset, IPosition, ISize } from './generics'
 
 /** Callback functions will be evaluated inside of a setState so they can always manipulate the chart state */
 export type IStateCallback<T extends (...args: any) => any> = (
-  ...params: Parameters<T>
+  ...params: Parameters<T>,
 ) => (chart: IChart) => IChart
 
 export interface IOnDragNodeInput {
@@ -66,7 +66,7 @@ export type IOnLinkStart = (input: IOnLinkBaseEvent) => void
 export interface IOnLinkMoveInput extends IOnLinkBaseEvent {
   toPosition: {
     x: number
-    y: number
+    y: number,
   }
 }
 export type IOnLinkMove = (input: IOnLinkMoveInput) => void

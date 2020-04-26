@@ -51,7 +51,7 @@ export class Zoom extends React.Component {
           <Button
             onClick={() => {
               this.setState({
-                zoom: { scale: this.state.scale + 0.1 },
+                scale: this.state.scale + 0.1 ,
               })
             }}
           >
@@ -61,7 +61,7 @@ export class Zoom extends React.Component {
           <Button
             onClick={() => {
               this.setState({
-                zoom: { scale: this.state.scale - 0.1 },
+                scale: this.state.scale - 0.1 ,
               })
             }}
           >

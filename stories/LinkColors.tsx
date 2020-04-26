@@ -8,6 +8,7 @@ const chartSimpleWithLinkColors: IChart = {
     x: 0,
     y: 0,
   },
+  scale: 1,
   nodes: {
     node1: {
       id: 'node1',
