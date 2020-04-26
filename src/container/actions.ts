@@ -2,8 +2,8 @@ import { v4 } from 'uuid'
 import {
   IChart, identity, IOnCanvasClick,
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
-  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeMouseEnter,
+  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave,
+  IOnLinkMove, IOnLinkStart,IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter,
   IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IOnZoomCanvas, IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
@@ -115,7 +115,7 @@ export const onLinkMouseLeave: IStateCallback<IOnLinkMouseLeave> = ({ linkId }) 
   return chart
 }
 
-export const onLinkClick: IStateCallback<IOnLinkMouseLeave> = ({ linkId }) => (chart: IChart) => {
+export const onLinkClick: IStateCallback<IOnLinkClick> = ({ linkId }) => (chart: IChart) => {
   if (chart.selected.id !== linkId || chart.selected.type !== 'link') {
     chart.selected = {
       type: 'link',
@@ -180,6 +180,16 @@ export const onNodeClick: IStateCallback<IOnNodeClick> = ({ nodeId }) => (chart:
   return chart
 }
 
+export const onNodeDoubleClick: IStateCallback<IOnNodeDoubleClick> = ({ nodeId }) => (chart: IChart) => {
+  if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+    chart.selected = {
+      type: 'node',
+      id: nodeId,
+    }
+  }
+  return chart
+}
+
 export const onNodeSizeChange: IStateCallback<IOnNodeSizeChange> = ({ nodeId, size }) => (chart: IChart) => {
   chart.nodes[nodeId] = {
     ...chart.nodes[nodeId],
@@ -224,7 +234,7 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
   data,
   position,
 }) => (chart: IChart): IChart => {
-  const id = v4()
+  const id = data.id || v4()
   chart.nodes[id] = {
     id,
     position:
@@ -246,6 +256,6 @@ export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (
   chart: IChart,
 ): IChart => {
   chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
-  chart.zoom.scale = data.scale
+  chart.scale = data.scale
   return chart
 }

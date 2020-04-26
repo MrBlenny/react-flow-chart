@@ -31,10 +31,10 @@ export const Button = styled.div`
 
 export class Zoom extends React.Component {
   public state = cloneDeep(chartSimple)
-  public render() {
+  public render () {
     const chart = this.state
     const stateActions = mapValues(actions, (func: any) => (...args: any) =>
-      this.setState(func(...args))
+      this.setState(func(...args)),
     ) as typeof actions
 
     return (
@@ -45,13 +45,13 @@ export class Zoom extends React.Component {
         <Sidebar>
           <Message>
             Current zoom:
-            {chart.zoom.scale}
+            {chart.scale}
           </Message>
 
           <Button
             onClick={() => {
               this.setState({
-                zoom: { scale: this.state.zoom.scale + 0.1 },
+                zoom: { scale: this.state.scale + 0.1 },
               })
             }}
           >
@@ -61,7 +61,7 @@ export class Zoom extends React.Component {
           <Button
             onClick={() => {
               this.setState({
-                zoom: { scale: this.state.zoom.scale - 0.1 },
+                zoom: { scale: this.state.scale - 0.1 },
               })
             }}
           >

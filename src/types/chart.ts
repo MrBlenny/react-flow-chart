@@ -1,4 +1,4 @@
-import { IPosition, ISize } from './generics';
+import { IPosition, ISize } from './generics'
 
 export interface IChart {
   offset: IPosition
@@ -8,7 +8,7 @@ export interface IChart {
   links: {
     [id: string]: ILink,
   }
-  zoom: IZoom
+  scale: number
   properties?: any
 
   /** System Temp */
@@ -56,29 +56,4 @@ export interface ILink {
     position?: IPosition,
   }
   properties?: any
-}
-
-export interface IZoom {
-  scale: number
-  transformEnabled?: boolean
-  minScale?: number
-  maxScale?: number
-  pan?: {
-    disabled?: boolean
-    touchPadEnabled?: boolean,
-  }
-  wheel?: {
-    disabled?: boolean
-    step?: number
-    wheelEnabled?: boolean
-    touchPadEnabled?: boolean,
-  }
-  zoomIn?: {
-    disabled?: boolean
-    step?: number,
-  }
-  zoomOut?: {
-    disabled?: boolean
-    step?: number,
-  }
 }
