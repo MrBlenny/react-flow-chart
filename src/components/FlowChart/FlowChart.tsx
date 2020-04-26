@@ -4,7 +4,7 @@ import {
   ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
   IOnDragCanvasStop, IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
   IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter, IOnNodeMouseLeave, IOnNodeSizeChange,
-  IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
+  IOnPortPositionChange, IOnZoomCanvas, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 import { getMatrix } from './utils/grid'
 
@@ -29,6 +29,7 @@ export interface IFlowChartCallbacks {
   onNodeMouseEnter: IOnNodeMouseEnter
   onNodeMouseLeave: IOnNodeMouseLeave
   onNodeSizeChange: IOnNodeSizeChange
+  onZoomCanvas: IOnZoomCanvas
 }
 
 export interface IFlowChartComponents {
@@ -88,6 +89,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       onNodeMouseEnter,
       onNodeMouseLeave,
       onNodeSizeChange,
+      onZoomCanvas,
     },
     Components: {
       CanvasOuter = CanvasOuterDefault,
@@ -102,7 +104,7 @@ export const FlowChart = (props: IFlowChartProps) => {
   } = props
   const { links, nodes, selected, hovered, offset } = chart
 
-  const canvasCallbacks = { onDragCanvas, onDragCanvasStop, onCanvasClick, onDeleteKey, onCanvasDrop }
+  const canvasCallbacks = { onDragCanvas, onDragCanvasStop, onCanvasClick, onDeleteKey, onCanvasDrop, onZoomCanvas }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
   const nodeCallbacks = { onDragNode, onNodeClick, onDragNodeStop, onNodeMouseEnter, onNodeMouseLeave, onNodeSizeChange,onNodeDoubleClick }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
@@ -135,6 +137,7 @@ export const FlowChart = (props: IFlowChartProps) => {
     <CanvasWrapper
       config={config}
       position={chart.offset}
+      scale={chart.scale}
       ComponentInner={CanvasInner}
       ComponentOuter={CanvasOuter}
       onSizeChange={(width, height) => setCanvasSize({ width, height })}

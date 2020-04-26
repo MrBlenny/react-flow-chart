@@ -1,14 +1,16 @@
-import { DraggableData } from 'react-draggable'
+import { DraggableData, DraggableEvent } from 'react-draggable'
 import { IChart, INode, IPort } from './chart'
 import { IConfig } from './config'
 import { IOffset, IPosition, ISize } from './generics'
 
 /** Callback functions will be evaluated inside of a setState so they can always manipulate the chart state */
-export type IStateCallback<T extends (...args: any) => any> = (...params: Parameters<T>) => (chart: IChart) => IChart
+export type IStateCallback<T extends (...args: any) => any> = (
+  ...params: Parameters<T>,
+) => (chart: IChart) => IChart
 
 export interface IOnDragNodeInput {
   config?: IConfig
-  event: MouseEvent
+  event: DraggableEvent
   data: DraggableData
   id: string
 }
@@ -17,17 +19,24 @@ export type IOnDragNode = (input: IOnDragNodeInput) => void
 
 export interface IOnDragCanvasInput {
   config?: IConfig
-  event: MouseEvent
-  data: DraggableData
+  data: any
 }
 
 export type IOnDragCanvas = (input: IOnDragCanvasInput) => void
 
-export interface IOnDragNodeStopInput { config?: IConfig, event: MouseEvent, data: DraggableData, id: string }
+export interface IOnDragNodeStopInput {
+  config?: IConfig
+  event: MouseEvent
+  data: DraggableData
+  id: string
+}
 
 export type IOnDragNodeStop = (input: IOnDragNodeStopInput) => void
 
-export interface IOnDragCanvasStopInput { config?: IConfig, event: MouseEvent, data: DraggableData }
+export interface IOnDragCanvasStopInput {
+  config?: IConfig
+  data: any
+}
 
 export type IOnDragCanvasStop = (input: IOnDragCanvasStopInput) => void
 
@@ -56,8 +65,8 @@ export type IOnLinkStart = (input: IOnLinkBaseEvent) => void
 
 export interface IOnLinkMoveInput extends IOnLinkBaseEvent {
   toPosition: {
-    x: number;
-    y: number;
+    x: number
+    y: number,
   }
 }
 export type IOnLinkMove = (input: IOnLinkMoveInput) => void
@@ -106,3 +115,5 @@ export interface IOnCanvasDropInput {
 }
 
 export type IOnCanvasDrop = (input: IOnCanvasDropInput) => void
+
+export type IOnZoomCanvas = (input: { config?: IConfig; data: any }) => void

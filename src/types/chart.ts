@@ -8,6 +8,7 @@ export interface IChart {
   links: {
     [id: string]: ILink,
   }
+  scale: number
   properties?: any
 
   /** System Temp */
@@ -16,7 +17,7 @@ export interface IChart {
 }
 
 export interface ISelectedOrHovered {
-  type?: 'link' | 'node' | 'port',
+  type?: 'link' | 'node' | 'port'
   id?: string
 }
 
