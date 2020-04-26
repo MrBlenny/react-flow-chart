@@ -3,7 +3,7 @@ import {
   IChart, identity, IOnCanvasClick,
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
   IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeMouseEnter,
+  IOnLinkStart, IOnNodeClick,IOnNodeDoubleClick, IOnNodeMouseEnter,
   IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
@@ -153,6 +153,16 @@ export const onDeleteKey: IStateCallback<IOnDeleteKey> = () => (chart: IChart) =
 }
 
 export const onNodeClick: IStateCallback<IOnNodeClick> = ({ nodeId }) => (chart: IChart) => {
+  if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+    chart.selected = {
+      type: 'node',
+      id: nodeId,
+    }
+  }
+  return chart
+}
+
+export let onNodeDoubleClick: IStateCallback<IOnNodeDoubleClick> = ({ nodeId }) => (chart: IChart) => {
   if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
     chart.selected = {
       type: 'node',

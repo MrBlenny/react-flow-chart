@@ -6,7 +6,7 @@ import {
   IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
   IOnDragNodeStop, IOnLinkCancel,
   IOnLinkComplete, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeMouseEnter,
+  IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter,
   IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange,
   IPortDefaultProps, IPortsDefaultProps,
   IPosition, ISelectedOrHovered, ISize, PortWrapper,
@@ -35,6 +35,7 @@ export interface INodeWrapperProps {
   onDragNode: IOnDragNode
   onDragNodeStop: IOnDragNodeStop
   onNodeClick: IOnNodeClick
+  onNodeDoubleClick: IOnNodeDoubleClick
   onNodeSizeChange: IOnNodeSizeChange
   onNodeMouseEnter: IOnNodeMouseEnter
   onNodeMouseLeave: IOnNodeMouseLeave
@@ -46,6 +47,7 @@ export const NodeWrapper = ({
   onDragNode,
   onDragNodeStop,
   onNodeClick,
+  onNodeDoubleClick,
   isSelected,
   Component = NodeDefault,
   onNodeSizeChange,
@@ -90,6 +92,15 @@ export const NodeWrapper = ({
       e.stopPropagation()
       if (!isDragging.current) {
         onNodeClick({ config, nodeId: node.id })
+      }
+    }
+  }, [config, node.id])
+
+  const onDoubleClick = React.useCallback((e: React.MouseEvent) => {
+    if (!config.readonly) {
+      e.stopPropagation()
+      if (!isDragging.current) {
+        onNodeDoubleClick({ config, nodeId: node.id })
       }
     }
   }, [config, node.id])
@@ -168,6 +179,7 @@ export const NodeWrapper = ({
         ref={compRef}
         children={children}
         onClick={onClick}
+        onDoubleClick={onDoubleClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         isSelected={isSelected}
