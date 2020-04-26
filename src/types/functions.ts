@@ -87,6 +87,8 @@ export interface INodeBaseInput {
 
 export type IOnNodeClick = (input: INodeBaseInput) => void
 
+export type IOnNodeDoubleClick = (input: INodeBaseInput) => void
+
 export interface IOnNodeSizeChangeInput extends INodeBaseInput {
   size: ISize
 }

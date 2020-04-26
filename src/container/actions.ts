@@ -2,8 +2,8 @@ import { v4 } from 'uuid'
 import {
   IChart, identity, IOnCanvasClick,
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
-  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkClick,
-  IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeMouseEnter,
+  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
+  IOnLinkStart, IOnNodeClick,IOnNodeDoubleClick, IOnNodeMouseEnter, IOnLinkClick,
   IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
@@ -162,6 +162,16 @@ export const onNodeClick: IStateCallback<IOnNodeClick> = ({ nodeId }) => (chart:
   return chart
 }
 
+export let onNodeDoubleClick: IStateCallback<IOnNodeDoubleClick> = ({ nodeId }) => (chart: IChart) => {
+  if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+    chart.selected = {
+      type: 'node',
+      id: nodeId,
+    }
+  }
+  return chart
+}
+
 export const onNodeSizeChange: IStateCallback<IOnNodeSizeChange> = ({ nodeId, size }) => (chart: IChart) => {
   chart.nodes[nodeId] = {
     ...chart.nodes[nodeId],
@@ -192,7 +202,7 @@ export const onPortPositionChange: IStateCallback<IOnPortPositionChange> = ({ no
   }
 
 export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({ config, data, position }) => (chart: IChart): IChart => {
-  const id = v4()
+  const id = data.id || v4()
   chart.nodes[id] = {
     id,
     position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : { x: position.x, y: position.y },
