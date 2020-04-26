@@ -88,7 +88,6 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
             grid={[1, 1]}
             onDrag={(event, data) => onDragCanvas({ config, event, data })}
             onStop={(event, data) => onDragCanvasStop({ config, event, data })}
-            disabled={config.readonly}
           >
             <ComponentInner
               config={config}
