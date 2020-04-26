@@ -192,7 +192,7 @@ export const onPortPositionChange: IStateCallback<IOnPortPositionChange> = ({ no
   }
 
 export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({ config, data, position }) => (chart: IChart): IChart => {
-  const id = v4()
+  const id = data.id || v4()
   chart.nodes[id] = {
     id,
     position: config && config.snapToGrid ? { x: Math.round(position.x / 20) * 20, y: Math.round(position.y / 20) * 20 } : { x: position.x, y: position.y },
