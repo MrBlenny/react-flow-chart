@@ -81,7 +81,6 @@ export const NodeWrapper = ({
   }, [onDragNode, config, node.id])
 
   const onStop = React.useCallback((event: MouseEvent, data: DraggableData) => {
-    isDragging.current = false
     onDragNodeStop({ config, event, data, id: node.id })
   }, [onDragNodeStop, config, node.id])
 
