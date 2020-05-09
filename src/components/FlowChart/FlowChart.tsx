@@ -118,8 +118,7 @@ export const FlowChart = (props: IFlowChartProps) => {
     const isTooFarLeft = scale * x + offset.x + scale * size.width < 0
     const isTooFarRight = scale * x + offset.x > canvasSize.width
     const isTooFarUp = scale * y + offset.y + scale * size.height < 0
-    const isTooFarDown = scale * y + offset.y >  canvasSize.height
-    
+    const isTooFarDown = scale * y + offset.y > canvasSize.height
     return !(isTooFarLeft || isTooFarRight || isTooFarUp || isTooFarDown)
   })
 
