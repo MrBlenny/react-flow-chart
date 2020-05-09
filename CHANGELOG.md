@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.0.13] - 2020-05-09
+
+## Fixed
+
+- Nodes is view calculation was wrong if the chart was zoomed leading to the nodes not displaying.
+- Moved `styled-components` to a peer dependency
+- Do not send click even when drag finishes [crsven](https://github.com/MrBlenny/react-flow-chart/pull/132)
+
+## [0.0.12] - 2020-04-27
+
 ## Fixed
 
 - Fix a bad type annotation for `onLinkClick` [lukewarlow](https://github.com/MrBlenny/react-flow-chart/pull/107)
