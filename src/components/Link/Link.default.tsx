@@ -2,6 +2,7 @@ import * as React from 'react'
 import { generateCurvePath, generateRightAnglePath, generateSmartPath, IConfig, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPort, IPosition } from '../../'
 
 export interface ILinkDefaultProps {
+  className?: string
   config: IConfig
   link: ILink
   startPos: IPosition
@@ -17,6 +18,7 @@ export interface ILinkDefaultProps {
 }
 
 export const LinkDefault = ({
+  className,
   config,
   link,
   startPos,
@@ -38,7 +40,7 @@ export const LinkDefault = ({
   const linkColor: string = (fromPort.properties && fromPort.properties.linkColor) || 'cornflowerblue'
 
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
+    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }} className={className}>
       <circle
         r="4"
         cx={startPos.x}
