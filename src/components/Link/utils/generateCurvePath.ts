@@ -2,12 +2,18 @@ import * as PF from 'pathfinding'
 import { IPort, IPosition } from '../../../'
 import { MATRIX_PADDING } from '../../FlowChart/utils/grid'
 
-export const generateCurvePath = (startPos: IPosition, endPos: IPosition): string => {
+export const getDirectional = (startPos: IPosition, endPos: IPosition) => {
   const width = Math.abs(startPos.x - endPos.x)
   const height = Math.abs(startPos.y - endPos.y)
   const leftToRight = startPos.x < endPos.x
   const topToBottom = startPos.y < endPos.y
   const isHorizontal = width > height
+
+  return { width, height,leftToRight,topToBottom,isHorizontal }
+}
+
+export const generateCurvePath = (startPos: IPosition, endPos: IPosition): string => {
+  const { width, height,leftToRight,topToBottom,isHorizontal } = getDirectional(startPos,endPos)
 
   let start: IPosition
   let end: IPosition
@@ -32,11 +38,7 @@ const finder = PF.JumpPointFinder({
 })
 
 export const generateRightAnglePath = (startPos: IPosition, endPos: IPosition) => {
-  const width = Math.abs(startPos.x - endPos.x)
-  const height = Math.abs(startPos.y - endPos.y)
-  const leftToRight = startPos.x < endPos.x
-  const topToBottom = startPos.y < endPos.y
-  const isHorizontal = width > height
+  const { leftToRight,topToBottom,isHorizontal } = getDirectional(startPos,endPos)
 
   let start: IPosition
   let end: IPosition
