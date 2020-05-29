@@ -1,64 +1,75 @@
-import { IPosition, ISize } from "./generics";
+import { IPosition, ISize } from './generics'
 
-export interface IChart<
-  ChartProps = any,
-  NodeProps = any,
-  LinkProps = any,
-  PortProps = any
-> {
-  offset: IPosition;
-  nodes: {
-    [id: string]: INode<NodeProps, PortProps>;
-  };
-  links: {
-    [id: string]: ILink<LinkProps>;
-  };
-  scale: number;
-  properties?: ChartProps;
-
-  /** System Temp */
-  selected: ISelectedOrHovered;
-  hovered: ISelectedOrHovered;
-}
+export type IChart<
+  ChartProps = undefined,
+  NodeProps = undefined,
+  LinkProps = undefined,
+  PortProps = undefined
+  > = {
+    offset: IPosition
+    nodes: {
+      [id: string]: INode<NodeProps, PortProps>;
+    }
+    links: {
+      [id: string]: ILink<LinkProps>;
+    }
+    scale: number
+    /** System Temp */
+    selected: ISelectedOrHovered
+    hovered: ISelectedOrHovered,
+  } & (ChartProps extends undefined ? {
+    properties?: any,
+  } : {
+    properties: ChartProps,
+  })
 
 export interface ISelectedOrHovered {
-  type?: "link" | "node" | "port";
-  id?: string;
+  type?: 'link' | 'node' | 'port'
+  id?: string
 }
 
-export interface INode<NodeProps = any, PortProps = any> {
-  id: string;
-  type: string;
-  position: IPosition;
-  orientation?: number;
+export type INode<NodeProps = undefined, PortProps = undefined> = {
+  id: string
+  type: string
+  position: IPosition
+  orientation?: number
   ports: {
     [id: string]: IPort<PortProps>;
-  };
-  properties?: NodeProps;
+  }
   /** System Temp */
-  size?: ISize;
-}
+  size?: ISize,
+} & (NodeProps extends undefined ? {
+  properties?: any,
+} : {
+  properties: NodeProps,
+})
 
-export interface IPort<W = any> {
-  id: string;
-  type: string;
-  value?: string;
-  properties?: W;
+export type IPort<PortProps = undefined> = {
+  id: string
+  type: string
+  value?: string
   /** System Temp */
-  position?: IPosition;
-}
+  position?: IPosition,
+} & (PortProps extends undefined ? {
+  properties?: any,
+} : {
+  properties: PortProps,
+})
 
-export interface ILink<V = any> {
-  id: string;
+export type ILink<LinkProps = undefined> = {
+  id: string
   from: {
     nodeId: string;
     portId: string;
-  };
+  }
   to: {
     nodeId?: string;
     portId?: string;
     /** System Temp */
     position?: IPosition;
-  };
-  properties?: V;
-}
+  },
+} & (LinkProps extends undefined ? {
+  properties?: any,
+} : {
+  properties: LinkProps,
+})
