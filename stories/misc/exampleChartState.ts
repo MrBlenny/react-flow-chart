@@ -14,9 +14,6 @@ export const chartSimple: IChart = {
         x: 300,
         y: 100,
       },
-      properties: {
-        test: 0,
-      },
       ports: {
         port1: {
           id: 'port1',
@@ -41,23 +38,14 @@ export const chartSimple: IChart = {
         x: 300,
         y: 300,
       },
-      properties: {
-        test: 1,
-      },
       ports: {
         port1: {
           id: 'port1',
           type: 'input',
-          properties: {
-            hello: 'test',
-          },
         },
         port2: {
           id: 'port2',
           type: 'output',
-          properties: {
-            hello: 'test',
-          },
         },
       },
     },
@@ -68,23 +56,14 @@ export const chartSimple: IChart = {
         x: 100,
         y: 600,
       },
-      properties: {
-        test: 2,
-      },
       ports: {
         port1: {
           id: 'port1',
           type: 'input',
-          properties: {
-            hello: 'test',
-          },
         },
         port2: {
           id: 'port2',
           type: 'output',
-          properties: {
-            hello: 'test',
-          },
         },
       },
     },
@@ -95,23 +74,14 @@ export const chartSimple: IChart = {
         x: 500,
         y: 600,
       },
-      properties: {
-        test: 3,
-      },
       ports: {
         port1: {
           id: 'port1',
           type: 'input',
-          properties: {
-            hello: 'test',
-          },
         },
         port2: {
           id: 'port2',
           type: 'output',
-          properties: {
-            hello: 'test',
-          },
         },
       },
     },
@@ -154,9 +124,6 @@ export const chartSimple: IChart = {
       to: {
         nodeId: 'node4',
         portId: 'port1',
-      },
-      properties: {
-        label: 'example link label',
       },
     },
   },
