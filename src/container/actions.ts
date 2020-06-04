@@ -1,14 +1,33 @@
 import { v4 } from 'uuid'
 import {
-  IChart, identity, IOnCanvasClick,
-  IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
-  IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave,
-  IOnLinkMove, IOnLinkStart,IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter,
-  IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IOnZoomCanvas, IStateCallback,
+  IChart,
+  identity,
+  IOnCanvasClick,
+  IOnCanvasDrop,
+  IOnDeleteKey,
+  IOnDragCanvas,
+  IOnDragCanvasStop,
+  IOnDragNode,
+  IOnDragNodeStop,
+  IOnLinkCancel,
+  IOnLinkClick,
+  IOnLinkComplete,
+  IOnLinkMouseEnter,
+  IOnLinkMouseLeave,
+  IOnLinkMove,
+  IOnLinkStart,
+  IOnNodeClick,
+  IOnNodeDoubleClick,
+  IOnNodeMouseEnter,
+  IOnNodeMouseLeave,
+  IOnNodeSizeChange,
+  IOnPortPositionChange,
+  IOnZoomCanvas,
+  IStateCallback,
 } from '../'
 import { rotate } from './utils/rotate'
 
-function getOffset (config: any, data: any, zoom?: number) {
+function getOffset(config: any, data: any, zoom?: number) {
   let offset = { x: data.x, y: data.y }
   if (config && config.snapToGrid) {
     offset = {
@@ -48,10 +67,11 @@ export const onDragCanvas: IOnDragCanvas = ({ config, data }) => (chart: IChart)
   return chart
 }
 
-export const onDragCanvasStop: IStateCallback<IOnDragCanvasStop> = () =>
-  identity
+export const onDragCanvasStop: IStateCallback<IOnDragCanvasStop> = () => identity
 
-export const onLinkStart: IStateCallback<IOnLinkStart> = ({ linkId, fromNodeId, fromPortId }) => (chart: IChart): IChart => {
+export const onLinkStart: IStateCallback<IOnLinkStart> = ({ linkId, fromNodeId, fromPortId }) => (
+  chart: IChart
+): IChart => {
   chart.links[linkId] = {
     id: linkId,
     from: {
@@ -74,7 +94,11 @@ export const onLinkComplete: IStateCallback<IOnLinkComplete> = (props) => {
   const { linkId, fromNodeId, fromPortId, toNodeId, toPortId, config = {} } = props
 
   return (chart: IChart): IChart => {
-    if (!config.readonly && (config.validateLink ? config.validateLink({ ...props, chart }) : true) && [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()) {
+    if (
+      !config.readonly &&
+      (config.validateLink ? config.validateLink({ ...props, chart }) : true) &&
+      [fromNodeId, fromPortId].join() !== [toNodeId, toPortId].join()
+    ) {
       chart.links[linkId].to = {
         nodeId: toNodeId,
         portId: toPortId,
@@ -152,6 +176,9 @@ export const onNodeMouseLeave: IStateCallback<IOnNodeMouseLeave> = ({ nodeId }) 
 export const onDeleteKey: IStateCallback<IOnDeleteKey> = () => (chart: IChart) => {
   if (chart.selected.type === 'node' && chart.selected.id) {
     const node = chart.nodes[chart.selected.id]
+    if (node.readonly) {
+      return chart
+    }
     // Delete the connected links
     Object.keys(chart.links).forEach((linkId) => {
       const link = chart.links[linkId]
@@ -229,20 +256,16 @@ export const onPortPositionChange: IStateCallback<IOnPortPositionChange> = ({
   return chart
 }
 
-export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
-  config,
-  data,
-  position,
-}) => (chart: IChart): IChart => {
+export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({ config, data, position }) => (chart: IChart): IChart => {
   const id = data.id || v4()
   chart.nodes[id] = {
     id,
     position:
       config && config.snapToGrid
         ? {
-          x: Math.round(position.x / 20) * 20,
-          y: Math.round(position.y / 20) * 20,
-        }
+            x: Math.round(position.x / 20) * 20,
+            y: Math.round(position.y / 20) * 20,
+          }
         : { x: position.x, y: position.y },
     orientation: data.orientation || 0,
     type: data.type,
@@ -252,9 +275,7 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
   return chart
 }
 
-export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (
-  chart: IChart,
-): IChart => {
+export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (chart: IChart): IChart => {
   chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
   chart.scale = data.scale
   return chart

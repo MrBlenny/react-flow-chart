@@ -1,6 +1,5 @@
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
-
 import { ConfigSnapToGridDemo } from './ConfigSnapToGrid'
 import { ConfigValidateLinkDemo } from './ConfigValidateLink'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
@@ -12,6 +11,7 @@ import { DragAndDropSidebar } from './DragAndDropSidebar'
 import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
 import { LinkColors } from './LinkColors'
+import { NodeReadonly } from './NodeReadonly'
 import { ReadonlyMode } from './ReadonlyMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { SmartRouting } from './SmartRouting'
@@ -42,3 +42,4 @@ storiesOf('Other Config', module)
   .add('Read only mode', ReadonlyMode)
   .add('Smart link routing', SmartRouting)
   .add('Zoom', () => <Zoom />)
+  .add('Node read only', NodeReadonly)
