@@ -12,7 +12,7 @@ export const SelectableMode = () => {
 
       <Sidebar>
         <Message>
-          <strong>Selectable mode</strong> allows you to select a node when the chart is in read only mode.
+          <strong>Selectable mode</strong> allows you to select a node or link when the chart is in read only mode.
         </Message>
 
         <Message>
