@@ -1,3 +1,4 @@
+import { IConfig } from 'types'
 import { v4 } from 'uuid'
 import {
   IChart,
@@ -173,7 +174,10 @@ export const onNodeMouseLeave: IStateCallback<IOnNodeMouseLeave> = ({ nodeId }) 
   return chart
 }
 
-export const onDeleteKey: IStateCallback<IOnDeleteKey> = () => (chart: IChart) => {
+export const onDeleteKey: IStateCallback<IOnDeleteKey> = ({ config }: IConfig) => (chart: IChart) => {
+  if (config.readonly) {
+    return chart
+  }
   if (chart.selected.type === 'node' && chart.selected.id) {
     const node = chart.nodes[chart.selected.id]
     if (node.readonly) {
