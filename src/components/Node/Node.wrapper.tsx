@@ -150,6 +150,7 @@ export const NodeWrapper = ({
             hoveredLink={hoveredLink}
             hovered={hovered}
             node={node}
+            portsSize={portsSize}
             port={node.ports[portId]}
             Component={Port}
             onPortPositionChange={onPortPositionChange}

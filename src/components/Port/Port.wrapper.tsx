@@ -2,7 +2,7 @@ import { isEqual } from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { v4 } from 'uuid'
-import { IConfig, ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered } from '../../'
+import { IConfig, ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered, ISize } from '../../'
 import CanvasContext from '../Canvas/CanvasContext'
 import { IPortDefaultProps, PortDefault } from './Port.default'
 
@@ -26,6 +26,7 @@ export interface IPortWrapperProps {
   hoveredLink: ILink | undefined
   port: IPort
   node: INode
+  portsSize: ISize
   onPortPositionChange: IOnPortPositionChange
   Component: React.FunctionComponent<IPortDefaultProps>
 
@@ -49,7 +50,9 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   public componentDidUpdate (prevProps: IPortWrapperProps) {
     // Update port position after a re-render if there are more ports on the same side
     // or if node.size has changed
-    if (this.portsOfType(this.props) !== this.portsOfType(prevProps) || !isEqual(this.props.node.size, prevProps.node.size)) {
+    if (this.portsOfType(this.props) !== this.portsOfType(prevProps)
+        || !isEqual(this.props.node.size, prevProps.node.size)
+        || !isEqual(this.props.portsSize, prevProps.portsSize)) {
       this.updatePortPosition()
     }
   }
