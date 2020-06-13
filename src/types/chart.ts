@@ -1,6 +1,6 @@
 import { IPosition, ISize } from './generics'
 
-export interface IChart {
+export interface IChart<P extends object = any> {
   offset: IPosition
   nodes: {
     [id: string]: INode,
@@ -9,7 +9,7 @@ export interface IChart {
     [id: string]: ILink,
   }
   scale: number
-  properties?: any
+  properties?: P
 
   /** System Temp */
   selected: ISelectedOrHovered
@@ -21,7 +21,7 @@ export interface ISelectedOrHovered {
   id?: string
 }
 
-export interface INode {
+export interface INode<P extends object = any> {
   id: string
   type: string
   position: IPosition
@@ -29,21 +29,21 @@ export interface INode {
   ports: {
     [id: string]: IPort,
   }
-  properties?: any
+  properties?: P
   /** System Temp */
   size?: ISize
 }
 
-export interface IPort {
+export interface IPort<P extends object = any> {
   id: string
   type: string
   value?: string
-  properties?: any
+  properties?: P
   /** System Temp */
   position?: IPosition
 }
 
-export interface ILink {
+export interface ILink<P extends object = any> {
   id: string
   from: {
     nodeId: string
@@ -55,5 +55,5 @@ export interface ILink {
     /** System Temp */
     position?: IPosition,
   }
-  properties?: any
+  properties?: P
 }
