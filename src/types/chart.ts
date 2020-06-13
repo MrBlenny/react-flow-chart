@@ -21,9 +21,9 @@ export interface ISelectedOrHovered {
   id?: string
 }
 
-export interface INode<P extends object = any> {
+export interface INode<P extends object = any, T extends string = string> {
   id: string
-  type: string
+  type: T
   position: IPosition
   orientation?: number
   ports: {
@@ -34,10 +34,10 @@ export interface INode<P extends object = any> {
   size?: ISize
 }
 
-export interface IPort<P extends object = any> {
+export interface IPort<P extends object = any, T extends string = string, V extends string = string> {
   id: string
-  type: string
-  value?: string
+  type: T
+  value?: V
   properties?: P
   /** System Temp */
   position?: IPosition
