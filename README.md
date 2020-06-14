@@ -1,3 +1,7 @@
+# IMPORTANT 
+This is a fork of the repository (https://github.com/MrBlenny/react-flow-chart)[https://github.com/MrBlenny/react-flow-chart].
+I only did this fork to implement some of the PR the repository had, because I need the module in NPM for some things I'm testing and I couldn't wait for them to be approved by MrBlenny. 
+
 # React Flow Chart
 
 [![CircleCI](https://circleci.com/gh/MrBlenny/react-flow-chart.svg?style=svg)](https://circleci.com/gh/MrBlenny/react-flow-chart)
