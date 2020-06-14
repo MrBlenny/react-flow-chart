@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import * as React from 'react'
 import { IConfig, INode } from '../../'
 
 export interface INodeDefaultProps {
@@ -14,15 +14,20 @@ export interface INodeDefaultProps {
   ref?: React.Ref<any>
 }
 
-export const NodeDefault = styled.div<INodeDefaultProps>`
-  position: absolute;
-  transition: 0.3s ease box-shadow, 0.3s ease margin-top;
-  background: white;
-  border-radius: 4px;
-  min-width: 200px;
-  ${(props: any) => props.isSelected && css`
-    box-shadow: 0 10px 20px rgba(0,0,0,.1);
-    margin-top: -2px
-    `
-  }
-` as any
+const styles = {
+  position: 'absolute',
+  transition: '0.3s ease box-shadow, 0.3s ease margin-top',
+  background: 'white',
+  borderRadius: '4px',
+  minWidth: '200px',
+}
+
+const stylesSelected = {
+  ...styles,
+  boxShadow: '0 10px 20px rgba(0,0,0,.1)',
+  marginTop: '-2px',
+}
+
+export const NodeDefault = (props: INodeDefaultProps): JSX.Element => {
+  return <div {...props} style={(props.isSelected ? stylesSelected : styles) as any} />
+}

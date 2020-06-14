@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import * as React from 'react'
 import { IConfig, IOnCanvasClick } from '../../'
 
 export interface ICanvasInnerDefaultProps {
@@ -11,10 +11,14 @@ export interface ICanvasInnerDefaultProps {
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void
 }
 
-export const CanvasInnerDefault = styled.div<ICanvasInnerDefaultProps>`
-  position: relative;
-  outline: 1px dashed rgba(0,0,0,0.1);
-  width: 10000px;
-  height: 10000px;
-  cursor: move;
-` as any
+const styles = {
+  position: 'relative',
+  outline: '1px dashed rgba(0,0,0,0.1)',
+  width: '10000px',
+  height: '10000px',
+  cursor: 'move',
+}
+
+export const CanvasInnerDefault = (props: any): JSX.Element => {
+  return <div {...props} style={styles as any} />
+}
