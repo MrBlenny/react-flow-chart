@@ -49,11 +49,11 @@ export interface ILink<P extends object = any> {
     nodeId: string
     portId: string,
   }
-  to: {
+  to: Partial<{
     nodeId: string
     portId: string
     /** System Temp */
     position?: IPosition,
-  }
+  }>
   properties?: P
 }
