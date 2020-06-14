@@ -1,7 +1,7 @@
 {
   "name": "@lucho_1312/react-flow-chart",
   "private": false,
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A flexible, stateless flow chart library for react.",
   "main": "src/index.js",
   "repository": "git@github.com:LucianoGanga/react-flow-chart.git",
