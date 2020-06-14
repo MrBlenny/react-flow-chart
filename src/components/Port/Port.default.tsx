@@ -29,7 +29,7 @@ const PortDefaultInner = styled.div<{ active: boolean }>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background:  ${(props) => props.active ? 'cornflowerblue' : 'grey' };
+  background:  ${(props: any) => props.active ? 'cornflowerblue' : 'grey' };
   cursor: pointer;
 `
 
