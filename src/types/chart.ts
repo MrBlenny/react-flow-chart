@@ -50,8 +50,8 @@ export interface ILink<P extends object = any> {
     portId: string,
   }
   to: {
-    nodeId?: string
-    portId?: string
+    nodeId: string
+    portId: string
     /** System Temp */
     position?: IPosition,
   }
