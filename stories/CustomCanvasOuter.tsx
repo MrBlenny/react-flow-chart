@@ -8,9 +8,12 @@ const CanvasOuterCustom = styled.div<ICanvasOuterDefaultProps>`
   position: relative;
   background-size: 10px 10px;
   background-color: #4f6791;
-  background-image:
-    linear-gradient(90deg,hsla(0,0%,100%,.1) 1px,transparent 0),
-    linear-gradient(180deg,hsla(0,0%,100%,.1) 1px,transparent 0);
+  background-image: linear-gradient(
+      90deg,
+      hsla(0, 0%, 100%, 0.1) 1px,
+      transparent 0
+    ),
+    linear-gradient(180deg, hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -22,8 +25,8 @@ export const CustomCanvasOuterDemo = () => {
     <Page>
       <FlowChartWithState
         initialValue={chartSimple}
-        Components={ {
-          CanvasOuter: CanvasOuterCustom,
+        Components={{
+          CanvasOuter: CanvasOuterCustom
         }}
       />
     </Page>

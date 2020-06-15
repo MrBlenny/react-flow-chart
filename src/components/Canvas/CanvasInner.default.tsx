@@ -16,9 +16,16 @@ const styles = {
   outline: '1px dashed rgba(0,0,0,0.1)',
   width: '10000px',
   height: '10000px',
-  cursor: 'move',
+  cursor: 'move'
 }
 
-export const CanvasInnerDefault = (props: any): JSX.Element => {
-  return <div {...props} style={styles as any} />
+export const CanvasInnerDefault = ({
+  children,
+  ...props
+}: any): JSX.Element => {
+  return (
+    <div {...props} style={styles as any}>
+      {children}
+    </div>
+  )
 }

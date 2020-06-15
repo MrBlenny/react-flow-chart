@@ -30,29 +30,34 @@ const Circle = styled.div`
  * Make sure it has the same prop signature
  * You'll need to add {...otherProps} so the event listeners are added to your component
  */
-const NodeCustom = React.forwardRef(({ node, children, ...otherProps }: INodeDefaultProps, ref: React.Ref<HTMLDivElement>) => {
-  if (node.type === 'output-only') {
-    return (
-      <DarkBox ref={ref} {...otherProps}>
-        {children}
-      </DarkBox>
-    )
-  } else {
-    return (
-      <Circle ref={ref} {...otherProps}>
-        {children}
-      </Circle>
-    )
+const NodeCustom = React.forwardRef(
+  (
+    { node, children, ...otherProps }: INodeDefaultProps,
+    ref: React.Ref<HTMLDivElement>
+  ) => {
+    if (node.type === 'output-only') {
+      return (
+        <DarkBox ref={ref} {...otherProps}>
+          {children}
+        </DarkBox>
+      )
+    } else {
+      return (
+        <Circle ref={ref} {...otherProps}>
+          {children}
+        </Circle>
+      )
+    }
   }
-})
+)
 
 export const CustomNodeDemo = () => {
   return (
     <Page>
       <FlowChartWithState
         initialValue={chartSimple}
-        Components={ {
-          Node: NodeCustom,
+        Components={{
+          Node: NodeCustom
         }}
       />
     </Page>

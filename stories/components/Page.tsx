@@ -24,7 +24,7 @@ const PageContent = styled.div`
   max-height: 100vh;
 `
 
-export const Page = ({ children }: { children: any}) => (
+export const Page = ({ children }: { children: any }) => (
   <PageContent>
     {children}
     <GlobalStyle />

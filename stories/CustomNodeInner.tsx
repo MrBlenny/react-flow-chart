@@ -34,8 +34,8 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
         <p>You may need to stop event propagation so your forms work.</p>
         <br />
         <Input
-          type="number"
-          placeholder="Some Input"
+          type='number'
+          placeholder='Some Input'
           onChange={(e) => console.log(e)}
           onClick={(e) => e.stopPropagation()}
           onMouseUp={(e) => e.stopPropagation()}
@@ -48,10 +48,11 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
 
 export class CustomNodeInnerDemo extends React.Component {
   public state = cloneDeep(chartSimple)
-  public render () {
+  public render() {
     const chart = this.state
-    const stateActions = mapValues(actions, (func: any) =>
-      (...args: any) => this.setState(func(...args))) as typeof actions
+    const stateActions = mapValues(actions, (func: any) => (...args: any) =>
+      this.setState(func(...args))
+    ) as typeof actions
 
     return (
       <Page>
@@ -59,7 +60,7 @@ export class CustomNodeInnerDemo extends React.Component {
           chart={chart}
           callbacks={stateActions}
           Components={{
-            NodeInner: NodeInnerCustom,
+            NodeInner: NodeInnerCustom
           }}
         />
       </Page>

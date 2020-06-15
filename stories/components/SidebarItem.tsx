@@ -10,18 +10,21 @@ const Outer = styled.div`
 `
 
 export interface ISidebarItemProps {
-  type: string,
-  ports: INode['ports'],
-  properties?: any,
+  type: string
+  ports: INode['ports']
+  properties?: any
 }
 
 export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
   return (
     <Outer
       draggable={true}
-      onDragStart={ (event) => {
-        event.dataTransfer.setData(REACT_FLOW_CHART, JSON.stringify({ type, ports, properties }))
-      } }
+      onDragStart={(event) => {
+        event.dataTransfer.setData(
+          REACT_FLOW_CHART,
+          JSON.stringify({ type, ports, properties })
+        )
+      }}
     >
       {type}
     </Outer>

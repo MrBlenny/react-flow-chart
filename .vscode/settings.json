@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  // Enable eslint
+  "eslint.enable": true,
+  // Disable standard
+  "standard.enable": false,
+  "cSpell.words": []
+}

@@ -28,7 +28,7 @@ const Button = styled.div`
   font-size: 10px;
   cursor: pointer;
   &:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
 `
 
@@ -46,10 +46,11 @@ const LabelContent = styled.div`
 
 export class CustomLinkDemo extends React.Component {
   public state = cloneDeep(chartSimple)
-  public render () {
+  public render() {
     const chart = this.state
-    const stateActions = mapValues(actions, (func: any) =>
-      (...args: any) => this.setState(func(...args))) as typeof actions
+    const stateActions = mapValues(actions, (func: any) => (...args: any) =>
+      this.setState(func(...args))
+    ) as typeof actions
 
     return (
       <Page>
@@ -65,9 +66,11 @@ export class CustomLinkDemo extends React.Component {
                 <>
                   <LinkDefault {...props} />
                   <Label style={{ left: centerX, top: centerY }}>
-                     { props.link.properties && props.link.properties.label && (
-                       <LabelContent>{props.link.properties && props.link.properties.label}</LabelContent>
-                     )}
+                    {props.link.properties && props.link.properties.label && (
+                      <LabelContent>
+                        {props.link.properties && props.link.properties.label}
+                      </LabelContent>
+                    )}
                     <Button
                       onClick={(e) => {
                         onLinkClick({ linkId: link.id })
@@ -80,7 +83,7 @@ export class CustomLinkDemo extends React.Component {
                   </Label>
                 </>
               )
-            },
+            }
           }}
         />
       </Page>

@@ -3,13 +3,28 @@ import * as ReactDOM from 'react-dom'
 import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import {
-  IConfig, ILink, INode, INodeInnerDefaultProps, IOnDragNode,
-  IOnDragNodeStop, IOnLinkCancel,
-  IOnLinkComplete, IOnLinkMove,
-  IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter,
-  IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange,
-  IPortDefaultProps, IPortsDefaultProps,
-  IPosition, ISelectedOrHovered, ISize, PortWrapper,
+  IConfig,
+  ILink,
+  INode,
+  INodeInnerDefaultProps,
+  IOnDragNode,
+  IOnDragNodeStop,
+  IOnLinkCancel,
+  IOnLinkComplete,
+  IOnLinkMove,
+  IOnLinkStart,
+  IOnNodeClick,
+  IOnNodeDoubleClick,
+  IOnNodeMouseEnter,
+  IOnNodeMouseLeave,
+  IOnNodeSizeChange,
+  IOnPortPositionChange,
+  IPortDefaultProps,
+  IPortsDefaultProps,
+  IPosition,
+  ISelectedOrHovered,
+  ISize,
+  PortWrapper
 } from '../../'
 import { noop } from '../../utils'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
@@ -65,7 +80,7 @@ export const NodeWrapper = ({
   onLinkStart,
   onLinkMove,
   onLinkComplete,
-  onLinkCancel,
+  onLinkCancel
 }: INodeWrapperProps) => {
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
@@ -75,34 +90,46 @@ export const NodeWrapper = ({
     // Stop propagation so the canvas does not move
     e.stopPropagation()
     isDragging.current = false
-  },[])
+  }, [])
 
-  const onDrag = React.useCallback((event: MouseEvent, data: DraggableData) => {
-    isDragging.current = true
-    onDragNode({ config, event, data, id: node.id })
-  }, [onDragNode, config, node.id])
+  const onDrag = React.useCallback(
+    (event: MouseEvent, data: DraggableData) => {
+      isDragging.current = true
+      onDragNode({ config, event, data, id: node.id })
+    },
+    [onDragNode, config, node.id]
+  )
 
-  const onStop = React.useCallback((event: MouseEvent, data: DraggableData) => {
-    onDragNodeStop({ config, event, data, id: node.id })
-  }, [onDragNodeStop, config, node.id])
+  const onStop = React.useCallback(
+    (event: MouseEvent, data: DraggableData) => {
+      onDragNodeStop({ config, event, data, id: node.id })
+    },
+    [onDragNodeStop, config, node.id]
+  )
 
-  const onClick = React.useCallback((e: React.MouseEvent) => {
-    if (!config.readonly) {
-      e.stopPropagation()
-      if (!isDragging.current) {
-        onNodeClick({ config, nodeId: node.id })
+  const onClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      if (!config.readonly) {
+        e.stopPropagation()
+        if (!isDragging.current) {
+          onNodeClick({ config, nodeId: node.id })
+        }
       }
-    }
-  }, [config, node.id])
+    },
+    [config, node.id]
+  )
 
-  const onDoubleClick = React.useCallback((e: React.MouseEvent) => {
-    if (!config.readonly) {
-      e.stopPropagation()
-      if (!isDragging.current) {
-        onNodeDoubleClick({ config, nodeId: node.id })
+  const onDoubleClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      if (!config.readonly) {
+        e.stopPropagation()
+        if (!isDragging.current) {
+          onNodeDoubleClick({ config, nodeId: node.id })
+        }
       }
-    }
-  }, [config, node.id])
+    },
+    [config, node.id]
+  )
 
   const onMouseEnter = React.useCallback(() => {
     onNodeMouseEnter({ config, nodeId: node.id })
@@ -139,7 +166,7 @@ export const NodeWrapper = ({
       />
       <NodeInner node={node} config={config} />
       <Ports node={node} config={config}>
-        { Object.keys(node.ports).map((portId) => (
+        {Object.keys(node.ports).map((portId) => (
           <PortWrapper
             config={config}
             key={portId}
@@ -157,17 +184,17 @@ export const NodeWrapper = ({
             onLinkComplete={onLinkComplete}
             onLinkCancel={onLinkCancel}
           />
-        )) }
+        ))}
       </Ports>
     </>
   )
 
   return (
     <Draggable
-      bounds="parent"
-      axis="both"
+      bounds='parent'
+      axis='both'
       position={node.position}
-      grid={[1,1]}
+      grid={[1, 1]}
       onStart={onStart}
       onDrag={onDrag}
       onStop={onStop}

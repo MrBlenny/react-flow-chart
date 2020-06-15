@@ -6,7 +6,7 @@ import { Page } from './components'
 const chartSimpleWithLinkColors: IChart = {
   offset: {
     x: 0,
-    y: 0,
+    y: 0
   },
   scale: 1,
   nodes: {
@@ -15,7 +15,7 @@ const chartSimpleWithLinkColors: IChart = {
       type: 'output-only',
       position: {
         x: 300,
-        y: 100,
+        y: 100
       },
       ports: {
         port1: {
@@ -23,113 +23,113 @@ const chartSimpleWithLinkColors: IChart = {
           type: 'output',
           properties: {
             value: 'no',
-            linkColor: '#FFCC00',
-          },
-        },
-      },
+            linkColor: '#FFCC00'
+          }
+        }
+      }
     },
     node2: {
       id: 'node2',
       type: 'input-output',
       position: {
         x: 300,
-        y: 300,
+        y: 300
       },
       ports: {
         port1: {
           id: 'port1',
-          type: 'input',
+          type: 'input'
         },
         port2: {
           id: 'port2',
           type: 'output',
           properties: {
-            linkColor: '#63D471',
-          },
+            linkColor: '#63D471'
+          }
         },
         port3: {
           id: 'port3',
           type: 'output',
           properties: {
-            linkColor: '#F8333C',
-          },
-        },
-      },
+            linkColor: '#F8333C'
+          }
+        }
+      }
     },
     node3: {
       id: 'node3',
       type: 'input-output',
       position: {
         x: 100,
-        y: 600,
+        y: 600
       },
       ports: {
         port1: {
           id: 'port1',
-          type: 'input',
+          type: 'input'
         },
         port2: {
           id: 'port2',
-          type: 'output',
-        },
-      },
+          type: 'output'
+        }
+      }
     },
     node4: {
       id: 'node4',
       type: 'input-output',
       position: {
         x: 500,
-        y: 600,
+        y: 600
       },
       ports: {
         port1: {
           id: 'port1',
-          type: 'input',
+          type: 'input'
         },
         port2: {
           id: 'port2',
-          type: 'output',
-        },
-      },
-    },
+          type: 'output'
+        }
+      }
+    }
   },
   links: {
     link1: {
       id: 'link1',
       from: {
         nodeId: 'node1',
-        portId: 'port1',
+        portId: 'port1'
       },
       to: {
         nodeId: 'node2',
-        portId: 'port1',
-      },
+        portId: 'port1'
+      }
     },
     link2: {
       id: 'link2',
       from: {
         nodeId: 'node2',
-        portId: 'port2',
+        portId: 'port2'
       },
       to: {
         nodeId: 'node3',
-        portId: 'port1',
-      },
+        portId: 'port1'
+      }
     },
     link3: {
       id: 'link3',
       from: {
         nodeId: 'node2',
-        portId: 'port3',
+        portId: 'port3'
       },
       to: {
         nodeId: 'node4',
-        portId: 'port1',
-      },
-    },
+        portId: 'port1'
+      }
+    }
   },
   selected: {},
-  hovered: {},
+  hovered: {}
 }
 
 export const LinkColors = () => {

@@ -6,7 +6,10 @@ import { chartSimple } from './misc/exampleChartState'
 export const ReadonlyMode = () => {
   return (
     <Page>
-      <FlowChartWithState config={{ readonly: true }} initialValue={chartSimple}/>
+      <FlowChartWithState
+        config={{ readonly: true }}
+        initialValue={chartSimple}
+      />
     </Page>
   )
 }

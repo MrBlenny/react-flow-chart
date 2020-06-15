@@ -12,7 +12,7 @@ const stylesBySide = {
     width: '100%',
     left: '0',
     top: '-12px',
-    flexDirection: 'row',
+    flexDirection: 'row'
     // '> div': {
     //   margin: '0 3px',
     // }
@@ -21,7 +21,7 @@ const stylesBySide = {
     width: '100%',
     left: '0',
     bottom: '-12px',
-    flexDirection: 'row',
+    flexDirection: 'row'
     // '> div': {
     //   margin: '0 3px',
     // }
@@ -30,7 +30,7 @@ const stylesBySide = {
     width: '100%',
     top: '0',
     left: '-12px',
-    flexDirection: 'column',
+    flexDirection: 'column'
     // '> div': {
     //   margin: '0 3px',
     // }
@@ -39,13 +39,16 @@ const stylesBySide = {
     width: '100%',
     top: '0',
     right: '-12px',
-    flexDirection: 'column',
+    flexDirection: 'column'
     // '> div': {
     //   margin: '0 3px',
     // }
-  },
+  }
 }
 
-export const PortsGroupDefault = ({ side = 'right', children }: IPortsGroupDefaultProps) => {
+export const PortsGroupDefault = ({
+  side = 'right',
+  children
+}: IPortsGroupDefaultProps) => {
   return <div style={stylesBySide[side] as any}>{children}</div>
 }

@@ -19,15 +19,26 @@ export const ConfigValidateLinkDemo = () => {
     <Page>
       <FlowChartWithState
         initialValue={chartSimple}
-        config={ {
-          validateLink: ({ linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart }): boolean => {
+        config={{
+          validateLink: ({
+            linkId,
+            fromNodeId,
+            fromPortId,
+            toNodeId,
+            toPortId,
+            chart
+          }): boolean => {
             // no links between same type nodes
-            if (chart.nodes[fromNodeId].type === chart.nodes[toNodeId].type) return false
+            if (chart.nodes[fromNodeId].type === chart.nodes[toNodeId].type)
+              return false
             return true
-          },
-        } }
+          }
+        }}
       />
-      <Note>Customise link validation. For example, only allow links between different Node Types</Note>
+      <Note>
+        Customise link validation. For example, only allow links between
+        different Node Types
+      </Note>
     </Page>
   )
 }

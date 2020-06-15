@@ -9,7 +9,7 @@ export const ConfigSnapToGridDemo = () => {
       <FlowChartWithState
         initialValue={chartSimple}
         config={{
-          snapToGrid: true,
+          snapToGrid: true
         }}
       />
     </Page>

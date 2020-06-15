@@ -6,24 +6,28 @@ export const throttleRender = (wait: number, options?: any) => {
   return (ComponentToThrottle: any) => {
     return class Throttle extends React.Component<any, any> {
       public throttledSetState: any
-      constructor (props: any, context: any) {
+      constructor(props: any, context: any) {
         super(props, context)
         this.state = {}
-        this.throttledSetState = throttle((nextState: any) => this.setState(nextState), wait, options)
+        this.throttledSetState = throttle(
+          (nextState: any) => this.setState(nextState),
+          wait,
+          options
+        )
       }
-      public shouldComponentUpdate (nextProps: any, nextState: any) {
+      public shouldComponentUpdate(nextProps: any, nextState: any) {
         return this.state !== nextState
       }
-      public componentWillMount () {
+      public componentWillMount() {
         this.throttledSetState({ props: this.props })
       }
-      public componentWillReceiveProps (nextProps: any) {
+      public componentWillReceiveProps(nextProps: any) {
         this.throttledSetState({ props: nextProps })
       }
-      public componentWillUnmount () {
+      public componentWillUnmount() {
         this.throttledSetState.cancel()
       }
-      public render () {
+      public render() {
         return <ComponentToThrottle {...this.state.props} />
       }
     }

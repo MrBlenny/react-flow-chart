@@ -6,7 +6,7 @@ import { chartSimple } from './misc/exampleChartState'
 export const InternalReactState = () => {
   return (
     <Page>
-      <FlowChartWithState initialValue={chartSimple}/>
+      <FlowChartWithState initialValue={chartSimple} />
     </Page>
   )
 }

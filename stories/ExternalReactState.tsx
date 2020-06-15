@@ -12,17 +12,15 @@ import { chartSimple } from './misc/exampleChartState'
  */
 export class ExternalReactState extends React.Component {
   public state = cloneDeep(chartSimple)
-  public render () {
+  public render() {
     const chart = this.state
-    const stateActions = mapValues(actions, (func: any) =>
-      (...args: any) => this.setState(func(...args))) as typeof actions
+    const stateActions = mapValues(actions, (func: any) => (...args: any) =>
+      this.setState(func(...args))
+    ) as typeof actions
 
     return (
       <Page>
-        <FlowChart
-          chart={chart}
-          callbacks={stateActions}
-        />
+        <FlowChart chart={chart} callbacks={stateActions} />
       </Page>
     )
   }

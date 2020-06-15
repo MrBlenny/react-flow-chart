@@ -10,16 +10,20 @@ export interface IPortsDefaultProps {
 export const PortsDefault = ({ children, config }: IPortsDefaultProps) => {
   return (
     <div>
-      <PortsGroupDefault config={config} side="top">
-        {children.filter((child) => ['input', 'top'].includes(child.props.port.type))}
+      <PortsGroupDefault config={config} side='top'>
+        {children.filter((child) =>
+          ['input', 'top'].includes(child.props.port.type)
+        )}
       </PortsGroupDefault>
-      <PortsGroupDefault config={config} side="bottom">
-        {children.filter((child) => ['output', 'bottom'].includes(child.props.port.type))}
+      <PortsGroupDefault config={config} side='bottom'>
+        {children.filter((child) =>
+          ['output', 'bottom'].includes(child.props.port.type)
+        )}
       </PortsGroupDefault>
-      <PortsGroupDefault config={config} side="right">
+      <PortsGroupDefault config={config} side='right'>
         {children.filter((child) => ['right'].includes(child.props.port.type))}
       </PortsGroupDefault>
-      <PortsGroupDefault config={config} side="left">
+      <PortsGroupDefault config={config} side='left'>
         {children.filter((child) => ['left'].includes(child.props.port.type))}
       </PortsGroupDefault>
     </div>
