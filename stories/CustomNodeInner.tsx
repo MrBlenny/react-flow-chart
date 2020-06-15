@@ -1,20 +1,36 @@
 import { cloneDeep, mapValues } from 'lodash'
 import * as React from 'react'
-import styled from 'styled-components'
 import { FlowChart, INodeInnerDefaultProps } from '../src'
 import * as actions from '../src/container/actions'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
-const Outer = styled.div`
-  padding: 30px;
-`
+import { makeStyles } from '@material-ui/styles'
 
-const Input = styled.input`
-  padding: 10px;
-  border: 1px solid cornflowerblue;
-  width: 100%;
-`
+const useStyles = makeStyles({
+  outer: {
+    padding: '30px'
+  },
+  input: {
+    padding: '10px',
+    border: '1px solid cornflowerblue',
+    width: '100%'
+  }
+})
+
+const Outer = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.outer} {...props}>
+      {children}
+    </div>
+  )
+}
+
+const Input = ({ ...props }: any) => {
+  const classes = useStyles()
+  return <input className={classes.input} {...props} />
+}
 
 /**
  * Create the custom component,
@@ -36,10 +52,10 @@ const NodeInnerCustom = ({ node, config }: INodeInnerDefaultProps) => {
         <Input
           type='number'
           placeholder='Some Input'
-          onChange={(e) => console.log(e)}
-          onClick={(e) => e.stopPropagation()}
-          onMouseUp={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
+          onChange={(e: any) => console.log(e)}
+          onClick={(e: any) => e.stopPropagation()}
+          onMouseUp={(e: any) => e.stopPropagation()}
+          onMouseDown={(e: any) => e.stopPropagation()}
         />
       </Outer>
     )

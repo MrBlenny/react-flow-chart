@@ -1,5 +1,7 @@
 import * as React from 'react'
-import styled from 'styled-components'
+
+import { makeStyles } from '@material-ui/styles'
+import clsx from 'clsx'
 import { IConfig, IPort } from '../../'
 
 export interface IPortDefaultProps {
@@ -11,36 +13,47 @@ export interface IPortDefaultProps {
   isLinkHovered: boolean
 }
 
-const PortDefaultOuter = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover > div {
-    background: cornflowerblue;
+const useStyles = makeStyles({
+  portDefaultOuter: {
+    width: '24px',
+    height: '24px',
+    borderRadius: '50%',
+    background: 'white',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '&:hover > div': {
+      background: 'cornflowerblue'
+    }
+  },
+  portDefaultInner: {
+    width: '12px',
+    height: '12px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    background: 'grey'
+  },
+  active: {
+    background: 'cornflowerblue'
   }
-`
-
-const PortDefaultInner = styled.div<{ active: boolean }>`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: ${(props) => (props.active ? 'cornflowerblue' : 'grey')};
-  cursor: pointer;
-`
+})
 
 export const PortDefault = ({
   isLinkSelected,
   isLinkHovered,
   config
-}: IPortDefaultProps) => (
-  <PortDefaultOuter>
-    <PortDefaultInner
-      active={!config.readonly && (isLinkSelected || isLinkHovered)}
-    />
-  </PortDefaultOuter>
-)
+}: IPortDefaultProps) => {
+  const classes = useStyles()
+
+  const isActive = !config.readonly && (isLinkSelected || isLinkHovered)
+  return (
+    <div className={classes.portDefaultOuter}>
+      <div
+        className={clsx(classes.portDefaultInner, {
+          [classes.active]: isActive
+        })}
+      />
+    </div>
+  )
+}

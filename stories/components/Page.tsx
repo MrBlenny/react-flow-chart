@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { makeStyles } from '@material-ui/styles'
+// import { classicNameResolver } from 'typescript'
 // import styled, { createGlobalStyle } from 'styled-components'
 
 // const GlobalStyle = createGlobalStyle`
@@ -16,17 +18,22 @@ import * as React from 'react'
 //   }
 // `
 
-export const Page = ({ children }: { children: any }) => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      flex: '1',
-      maxWidth: '100vw',
-      maxHeight: '100vh'
-    }}
-  >
-    {children}
-    {/* <GlobalStyle /> */}
-  </div>
-)
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: '1',
+    maxWidth: '100vw',
+    maxHeight: '100vh'
+  }
+})
+
+export const Page = ({ children }: { children: any }) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.root}>
+      {children}
+      {/* <GlobalStyle /> */}
+    </div>
+  )
+}

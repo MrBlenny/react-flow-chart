@@ -1,18 +1,30 @@
 import * as React from 'react'
-import styled from 'styled-components'
 import { FlowChartWithState, IPortDefaultProps } from '../src'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
-const PortDefaultOuter = styled.div`
-  width: 24px;
-  height: 24px;
-  background: cornflowerblue;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles({
+  portDefaultOuter: {
+    width: '24px',
+    height: '24px',
+    background: 'cornflowerblue',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})
+
+const PortDefaultOuter = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.portDefaultOuter} {...props}>
+      {children}
+    </div>
+  )
+}
 
 const PortCustom = (props: IPortDefaultProps) => (
   <PortDefaultOuter>

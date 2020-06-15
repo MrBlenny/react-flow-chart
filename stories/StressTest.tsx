@@ -1,8 +1,44 @@
 import { compact, flatMap, flatten, keyBy, range } from 'lodash'
 import * as React from 'react'
-import styled from 'styled-components'
 import { FlowChartWithState } from '../src'
 import { Page } from './components'
+
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles({
+  input: {
+    padding: '5px 5px 5px 10px',
+    width: '50px'
+  },
+  label: {
+    padding: '0 10px',
+    fontSize: '14px'
+  },
+  controls: {
+    padding: '10px'
+  }
+})
+
+const Input = ({ ...props }: any) => {
+  const classes = useStyles()
+  return <input className={classes.input} {...props} />
+}
+const Label = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <label className={classes.label} {...props}>
+      {children}
+    </label>
+  )
+}
+const Controls = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.controls} {...props}>
+      {children}
+    </div>
+  )
+}
 
 const getChart = (rows: number, cols: number) => {
   const xyGrid = flatten(
@@ -96,13 +132,13 @@ const StressTestWithState = () => {
         <Input
           type='number'
           value={cols}
-          onChange={(e) => setCols(parseInt(e.target.value, 10))}
+          onChange={(e: any) => setCols(parseInt(e.target.value, 10))}
         />
         <Label>Rows:</Label>
         <Input
           type='number'
           value={rows}
-          onChange={(e) => setRows(parseInt(e.target.value, 10))}
+          onChange={(e: any) => setRows(parseInt(e.target.value, 10))}
         />
       </Controls>
       <Page>
@@ -115,17 +151,3 @@ const StressTestWithState = () => {
 export const StressTestDemo = () => {
   return <StressTestWithState />
 }
-
-const Input = styled.input`
-  padding: 5px 5px 5px 10px;
-  width: 50px;
-`
-
-const Label = styled.label`
-  padding: 0 10px;
-  font-size: 14px;
-`
-
-const Controls = styled.div`
-  padding: 10px;
-`

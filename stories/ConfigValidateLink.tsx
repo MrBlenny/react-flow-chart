@@ -1,18 +1,25 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/styles'
 import { FlowChartWithState } from '../src'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
-const Note = styled.div`
-  position: absolute;
-  left: 30px;
-  top: 30px;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  border: 2px solid red;
-`
+const useStyles = makeStyles({
+  node: {
+    position: 'absolute',
+    left: '30px',
+    top: '30px',
+    padding: '20px',
+    background: 'white',
+    borderRadius: '10px',
+    border: '2px solid red'
+  }
+})
+
+const Note = ({ children }: any) => {
+  const classes = useStyles()
+  return <div className={classes.node}>{children}</div>
+}
 
 export const ConfigValidateLinkDemo = () => {
   return (

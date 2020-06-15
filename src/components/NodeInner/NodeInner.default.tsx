@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/styles'
 import { IConfig, INode } from '../../'
 
 export interface INodeInnerDefaultProps {
@@ -7,14 +7,18 @@ export interface INodeInnerDefaultProps {
   node: INode
 }
 
-const Outer = styled.div`
-  padding: 40px 30px;
-`
+const useStyles = makeStyles({
+  root: {
+    padding: '40px 30px'
+  }
+})
 
-export const NodeInnerDefault = ({ node }: INodeInnerDefaultProps) => {
+export const NodeInnerDefault = ({ node, config }: INodeInnerDefaultProps) => {
+  const classes = useStyles()
+
   return (
-    <Outer>
+    <div className={classes.root}>
       <div>Type: {node.type}</div>
-    </Outer>
+    </div>
   )
 }

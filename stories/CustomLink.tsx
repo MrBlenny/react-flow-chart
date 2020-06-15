@@ -1,48 +1,75 @@
 import { cloneDeep, mapValues } from 'lodash'
 import * as React from 'react'
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/styles'
 import { FlowChart, LinkDefault } from '../src'
 import * as actions from '../src/container/actions'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
-const Label = styled.div`
-  position: absolute;
-`
-
-const Button = styled.div`
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  padding: 5px;
-  height: 15px;
-  width: 15px;
-  transform: translate(50%, -50%);
-  background: red;
-  color: white;
-  border-radius: 50%;
-  transition: 0.3s ease all;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  cursor: pointer;
-  &:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+const useStyles = makeStyles({
+  label: {
+    position: 'absolute'
+  },
+  labelContent: {
+    padding: '5px 10px',
+    background: 'cornflowerblue',
+    color: 'white',
+    borderRadius: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '10px',
+    cursor: 'pointer'
+  },
+  button: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    padding: '5px',
+    height: '15px',
+    width: '15px',
+    transform: 'translate(50%, -50%)',
+    background: 'red',
+    color: 'white',
+    borderRadius: '50%',
+    transition: '0.3s ease all',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '10px',
+    cursor: 'pointer',
+    '&:hover': {
+      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)'
+    }
   }
-`
+})
 
-const LabelContent = styled.div`
-  padding: 5px 10px;
-  background: cornflowerblue;
-  color: white;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  cursor: pointer;
-`
+const LabelContent = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.label} {...props}>
+      {children}
+    </div>
+  )
+}
+
+const Label = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.label} {...props}>
+      {children}
+    </div>
+  )
+}
+
+const Button = ({ children, ...props }: any) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.label} {...props}>
+      {children}
+    </div>
+  )
+}
 
 export class CustomLinkDemo extends React.Component {
   public state = cloneDeep(chartSimple)
@@ -72,7 +99,7 @@ export class CustomLinkDemo extends React.Component {
                       </LabelContent>
                     )}
                     <Button
-                      onClick={(e) => {
+                      onClick={(e: any) => {
                         onLinkClick({ linkId: link.id })
                         stateActions.onDeleteKey({})
                         e.stopPropagation()

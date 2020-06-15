@@ -4,5 +4,7 @@
   "eslint.enable": true,
   // Disable standard
   "standard.enable": false,
-  "cSpell.words": []
+  "cSpell.words": [
+    "clsx"
+  ]
 }
