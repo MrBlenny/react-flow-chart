@@ -169,13 +169,13 @@ export const FlowChart = (props: IFlowChartProps) => {
     onLinkComplete,
     onLinkCancel
   }
-
+  console.log('nodes', nodes)
   const nodesInView = Object.keys(nodes).filter((nodeId) => {
     const defaultNodeSize = { width: 500, height: 500 }
 
     const { x, y } = nodes[nodeId].position
     const size = nodes[nodeId].size || defaultNodeSize
-
+    console.log('size', size)
     const isTooFarLeft = scale * x + offset.x + scale * size.width < 0
     const isTooFarRight = scale * x + offset.x > canvasSize.width
     const isTooFarUp = scale * y + offset.y + scale * size.height < 0
@@ -200,6 +200,8 @@ export const FlowChart = (props: IFlowChartProps) => {
       nodesInView.indexOf(to.nodeId) !== -1
     )
   })
+  console.log('linksInView', linksInView)
+  console.log('nodesInView', nodesInView)
 
   return (
     <CanvasWrapper
@@ -238,7 +240,7 @@ export const FlowChart = (props: IFlowChartProps) => {
         const isSelected = selected.type === 'node' && selected.id === nodeId
         const selectedLink = getSelectedLinkForNode(selected, nodeId, links)
         const hoveredLink = getSelectedLinkForNode(hovered, nodeId, links)
-
+        console.log('NODE!!')
         return (
           <NodeWrapper
             config={config}

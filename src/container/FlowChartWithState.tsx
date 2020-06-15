@@ -25,7 +25,7 @@ export class FlowChartWithState extends React.Component<
     super(props)
     this.state = props.initialValue
   }
-  public render() {
+  render() {
     const { Components, config } = this.props
 
     return (

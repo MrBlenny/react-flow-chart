@@ -1,8 +1,15 @@
-import styled from 'styled-components'
+import * as React from 'react'
 
-export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: hidden;
-`
+export const Content = (props: any) => {
+  return (
+    <div
+      {...props}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: '1',
+        overflow: 'hidden'
+      }}
+    />
+  )
+}

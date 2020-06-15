@@ -1,13 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
 import { INode, REACT_FLOW_CHART } from '../../src'
-
-const Outer = styled.div`
-  padding: 20px 30px;
-  font-size: 14px;
-  background: white;
-  cursor: move;
-`
 
 export interface ISidebarItemProps {
   type: string
@@ -17,7 +9,13 @@ export interface ISidebarItemProps {
 
 export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
   return (
-    <Outer
+    <div
+      style={{
+        padding: '20px 30px',
+        fontSize: '14px',
+        background: 'white',
+        cursor: 'move'
+      }}
       draggable={true}
       onDragStart={(event) => {
         event.dataTransfer.setData(
@@ -27,6 +25,6 @@ export const SidebarItem = ({ type, ports, properties }: ISidebarItemProps) => {
       }}
     >
       {type}
-    </Outer>
+    </div>
   )
 }

@@ -1,14 +1,7 @@
 import * as React from 'react'
-import styled from 'styled-components'
 import { FlowChartWithState } from '../src'
 import { Content, Page, Sidebar, SidebarItem } from './components'
 import { chartSimple } from './misc/exampleChartState'
-
-const Message = styled.div`
-  margin: 10px;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.05);
-`
 
 export const DragAndDropSidebar = () => (
   <Page>
@@ -16,7 +9,15 @@ export const DragAndDropSidebar = () => (
       <FlowChartWithState initialValue={chartSimple} />
     </Content>
     <Sidebar>
-      <Message>Drag and drop these items onto the canvas.</Message>
+      <div
+        style={{
+          margin: '10px',
+          padding: '10px',
+          background: 'rgba(0, 0, 0, 0.05)'
+        }}
+      >
+        Drag and drop these items onto the canvas.
+      </div>
       <SidebarItem
         type='top/bottom'
         ports={{

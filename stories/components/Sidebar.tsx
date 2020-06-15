@@ -1,9 +1,16 @@
-import styled from 'styled-components'
+import * as React from 'react'
 
-export const Sidebar = styled.div`
-  width: 300px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-`
+export const Sidebar = (props: any) => {
+  return (
+    <div
+      {...props}
+      style={{
+        width: '300px',
+        background: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 0
+      }}
+    />
+  )
+}
