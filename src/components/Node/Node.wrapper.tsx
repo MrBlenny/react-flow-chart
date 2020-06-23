@@ -116,7 +116,7 @@ export const NodeWrapper = ({
 
   // TODO: probably should add an observer to track node component size changes
   React.useLayoutEffect(() => {
-    const el = ReactDOM.findDOMNode(compRef.current) as HTMLInputElement
+    const el = compRef.current as HTMLInputElement
     if (el) {
       if (
         (node.size && node.size.width) !== el.offsetWidth ||
