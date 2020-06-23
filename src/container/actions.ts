@@ -1,4 +1,3 @@
-import { v4 } from 'uuid'
 import {
   IChart, identity, IOnCanvasClick,
   IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop,
@@ -233,8 +232,8 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
   config,
   data,
   position,
+  id,
 }) => (chart: IChart): IChart => {
-  const id = data.id || v4()
   chart.nodes[id] = {
     id,
     position:
