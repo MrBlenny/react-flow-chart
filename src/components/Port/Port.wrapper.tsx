@@ -63,7 +63,8 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
     // Create the move handler
     // This will update the position as the mouse moves
     const mouseMoveHandler = (e: MouseEvent) => {
-      const { offsetX, offsetY, zoomScale } = this.context
+      const { offsetX, offsetY } = this.context
+      const zoomScale = this.context.zoomScale || 1
 
       onLinkMove({
         config,

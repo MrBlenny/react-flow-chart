@@ -38,7 +38,10 @@ export const LinkDefault = ({
   const linkColor: string = (fromPort.properties && fromPort.properties.linkColor) || 'cornflowerblue'
 
   return (
-    <svg style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}>
+    <svg
+      className={toPort ? 'react-flow-chart__link--placed' : 'react-flow-chart__link--dragging'}
+      style={{ overflow: 'visible', position: 'absolute', cursor: 'pointer', left: 0, right: 0 }}
+    >
       <circle
         r="4"
         cx={startPos.x}
