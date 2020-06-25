@@ -17,10 +17,17 @@ const useStyles = makeStyles({
     cursor: 'not-allowed'
   }
 })
-const CanvasOuterCustom = ({ children }: ICanvasOuterDefaultProps) => {
-  const classes = useStyles()
-  return <div className={classes.canvasOuterCustom}>{children}</div>
-}
+
+const CanvasOuterCustom = React.forwardRef(
+  ({ children, ...props }: ICanvasOuterDefaultProps, ref: React.Ref<any>) => {
+    const classes = useStyles()
+    return (
+      <div className={classes.canvasOuterCustom} ref={ref}>
+        {children}
+      </div>
+    )
+  }
+)
 
 export const CustomCanvasOuterDemo = () => {
   return (

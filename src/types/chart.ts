@@ -34,13 +34,14 @@ export interface INode<P extends object = any, T extends string = string> {
   size?: ISize
 }
 
+export type TPortType = 'top' | 'right' | 'bottom' | 'left'
 export interface IPort<
   P extends object = any,
   T extends string = string,
   V extends string = string
 > {
   id: string
-  type: T
+  type: TPortType
   value?: V
   properties?: P
   /** System Temp */

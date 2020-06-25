@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     left: '0',
     top: '-12px',
     flexDirection: 'row',
-    '> div': {
+    '& > div': {
       margin: '0 3px'
     }
   },
@@ -29,26 +29,26 @@ const useStyles = makeStyles({
     left: '0',
     bottom: '-12px',
     flexDirection: 'row',
-    '> div': {
+    '& > div': {
       margin: '0 3px'
     }
   },
   left: {
-    width: '100%',
+    height: '100%',
     top: '0',
     left: '-12px',
     flexDirection: 'column',
-    '> div': {
-      margin: '0 3px'
+    '& > div': {
+      margin: '3px 0'
     }
   },
   right: {
-    width: '100%',
+    height: '100%',
     top: '0',
     right: '-12px',
     flexDirection: 'column',
-    '> div': {
-      margin: '0 3px'
+    '& > div': {
+      margin: '3px 0'
     }
   }
 })
@@ -58,6 +58,16 @@ export const PortsGroupDefault = ({
   children
 }: IPortsGroupDefaultProps) => {
   const classes = useStyles()
-
-  return <div className={clsx(classes.root, classes[side])}>{children}</div>
+  return (
+    <div
+      className={clsx(
+        classes.root,
+        classes[
+          ['top', 'bottom', 'left', 'right'].includes(side) ? side : 'right'
+        ]
+      )}
+    >
+      {children}
+    </div>
+  )
 }

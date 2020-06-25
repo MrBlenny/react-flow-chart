@@ -2,6 +2,7 @@ import { compact, flatMap, flatten, keyBy, range } from 'lodash'
 import * as React from 'react'
 import { FlowChartWithState } from '../src'
 import { Page } from './components'
+import { IChart, INode } from '../src/types/chart'
 
 import { makeStyles } from '@material-ui/styles'
 
@@ -47,6 +48,25 @@ const getChart = (rows: number, cols: number) => {
     )
   )
 
+  const ports: INode['ports'] = {
+    port1: {
+      id: 'port1',
+      type: 'top'
+    },
+    port2: {
+      id: 'port2',
+      type: 'bottom'
+    },
+    port3: {
+      id: 'port3',
+      type: 'right'
+    },
+    port4: {
+      id: 'port4',
+      type: 'left'
+    }
+  }
+
   return {
     offset: {
       x: 0,
@@ -58,24 +78,7 @@ const getChart = (rows: number, cols: number) => {
         id: `node-${x}-${y}`,
         type: 'default',
         position: { x: x + 100, y: y + 100 },
-        ports: {
-          port1: {
-            id: 'port1',
-            type: 'top'
-          },
-          port2: {
-            id: 'port2',
-            type: 'bottom'
-          },
-          port3: {
-            id: 'port3',
-            type: 'right'
-          },
-          port4: {
-            id: 'port4',
-            type: 'left'
-          }
-        }
+        ports: ports
       })),
       'id'
     ),
@@ -123,7 +126,7 @@ const StressTestWithState = () => {
   const [rows, setRows] = React.useState(100)
   const [cols, setCols] = React.useState(100)
 
-  const chart = React.useMemo(() => getChart(rows, cols), [rows, cols])
+  const chart: IChart = React.useMemo(() => getChart(rows, cols), [rows, cols])
 
   return (
     <>

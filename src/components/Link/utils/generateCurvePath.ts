@@ -67,7 +67,7 @@ const setWalkableAtPorts = (
   grid: PF.Grid
 ) => {
   ;[start, end].forEach((point) => {
-    if (['input', 'top'].includes(point.port.type)) {
+    if (['input', 'top', 'right'].includes(point.port.type)) {
       for (
         let i = point.pos.y;
         i >= Math.max(point.pos.y - MATRIX_PADDING, 0);
