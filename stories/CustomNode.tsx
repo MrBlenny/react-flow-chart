@@ -2,22 +2,22 @@ import * as React from 'react'
 import { FlowChartWithState, INodeDefaultProps } from '../src'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
-
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles({
   darkBox: {
     position: 'absolute',
-    padding: '30px',
+    padding: '20px',
     background: '#3e3e3e',
     color: 'white',
     borderRadius: '10px'
   },
   circle: {
     position: 'absolute',
-    width: '150px',
-    height: '150px',
-    padding: '30px',
+    width: '110px',
+    height: '110px',
+    padding: '20px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -28,10 +28,10 @@ const useStyles = makeStyles({
 })
 
 const DarkBox = React.forwardRef(
-  ({ children, ...props }: any, ref: React.Ref<any>) => {
+  ({ children, className, ...props }: any, ref: React.Ref<any>) => {
     const classes = useStyles()
     return (
-      <div className={classes.darkBox} {...props} ref={ref}>
+      <div className={clsx(className, classes.darkBox)} {...props} ref={ref}>
         {children}
       </div>
     )
@@ -39,10 +39,10 @@ const DarkBox = React.forwardRef(
 )
 
 const Circle = React.forwardRef(
-  ({ children, ...props }: any, ref: React.Ref<any>) => {
+  ({ children, className, ...props }: any, ref: React.Ref<any>) => {
     const classes = useStyles()
     return (
-      <div className={classes.circle} {...props} ref={ref}>
+      <div className={clsx(className, classes.circle)} {...props} ref={ref}>
         {children}
       </div>
     )
