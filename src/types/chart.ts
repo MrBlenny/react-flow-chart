@@ -21,34 +21,37 @@ export interface ISelectedOrHovered {
   id?: string
 }
 
-export interface INode<P extends object = any, T extends string = string> {
+export interface INode<
+  TNodeProperties extends object = any,
+  TNodeType extends string = string,
+  TPortProperties extends object = any
+> {
   id: string
-  type: T
+  type: TNodeType
   position: IPosition
   orientation?: number
   ports: {
-    [id: string]: IPort<P>
+    [id: string]: IPort<TPortProperties>
   }
-  properties?: P
+  properties?: TNodeProperties
   /** System Temp */
   size?: ISize
 }
 
 export type TPortType = 'top' | 'right' | 'bottom' | 'left'
 export interface IPort<
-  P extends object = any,
-  T extends string = string,
-  V extends string = string
+  PortProperties extends object = any,
+  TPortValue extends string = string
 > {
   id: string
   type: TPortType
-  value?: V
-  properties?: P
+  value?: TPortValue
+  properties?: PortProperties
   /** System Temp */
   position?: IPosition
 }
 
-export interface ILink<P extends object = any> {
+export interface ILink<TLinkProperties extends object = any> {
   id: string
   from: {
     nodeId: string
@@ -60,5 +63,5 @@ export interface ILink<P extends object = any> {
     /** System Temp */
     position?: IPosition
   }>
-  properties?: P
+  properties?: TLinkProperties
 }
