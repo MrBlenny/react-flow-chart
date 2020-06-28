@@ -33,6 +33,7 @@ export type INode<NodeProps = undefined, PortProps = undefined> = {
   type: string
   position: IPosition
   orientation?: number
+  readonly?: boolean
   ports: {
     [id: string]: IPort<PortProps>;
   }
@@ -59,8 +60,8 @@ export type IPort<PortProps = undefined> = {
 export type ILink<LinkProps = undefined> = {
   id: string
   from: {
-    nodeId: string;
-    portId: string;
+    nodeId: string
+    portId: string
   }
   to: {
     nodeId?: string;
