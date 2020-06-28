@@ -12,6 +12,7 @@ import { DragAndDropSidebar } from './DragAndDropSidebar'
 import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
 import { LinkColors } from './LinkColors'
+import { LinkWithArrowHead } from './LinkWithArrowHead'
 import { ReadonlyMode } from './ReadonlyMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { SmartRouting } from './SmartRouting'
@@ -29,6 +30,7 @@ storiesOf('Custom Components', module)
   .add('Canvas Outer', CustomCanvasOuterDemo)
   .add('Canvas Link', () => <CustomLinkDemo />)
   .add('Link Colors', () => <LinkColors />)
+  .add('ArrowHead',() => <LinkWithArrowHead />)
 
 storiesOf('Stress Testing', module).add('default', StressTestDemo)
 
