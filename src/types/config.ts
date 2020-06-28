@@ -6,6 +6,7 @@ export interface IConfig {
   selectable?: boolean
   snapToGrid?: boolean
   smartRouting?: boolean
+  showArrowHead?: boolean
   gridSize?: number
   validateLink?: (props: IOnLinkCompleteInput & { chart: IChart }) => boolean
   nodeProps?: any
