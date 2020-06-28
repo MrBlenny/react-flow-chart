@@ -3,6 +3,7 @@ import { generateCurvePath, generateRightAnglePath, generateSmartPath, IConfig, 
 import { ArrowLink, RegularLink } from './variants'
 
 export interface ILinkDefaultProps {
+  className?: string
   config: IConfig
   link: ILink
   startPos: IPosition
