@@ -113,7 +113,7 @@ export const NodeWrapper = ({
 
   const onClick = React.useCallback(
     (e: React.MouseEvent) => {
-      if (!config.readonly) {
+      if (!config.readonly || config.selectable) {
         e.stopPropagation()
         if (!isDragging.current) {
           onNodeClick({ config, nodeId: node.id })

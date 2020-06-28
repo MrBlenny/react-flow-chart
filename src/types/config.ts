@@ -3,6 +3,7 @@ import { IOnLinkCompleteInput } from './functions'
 
 export interface IConfig {
   readonly?: boolean
+  selectable?: boolean
   snapToGrid?: boolean
   smartRouting?: boolean
   showArrowHead?: boolean
@@ -19,20 +20,20 @@ export interface IZoomConfig {
   maxScale?: number
   pan?: {
     disabled?: boolean
-    touchPadEnabled?: boolean,
+    touchPadEnabled?: boolean
   }
   wheel?: {
     disabled?: boolean
     step?: number
     wheelEnabled?: boolean
-    touchPadEnabled?: boolean,
+    touchPadEnabled?: boolean
   }
   zoomIn?: {
     disabled?: boolean
-    step?: number,
+    step?: number
   }
   zoomOut?: {
     disabled?: boolean
-    step?: number,
+    step?: number
   }
 }

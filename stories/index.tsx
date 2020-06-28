@@ -15,6 +15,7 @@ import { LinkColors } from './LinkColors'
 import { NodeReadonly } from './NodeReadonly'
 import { LinkWithArrowHead } from './LinkWithArrowHead'
 import { ReadonlyMode } from './ReadonlyMode'
+import { SelectableMode } from './SelectableMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { SmartRouting } from './SmartRouting'
 import { StressTestDemo } from './StressTest'
@@ -46,4 +47,5 @@ storiesOf('Other Config', module)
   .add('Smart link routing', SmartRouting)
   .add('Zoom', () => <Zoom />)
   .add('Node read only', NodeReadonly)
+  .add('Selectable Mode', SelectableMode)
   .add('Type-safe properties', CustomGraphTypes)
