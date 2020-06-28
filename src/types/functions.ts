@@ -110,6 +110,7 @@ export interface IOnCanvasDropInput {
   config?: IConfig
   data: any
   position: IPosition
+  id: string
 }
 
 export type IOnCanvasDrop = (input: IOnCanvasDropInput) => void

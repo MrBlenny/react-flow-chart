@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { v4 } from 'uuid'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnZoomCanvas, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
@@ -145,7 +146,8 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                       position: {
                         x: relativeClientX / scale - position.x / scale,
                         y: relativeClientY / scale - position.y / scale
-                      }
+                      },
+                      id: data.id || v4(),
                     })
                   }
                 }}

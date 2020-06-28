@@ -1,6 +1,5 @@
-import { IConfig } from 'types'
-import { v4 } from 'uuid'
 import {
+  IConfig,
   IChart,
   identity,
   IOnCanvasClick,
@@ -266,8 +265,12 @@ export const onPortPositionChange: IStateCallback<IOnPortPositionChange> = ({
   return chart
 }
 
-export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({ config, data, position }) => (chart: IChart): IChart => {
-  const id = data.id || v4()
+export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
+  config,
+  data,
+  position,
+  id,
+}) => (chart: IChart): IChart => {
   chart.nodes[id] = {
     id,
     position:
