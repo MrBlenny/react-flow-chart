@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## Added
+
+- Class names to all default components [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/144)
+- Arrow heads to links [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/145)
+
 ## [0.0.13] - 2020-05-09
 
 ## Fixed
