@@ -148,7 +148,7 @@ export const NodeWrapper = ({
 
   // TODO: probably should add an observer to track node component size changes
   React.useLayoutEffect(() => {
-    const el = ReactDOM.findDOMNode(compRef.current) as HTMLInputElement
+    const el = compRef.current as HTMLInputElement
     if (el) {
       if ((node.size && node.size.width) !== el.offsetWidth || (node.size && node.size.height) !== el.offsetHeight) {
         const newSize = { width: el.offsetWidth, height: el.offsetHeight }
@@ -204,6 +204,7 @@ export const NodeWrapper = ({
       onDrag={onDrag}
       onStop={onStop}
       disabled={readonly}
+      nodeRef={compRef}
     >
       <Component
         config={config}
