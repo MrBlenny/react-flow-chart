@@ -6,6 +6,8 @@ import { chartSimple } from './misc/exampleChartState'
 
 const DarkBox = styled.div`
   position: absolute;
+  width: 300px;
+  height: 150px;
   padding: 30px;
   background: #3e3e3e;
   color: white;

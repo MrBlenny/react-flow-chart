@@ -1,6 +1,5 @@
 import { isEqual } from 'lodash'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { v4 } from 'uuid'
 import { IConfig, ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnPortPositionChange, IPort, IPosition, ISelectedOrHovered, ISize } from '../../'
 import CanvasContext from '../Canvas/CanvasContext'
