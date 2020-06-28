@@ -3,6 +3,7 @@ import * as React from 'react'
 import { ConfigSnapToGridDemo } from './ConfigSnapToGrid'
 import { ConfigValidateLinkDemo } from './ConfigValidateLink'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
+import { CustomGraphTypes } from './CustomGraphTypes'
 import { CustomLinkDemo } from './CustomLink'
 import { CustomNodeDemo } from './CustomNode'
 import { CustomNodeInnerDemo } from './CustomNodeInner'
@@ -12,6 +13,7 @@ import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
 import { LinkColors } from './LinkColors'
 import { NodeReadonly } from './NodeReadonly'
+import { LinkWithArrowHead } from './LinkWithArrowHead'
 import { ReadonlyMode } from './ReadonlyMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { SmartRouting } from './SmartRouting'
@@ -29,6 +31,7 @@ storiesOf('Custom Components', module)
   .add('Canvas Outer', CustomCanvasOuterDemo)
   .add('Canvas Link', () => <CustomLinkDemo />)
   .add('Link Colors', () => <LinkColors />)
+  .add('ArrowHead',() => <LinkWithArrowHead />)
 
 storiesOf('Stress Testing', module).add('default', StressTestDemo)
 
@@ -43,3 +46,4 @@ storiesOf('Other Config', module)
   .add('Smart link routing', SmartRouting)
   .add('Zoom', () => <Zoom />)
   .add('Node read only', NodeReadonly)
+  .add('Type-safe properties', CustomGraphTypes)

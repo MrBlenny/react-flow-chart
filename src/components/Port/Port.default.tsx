@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { IConfig, IPort } from '../../'
 
 export interface IPortDefaultProps {
+  className?: string
   config: IConfig
   port: IPort
   isSelected: boolean
@@ -33,8 +34,8 @@ const PortDefaultInner = styled.div<{ active: boolean }>`
   cursor: pointer;
 `
 
-export const PortDefault = ({ isLinkSelected, isLinkHovered, config }: IPortDefaultProps) => (
-  <PortDefaultOuter>
+export const PortDefault = ({ isLinkSelected, isLinkHovered, config, className }: IPortDefaultProps) => (
+  <PortDefaultOuter className={className}>
     <PortDefaultInner
       active={!config.readonly && (isLinkSelected || isLinkHovered)}
     />

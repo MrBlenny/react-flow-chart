@@ -50,10 +50,16 @@ export const onDragNode: IStateCallback<IOnDragNode> = ({ config, event, data, i
   const nodechart = chart.nodes[id]
 
   if (nodechart) {
-    const position = getOffset(config, data)
+    const delta = {
+      x: data.deltaX,
+      y: data.deltaY
+    };
     chart.nodes[id] = {
       ...nodechart,
-      position,
+      position: {
+        x: nodechart.position.x + delta.x,
+        y: nodechart.position.y + delta.y
+      }
     }
   }
 

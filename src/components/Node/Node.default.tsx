@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 import { IConfig, INode } from '../../'
 
 export interface INodeDefaultProps {
+  className?: string
   config: IConfig
   node: INode
   children: any

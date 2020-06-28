@@ -137,13 +137,15 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                     e.dataTransfer.getData(REACT_FLOW_CHART),
                   )
                   if (data) {
+                    const relativeClientX = e.clientX - offsetX;
+                    const relativeClientY = e.clientY - offsetY;
                     onCanvasDrop({
                       config,
                       data,
                       position: {
-                        x: e.clientX - (position.x + offsetX),
-                        y: e.clientY - (position.y + offsetY),
-                      },
+                        x: relativeClientX / scale - position.x / scale,
+                        y: relativeClientY / scale - position.y / scale
+                      }
                     })
                   }
                 }}
