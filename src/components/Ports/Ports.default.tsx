@@ -4,13 +4,14 @@ import ResizeObserver from "react-resize-observer";
 import {useEffect, useState} from "react";
 
 export interface IPortsDefaultProps {
+  className?: string
   config: IConfig
   node: INode
   children: Array<React.ReactElement<any>>
   onResize: (size: ISize) => void
 }
 
-export const PortsDefault = ({ children, config, onResize }: IPortsDefaultProps) => {
+export const PortsDefault = ({ children, config, onResize, className }: IPortsDefaultProps) => {
   const [ top, setTop ] = useState(0);
   const [ bottom, setBottom ] = useState(0);
   const [ right, setRight ] = useState(0);
@@ -31,7 +32,7 @@ export const PortsDefault = ({ children, config, onResize }: IPortsDefaultProps)
   }, [ width, height, onResize ]);
 
   return (
-    <div>
+    <div className={className}>
       <PortsGroupDefault config={config} side="top">
         <ResizeObserver onResize={(rect) => { setTop(rect.width) }} />
         {children.filter((child) => ['input', 'top'].includes(child.props.port.type))}
