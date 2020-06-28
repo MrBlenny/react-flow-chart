@@ -15,7 +15,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
   ${(props) => {
     if (props.side === 'top') {
       return css`
-        width: 100%;
+        min-width: 100%;
         left: 0;
         top: -12px;
         flex-direction: row;
@@ -25,7 +25,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
       `
     } else if (props.side === 'bottom') {
       return css`
-        width: 100%;
+        min-width: 100%;
         left: 0;
         bottom: -12px;
         flex-direction: row;
@@ -35,7 +35,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
       `
     } else if (props.side === 'left') {
       return css`
-        height: 100%;
+        min-height: 100%;
         top: 0;
         left: -12px;
         flex-direction: column;
@@ -45,7 +45,7 @@ export const PortsGroupDefault = styled.div<IPortsGroupDefaultProps>`
       `
     } else {
       return css`
-        height: 100%;
+        min-height: 100%;
         top: 0;
         right: -12px;
         flex-direction: column;
