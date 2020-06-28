@@ -3,6 +3,7 @@ import { IConfig, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPo
 import { getDirectional } from '../utils'
 
 export interface IArrowLinkProps {
+  className?: string
   link: ILink
   config: IConfig
   linkColor: string
@@ -17,6 +18,7 @@ export interface IArrowLinkProps {
 }
 
 export const ArrowLink = ({
+  className,
   link,
   config,
   linkColor,
@@ -41,7 +43,7 @@ export const ArrowLink = ({
     markerKey = 'markerStart'
   }
 
-  const marker = { [markerKey]: 'url(#arrowHead)' }
+  const marker = { [markerKey]: `url(#arrowHead-${linkColor})` }
 
   return (
     <svg
@@ -52,10 +54,11 @@ export const ArrowLink = ({
         left: 0,
         right: 0,
       }}
+      className={className}
     >
       <defs>
         <marker
-          id="arrowHead"
+          id={`arrowHead-${linkColor}`}
           orient="auto-start-reverse"
           markerWidth="2"
           markerHeight="4"

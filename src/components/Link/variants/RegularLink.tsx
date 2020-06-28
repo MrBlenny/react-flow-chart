@@ -2,6 +2,7 @@ import * as React from 'react'
 import { IConfig, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../../'
 
 export interface IRegularLinkProps {
+  className?: string
   points: string
   linkColor: string
   config: IConfig
@@ -16,6 +17,7 @@ export interface IRegularLinkProps {
 }
 
 export const RegularLink = ({
+  className,
   points,
   linkColor,
   config,
@@ -37,6 +39,7 @@ export const RegularLink = ({
         left: 0,
         right: 0,
       }}
+      className={className}
     >
       <circle r="4" cx={startPos.x} cy={startPos.y} fill={linkColor} />
       {/* Main line */}
