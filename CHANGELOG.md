@@ -6,6 +6,7 @@
 
 - Class names to all default components [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/144)
 - Arrow heads to links [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/145)
+- Add generics to main chart types [andrewadams32](https://github.com/MrBlenny/react-flow-chart/pull/151)
 
 ## [0.0.13] - 2020-05-09
 
