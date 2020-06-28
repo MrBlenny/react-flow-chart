@@ -32,7 +32,6 @@ storiesOf('Custom Components', module)
   .add('Canvas Outer', CustomCanvasOuterDemo)
   .add('Canvas Link', () => <CustomLinkDemo />)
   .add('Link Colors', () => <LinkColors />)
-  .add('ArrowHead',() => <LinkWithArrowHead />)
 
 storiesOf('Stress Testing', module).add('default', StressTestDemo)
 
@@ -49,3 +48,4 @@ storiesOf('Other Config', module)
   .add('Node read only', NodeReadonly)
   .add('Selectable Mode', SelectableMode)
   .add('Type-safe properties', CustomGraphTypes)
+  .add('ArrowHead',() => <LinkWithArrowHead />)
