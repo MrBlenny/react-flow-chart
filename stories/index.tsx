@@ -4,6 +4,7 @@ import * as React from 'react'
 import { ConfigSnapToGridDemo } from './ConfigSnapToGrid'
 import { ConfigValidateLinkDemo } from './ConfigValidateLink'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
+import { CustomGraphTypes } from './CustomGraphTypes'
 import { CustomLinkDemo } from './CustomLink'
 import { CustomNodeDemo } from './CustomNode'
 import { CustomNodeInnerDemo } from './CustomNodeInner'
@@ -44,3 +45,4 @@ storiesOf('Other Config', module)
   .add('Read only mode', ReadonlyMode)
   .add('Smart link routing', SmartRouting)
   .add('Zoom', () => <Zoom />)
+  .add('Type-safe properties', CustomGraphTypes)
