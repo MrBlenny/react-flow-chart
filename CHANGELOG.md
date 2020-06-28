@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## Fixed
+
+- Drag and drop nodes now reflects the correct position when zoomed [ajuhos](https://github.com/MrBlenny/react-flow-chart/pull/152)
+
 ## Added
 
 - Class names to all default components [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/144)
