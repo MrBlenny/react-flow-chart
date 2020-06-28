@@ -5,7 +5,8 @@
 ## Fixed
 
 - Drag and drop nodes now reflects the correct position when zoomed [ajuhos](https://github.com/MrBlenny/react-flow-chart/pull/152)
-- Fixed some link positioning errors [ajuhos ](https://github.com/MrBlenny/react-flow-chart/pull/162/)
+- Fixed some link positioning errors [ajuhos](https://github.com/MrBlenny/react-flow-chart/pull/162/)
+- Fix canvas drop creating 2 nodes [IdealSystemsMCP](https://github.com/MrBlenny/react-flow-chart/pull/169/)
 
 ## Added
 
