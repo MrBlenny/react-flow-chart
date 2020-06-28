@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.0.14] - 2020-06-28
+
 ## Fixed
 
 - Drag and drop nodes now reflects the correct position when zoomed [ajuhos](https://github.com/MrBlenny/react-flow-chart/pull/152)
