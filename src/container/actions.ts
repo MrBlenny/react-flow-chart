@@ -1,6 +1,6 @@
 import {
-  IConfig,
   IChart,
+  IConfig,
   identity,
   IOnCanvasClick,
   IOnCanvasDrop,
@@ -27,7 +27,7 @@ import {
 } from '../'
 import { rotate } from './utils/rotate'
 
-function getOffset(config: any, data: any, zoom?: number) {
+function getOffset (config: any, data: any, zoom?: number) {
   let offset = { x: data.x, y: data.y }
   if (config && config.snapToGrid) {
     offset = {
@@ -52,14 +52,14 @@ export const onDragNode: IStateCallback<IOnDragNode> = ({ config, event, data, i
   if (nodechart) {
     const delta = {
       x: data.deltaX,
-      y: data.deltaY
-    };
+      y: data.deltaY,
+    }
     chart.nodes[id] = {
       ...nodechart,
       position: {
         x: nodechart.position.x + delta.x,
-        y: nodechart.position.y + delta.y
-      }
+        y: nodechart.position.y + delta.y,
+      },
     }
   }
 
@@ -76,7 +76,7 @@ export const onDragCanvas: IOnDragCanvas = ({ config, data }) => (chart: IChart)
 export const onDragCanvasStop: IStateCallback<IOnDragCanvasStop> = () => identity
 
 export const onLinkStart: IStateCallback<IOnLinkStart> = ({ linkId, fromNodeId, fromPortId }) => (
-  chart: IChart
+  chart: IChart,
 ): IChart => {
   chart.links[linkId] = {
     id: linkId,
@@ -276,9 +276,9 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
     position:
       config && config.snapToGrid
         ? {
-            x: Math.round(position.x / 20) * 20,
-            y: Math.round(position.y / 20) * 20,
-          }
+          x: Math.round(position.x / 20) * 20,
+          y: Math.round(position.y / 20) * 20,
+        }
         : { x: position.x, y: position.y },
     orientation: data.orientation || 0,
     type: data.type,

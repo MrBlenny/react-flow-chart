@@ -60,5 +60,5 @@ export const LinkWrapper = React.memo(
         isHovered={isHovered}
       />
     )
-  }
+  },
 )

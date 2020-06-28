@@ -61,7 +61,7 @@ export type ILink<LinkProps = undefined> = {
   id: string
   from: {
     nodeId: string
-    portId: string
+    portId: string,
   }
   to: {
     nodeId?: string;

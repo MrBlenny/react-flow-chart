@@ -1,7 +1,6 @@
 import * as React from 'react'
-import {IConfig, INode, ISize, PortsGroupDefault} from '../../'
-import ResizeObserver from "react-resize-observer";
-import {useEffect, useState} from "react";
+import ResizeObserver from 'react-resize-observer'
+import { IConfig, INode, ISize, PortsGroupDefault } from '../../'
 
 export interface IPortsDefaultProps {
   className?: string
@@ -12,24 +11,24 @@ export interface IPortsDefaultProps {
 }
 
 export const PortsDefault = ({ children, config, onResize, className }: IPortsDefaultProps) => {
-  const [ top, setTop ] = useState(0);
-  const [ bottom, setBottom ] = useState(0);
-  const [ right, setRight ] = useState(0);
-  const [ left, setLeft ] = useState(0);
-  const [ width, setWidth ] = useState(0);
-  const [ height, setHeight ] = useState(0);
+  const [ top, setTop ] = React.useState(0)
+  const [ bottom, setBottom ] = React.useState(0)
+  const [ right, setRight ] = React.useState(0)
+  const [ left, setLeft ] = React.useState(0)
+  const [ width, setWidth ] = React.useState(0)
+  const [ height, setHeight ] = React.useState(0)
 
-  useEffect(() => {
+  React.useEffect(() => {
     setWidth(Math.max(top, bottom))
-  }, [ top, bottom ]);
+  }, [ top, bottom ])
 
-  useEffect(() => {
+  React.useEffect(() => {
     setHeight(Math.max(left, right))
-  }, [ left, right ]);
+  }, [ left, right ])
 
-  useEffect(() => {
+  React.useEffect(() => {
     onResize({ width, height })
-  }, [ width, height, onResize ]);
+  }, [ width, height, onResize ])
 
   return (
     <div className={className}>

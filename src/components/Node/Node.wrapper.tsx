@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import {
@@ -27,8 +26,8 @@ import {
   PortWrapper,
 } from '../../'
 import { noop } from '../../utils'
+import CanvasContext from '../Canvas/CanvasContext'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
-import CanvasContext from "../Canvas/CanvasContext";
 
 export interface INodeWrapperProps {
   config: IConfig
@@ -83,7 +82,7 @@ export const NodeWrapper = ({
   onLinkComplete,
   onLinkCancel,
 }: INodeWrapperProps) => {
-  const { zoomScale } = React.useContext(CanvasContext);
+  const { zoomScale } = React.useContext(CanvasContext)
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
   const [portsSize, setPortsSize] = React.useState<ISize>({ width: 0, height: 0 })
 
@@ -102,14 +101,14 @@ export const NodeWrapper = ({
       isDragging.current = true
       onDragNode({ config, event, data, id: node.id })
     },
-    [onDragNode, config, node.id]
+    [onDragNode, config, node.id],
   )
 
   const onStop = React.useCallback(
     (event: MouseEvent, data: DraggableData) => {
       onDragNodeStop({ config, event, data, id: node.id })
     },
-    [onDragNodeStop, config, node.id]
+    [onDragNodeStop, config, node.id],
   )
 
   const onClick = React.useCallback(
@@ -121,7 +120,7 @@ export const NodeWrapper = ({
         }
       }
     },
-    [config, node.id]
+    [config, node.id],
   )
 
   const onDoubleClick = React.useCallback(
@@ -133,7 +132,7 @@ export const NodeWrapper = ({
         }
       }
     },
-    [config, node.id]
+    [config, node.id],
   )
 
   const onMouseEnter = React.useCallback(() => {
