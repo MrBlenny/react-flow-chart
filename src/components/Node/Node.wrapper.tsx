@@ -13,6 +13,7 @@ import {
 } from '../../'
 import { noop } from '../../utils'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
+import CanvasContext from "../Canvas/CanvasContext";
 
 export interface INodeWrapperProps {
   config: IConfig
@@ -67,6 +68,7 @@ export const NodeWrapper = ({
   onLinkComplete,
   onLinkCancel,
 }: INodeWrapperProps) => {
+  const { zoomScale } = React.useContext(CanvasContext);
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
 
   const isDragging = React.useRef(false)
@@ -168,6 +170,7 @@ export const NodeWrapper = ({
       axis="both"
       position={node.position}
       grid={[1,1]}
+      scale={zoomScale}
       onStart={onStart}
       onDrag={onDrag}
       onStop={onStop}
