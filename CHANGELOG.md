@@ -12,6 +12,7 @@
 - Arrow heads to links [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/145)
 - Add generics to main chart types [andrewadams32](https://github.com/MrBlenny/react-flow-chart/pull/151)
 - Add readonly mode to nodes [ielijose](https://github.com/MrBlenny/react-flow-chart/pull/155)
+- Add selectable mode [ielijose](https://github.com/MrBlenny/react-flow-chart/pull/156)
 
 ## [0.0.13] - 2020-05-09
 
