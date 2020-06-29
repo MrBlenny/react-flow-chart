@@ -3,8 +3,10 @@ import { IOnLinkCompleteInput } from './functions'
 
 export interface IConfig {
   readonly?: boolean
+  selectable?: boolean
   snapToGrid?: boolean
   smartRouting?: boolean
+  showArrowHead?: boolean
   gridSize?: number
   validateLink?: (props: IOnLinkCompleteInput & { chart: IChart }) => boolean
   nodeProps?: any

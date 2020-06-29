@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [0.0.14] - 2020-06-28
+
+## Fixed
+
+- Drag and drop nodes now reflects the correct position when zoomed [ajuhos](https://github.com/MrBlenny/react-flow-chart/pull/152)
+- Fixed some link positioning errors [ajuhos](https://github.com/MrBlenny/react-flow-chart/pull/162/)
+- Fix canvas drop creating 2 nodes [IdealSystemsMCP](https://github.com/MrBlenny/react-flow-chart/pull/169/)
+- Remove depricated findDOMNode method [IdealSystemsMCP](https://github.com/MrBlenny/react-flow-chart/pull/170/)
+
+## Added
+
+- Class names to all default components [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/144)
+- Arrow heads to links [davidanitoiu](https://github.com/MrBlenny/react-flow-chart/pull/145)
+- Add generics to main chart types [andrewadams32](https://github.com/MrBlenny/react-flow-chart/pull/151)
+- Add readonly mode to nodes [ielijose](https://github.com/MrBlenny/react-flow-chart/pull/155)
+- Add selectable mode [ielijose](https://github.com/MrBlenny/react-flow-chart/pull/156)
+
 ## [0.0.13] - 2020-05-09
 
 ## Fixed

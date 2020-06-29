@@ -1,6 +1,6 @@
 {
   "name": "@mrblenny/react-flow-chart",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A flexible, stateless flow chart library for react.",
   "main": "src/index.js",
   "repository": "git@github.com:MrBlenny/react-flow-chart.git",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "pathfinding": "^0.4.18",
-    "react-draggable": "^4.3.1",
+    "react-draggable": "^4.4.3",
     "react-resize-observer": "^1.1.1",
     "react-zoom-pan-pinch": "^1.6.1",
     "uuid": "^3.3.2"

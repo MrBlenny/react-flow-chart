@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
+import { v4 } from 'uuid'
 import { IConfig, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnZoomCanvas, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
@@ -137,13 +138,16 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
                     e.dataTransfer.getData(REACT_FLOW_CHART),
                   )
                   if (data) {
+                    const relativeClientX = e.clientX - offsetX
+                    const relativeClientY = e.clientY - offsetY
                     onCanvasDrop({
                       config,
                       data,
                       position: {
-                        x: e.clientX - (position.x + offsetX),
-                        y: e.clientY - (position.y + offsetY),
+                        x: relativeClientX / scale - position.x / scale,
+                        y: relativeClientY / scale - position.y / scale,
                       },
+                      id: data.id || v4(),
                     })
                   }
                 }}
