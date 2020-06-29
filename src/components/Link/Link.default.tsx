@@ -29,12 +29,15 @@ export const LinkDefault = (props: ILinkDefaultProps) => {
   const linkColor: string =
     (fromPort.properties && fromPort.properties.linkColor) || 'cornflowerblue'
 
+  const className = toPort ? 'react-flow-chart__link--placed' : 'react-flow-chart__link--dragging'
+
   const linkProps = {
     config,
     points,
     linkColor,
     startPos,
     endPos,
+    className,
     ...props,
   }
   
