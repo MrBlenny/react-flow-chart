@@ -180,7 +180,7 @@ export const onNodeMouseLeave: IStateCallback<IOnNodeMouseLeave> = ({ nodeId }) 
 }
 
 export const onDeleteKey: IStateCallback<IOnDeleteKey> = ({ config }: IConfig) => (chart: IChart) => {
-  if (config.readonly) {
+  if (config && config.readonly) {
     return chart
   }
   if (chart.selected.type === 'node' && chart.selected.id) {
