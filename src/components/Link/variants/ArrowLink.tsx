@@ -7,6 +7,7 @@ export interface IArrowLinkProps {
   link: ILink
   config: IConfig
   linkColor: string
+  linkStrokeWidth: string
   points: string
   isHovered: boolean
   isSelected: boolean
@@ -22,6 +23,7 @@ export const ArrowLink = ({
   link,
   config,
   linkColor,
+  linkStrokeWidth,
   points,
   isHovered,
   isSelected,
@@ -72,7 +74,7 @@ export const ArrowLink = ({
       <path
         d={points}
         stroke={linkColor}
-        strokeWidth="3"
+        strokeWidth={linkStrokeWidth}
         fill="none"
         {...marker}
       />
