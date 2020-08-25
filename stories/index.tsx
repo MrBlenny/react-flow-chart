@@ -12,6 +12,7 @@ import { DragAndDropSidebar } from './DragAndDropSidebar'
 import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
 import { LinkColors } from './LinkColors'
+import { LinkStrokeWidths } from './LinkStrokeWidths'
 import { NodeReadonly } from './NodeReadonly'
 import { LinkWithArrowHead } from './LinkWithArrowHead'
 import { ReadonlyMode } from './ReadonlyMode'
@@ -32,6 +33,7 @@ storiesOf('Custom Components', module)
   .add('Canvas Outer', CustomCanvasOuterDemo)
   .add('Canvas Link', () => <CustomLinkDemo />)
   .add('Link Colors', () => <LinkColors />)
+  .add('Link Stroke Widths', () => <LinkStrokeWidths />)
 
 storiesOf('Stress Testing', module).add('default', StressTestDemo)
 

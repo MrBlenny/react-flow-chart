@@ -29,15 +29,16 @@ export const LinkDefault = (props: ILinkDefaultProps) => {
   const linkColor: string =
     (fromPort.properties && fromPort.properties.linkColor) || 'cornflowerblue'
 
+  const linkStrokeWidth: string =
+    (fromPort.properties && fromPort.properties.linkStrokeWidth) || '3'
+
   const linkProps = {
-    config,
     points,
     linkColor,
-    startPos,
-    endPos,
+    linkStrokeWidth,
     ...props,
   }
-  
+
   return config.showArrowHead
     ? <ArrowLink {...linkProps} />
     : <RegularLink {...linkProps} />

@@ -5,6 +5,7 @@ export interface IRegularLinkProps {
   className?: string
   points: string
   linkColor: string
+  linkStrokeWidth: string
   config: IConfig
   link: ILink
   startPos: IPosition
@@ -20,6 +21,7 @@ export const RegularLink = ({
   className,
   points,
   linkColor,
+  linkStrokeWidth,
   config,
   link,
   startPos,
@@ -43,7 +45,7 @@ export const RegularLink = ({
     >
       <circle r="4" cx={startPos.x} cy={startPos.y} fill={linkColor} />
       {/* Main line */}
-      <path d={points} stroke={linkColor} strokeWidth="3" fill="none" />
+      <path d={points} stroke={linkColor} strokeWidth={linkStrokeWidth} fill="none" />
       {/* Thick line to make selection easier */}
       <path
         d={points}
