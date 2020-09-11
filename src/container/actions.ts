@@ -1,7 +1,6 @@
 import {
   IChart,
   IConfig,
-  identity,
   IOnCanvasClick,
   IOnCanvasDrop,
   IOnDeleteKey,
@@ -24,15 +23,18 @@ import {
   IOnPortPositionChange,
   IOnZoomCanvas,
   IStateCallback,
+  identity,
 } from '../'
+
 import { rotate } from './utils/rotate'
 
 function getOffset (config: any, data: any, zoom?: number) {
   let offset = { x: data.x, y: data.y }
   if (config && config.snapToGrid) {
+    const gridSize = config.gridSize || 20
     offset = {
-      x: Math.round(data.x / 20) * 20,
-      y: Math.round(data.y / 20) * 20,
+      x: Math.round(data.x / gridSize) * gridSize,
+      y: Math.round(data.y / gridSize) * gridSize,
     }
   }
   if (zoom) {
@@ -66,7 +68,24 @@ export const onDragNode: IStateCallback<IOnDragNode> = ({ config, event, data, i
   return chart
 }
 
-export const onDragNodeStop: IStateCallback<IOnDragNodeStop> = () => identity
+export const onDragNodeStop: IStateCallback<IOnDragNodeStop> = ({ config, event, data, id}) => (chart: IChart) => { 
+  const nodechart = chart.nodes[id];
+  
+  if (nodechart) {
+      if (config && config.snapToGrid) {
+        const gridSize = config.gridSize || 20
+        const position = {
+            x: Math.round(nodechart.position.x / gridSize) * gridSize,
+            y: Math.round(nodechart.position.y / gridSize) * gridSize,
+        };
+        chart.nodes[id] = {
+          ...nodechart,
+          position: position
+        }
+      }   
+  }
+  return chart
+};
 
 export const onDragCanvas: IOnDragCanvas = ({ config, data }) => (chart: IChart): IChart => {
   chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
@@ -271,15 +290,16 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
   position,
   id,
 }) => (chart: IChart): IChart => {
+  if (config && config.snapToGrid) {
+    const gridSize = config.gridSize || 20
+    position = {
+        x: Math.round(position.x / gridSize) * gridSize,
+        y: Math.round(position.y / gridSize) * gridSize,
+    }
+  }   
   chart.nodes[id] = {
     id,
-    position:
-      config && config.snapToGrid
-        ? {
-          x: Math.round(position.x / 20) * 20,
-          y: Math.round(position.y / 20) * 20,
-        }
-        : { x: position.x, y: position.y },
+    position: position,
     orientation: data.orientation || 0,
     type: data.type,
     ports: data.ports,
