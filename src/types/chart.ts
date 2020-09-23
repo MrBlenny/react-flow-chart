@@ -16,6 +16,8 @@ export type IChart<
     scale: number
     /** System Temp */
     selected: ISelectedOrHovered
+    multiSelectedNodes?: string[]
+    lastSelectedNodeId?: string
     hovered: ISelectedOrHovered,
   } & (ChartProps extends undefined ? {
     properties?: any,

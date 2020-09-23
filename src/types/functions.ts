@@ -90,6 +90,7 @@ export type IOnDeleteKey = (input: { config?: IConfig }) => void
 export interface INodeBaseInput {
   config?: IConfig
   nodeId: string
+  isShiftKeyPressed?: boolean
 }
 
 export type IOnNodeClick = (input: INodeBaseInput) => void

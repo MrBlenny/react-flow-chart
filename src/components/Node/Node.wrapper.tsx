@@ -116,7 +116,7 @@ export const NodeWrapper = ({
       if (!config.readonly || config.selectable) {
         e.stopPropagation()
         if (!isDragging.current) {
-          onNodeClick({ config, nodeId: node.id })
+          onNodeClick({ config, nodeId: node.id, isShiftKeyPressed: e.shiftKey })
         }
       }
     },

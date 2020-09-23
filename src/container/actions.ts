@@ -54,12 +54,25 @@ export const onDragNode: IStateCallback<IOnDragNode> = ({ config, event, data, i
       x: data.deltaX,
       y: data.deltaY,
     }
-    chart.nodes[id] = {
-      ...nodechart,
-      position: {
-        x: nodechart.position.x + delta.x,
-        y: nodechart.position.y + delta.y,
-      },
+    if (chart.multiSelectedNodes && chart.multiSelectedNodes.includes(id)) {
+      for (const eachNodeId of chart.multiSelectedNodes) {
+        const eachNodeChart = chart.nodes[eachNodeId]
+        chart.nodes[eachNodeId] = {
+          ...eachNodeChart,
+          position: {
+            x: eachNodeChart.position.x + delta.x,
+            y: eachNodeChart.position.y + delta.y,
+          },
+        }
+      }
+    } else {
+      chart.nodes[id] = {
+        ...nodechart,
+        position: {
+          x: nodechart.position.x + delta.x,
+          y: nodechart.position.y + delta.y,
+        },
+      }
     }
   }
 
@@ -152,6 +165,8 @@ export const onLinkClick: IStateCallback<IOnLinkClick> = ({ linkId }) => (chart:
       id: linkId,
     }
   }
+  chart.multiSelectedNodes = []
+  chart.lastSelectedNodeId = undefined
   return chart
 }
 
@@ -159,6 +174,8 @@ export const onCanvasClick: IStateCallback<IOnCanvasClick> = () => (chart: IChar
   if (chart.selected.id) {
     chart.selected = {}
   }
+  chart.multiSelectedNodes = []
+  chart.lastSelectedNodeId = undefined
   return chart
 }
 
@@ -206,13 +223,34 @@ export const onDeleteKey: IStateCallback<IOnDeleteKey> = ({ config }: IConfig) =
   return chart
 }
 
-export const onNodeClick: IStateCallback<IOnNodeClick> = ({ nodeId }) => (chart: IChart) => {
-  if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
-    chart.selected = {
-      type: 'node',
-      id: nodeId,
+export const onNodeClick: IStateCallback<IOnNodeClick> = ({ nodeId, isShiftKeyPressed }) => (chart: IChart) => {
+  if (isShiftKeyPressed) {
+    // initialize the multi-selected nodes list
+    if (!chart.multiSelectedNodes) {
+      chart.multiSelectedNodes = []
     }
+    // Add the last selected node to the list.
+    // This step is necessary because:
+    // if a user clicks on A, and THEN holds down the shift key, followed by clicking on B,
+    // both A and B should be selected although the shift key is actually not pressed while clicking on A.
+    // If there is no such step, the user has to hold down the shift key first before selecting any node.
+    if (chart.lastSelectedNodeId !== undefined && !chart.multiSelectedNodes.includes(chart.lastSelectedNodeId)) {
+      chart.multiSelectedNodes.push(chart.lastSelectedNodeId)
+    }
+    if (!chart.multiSelectedNodes.includes(nodeId)) {
+      chart.multiSelectedNodes.push(nodeId)
+    }
+  } else {
+    if (chart.selected.id !== nodeId || chart.selected.type !== 'node') {
+      chart.selected = {
+        type: 'node',
+        id: nodeId,
+      }
+    }
+    // clicking on any node without holding down the shift key clears the list
+    chart.multiSelectedNodes = []
   }
+  chart.lastSelectedNodeId = nodeId
   return chart
 }
 
@@ -223,6 +261,8 @@ export const onNodeDoubleClick: IStateCallback<IOnNodeDoubleClick> = ({ nodeId }
       id: nodeId,
     }
   }
+  chart.multiSelectedNodes = []
+  chart.lastSelectedNodeId = undefined
   return chart
 }
 

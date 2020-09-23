@@ -167,7 +167,7 @@ export const FlowChart = (props: IFlowChartProps) => {
         )
       })}
       { nodesInView.map((nodeId) => {
-        const isSelected = selected.type === 'node' && selected.id === nodeId
+        const isSelected = ((selected.type === 'node' && selected.id === nodeId) || (!!chart.multiSelectedNodes && chart.multiSelectedNodes.includes(nodeId)))
         const selectedLink = getSelectedLinkForNode(selected, nodeId, links)
         const hoveredLink = getSelectedLinkForNode(hovered, nodeId, links)
 
