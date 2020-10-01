@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/MrBlenny/react-flow-chart.svg?style=svg)](https://circleci.com/gh/MrBlenny/react-flow-chart)
 
-- [X] Dragabble Nodes and Canvas
+- [X] Draggable Nodes and Canvas
 - [x] Create curved links between ports
 - [x] Custom components for Canvas, Links, Ports, Nodes
 - [X] React state container
@@ -20,7 +20,7 @@
 
 ### [CodeSandbox Demo](https://codesandbox.io/s/4w46wv71o7)
 
-This project aims to build a highly customisable, declarative flow chart library. Critically, you control the state. Pick from Redux, MobX, React or any other state managment library - simply pass in the current state and hook up the callbacks.
+This project aims to build a highly customizable, declarative flow chart library. Critically, you control the state. Pick from Redux, MobX, React or any other state management library - simply pass in the current state and hook up the callbacks.
 
 For example:
 
@@ -201,7 +201,81 @@ const Example = (
 ### Other Demos
 [stories/ExternalReactState.tsx](./stories)
 
+# Props 
 
+## Chart ( interface: IChart ) 
+The current state of the chart.
+
+```ts
+
+export const chart: IChart = {
+  offset: {},
+  scale: 1,
+  nodes: {},
+  selected: {},
+  hovered: {},
+}
+
+```
+
+## Components( interface: IFlowChartComponents )    
+The definition of custom components.
+
+Example
+```tsx
+const PortCustom = (props: IPortDefaultProps) => (
+    <PortDefaultOuter>
+        {props.port.properties && props.port.properties.value === 'false' && (
+            <svg style={{width: '24px', height: '24px'}} viewBox="0 0 24 24">
+                <path fill="white"
+                      d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+        )}
+        {!props.port.properties && props.port.properties.value === 'true' && (
+            <svg style={{width: '24px', height: '24px'}} viewBox="0 0 24 24">
+                <path fill="white" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+            </svg>
+        )}
+    </PortDefaultOuter> )
+   
+   
+   
+<FlowChart
+    chart={chart}
+    callbacks={stateActionCallbacks}
+    Components={{
+        CanvasOuter:CanvasOuterCustom,
+        CanvasInner:CanvasInnerCustom,
+        NodeInner:NodeInnerCustom,
+        Ports:PortsCustom,
+        Port:PortCustom,
+        Node:NodeCustom,
+        Link:LinkCustom
+    }}
+/>
+  
+```
+
+## Components( interface: IConfig  )    
+Another config. This will be passed into all components and actions. (Don't store state here as it may trigger re-renders )
+Example
+```tsx
+ <FlowChart
+        chart={chart}
+        callbacks={stateActionCallbacks}
+        config={{
+           readonly:true,
+           snapToGrid:false,
+           smartRouting: true,
+           gridSize: 20,
+           validateLink: ({linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart}): boolean => {
+                                    //This does not allow links between the same type of node
+                                    return chart.nodes[fromNodeId].type !== chart.nodes[toNodeId].type;
+                          },}},
+           zoom:1.2,
+/>
+          
+```
 ## Contributing
 
 If you're interested in helping out, let me know. 
