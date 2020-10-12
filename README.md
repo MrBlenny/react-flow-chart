@@ -99,6 +99,7 @@ export const chart: IChart = {
   },
   selected: {},
   hovered: {},
+  scale: 1
 }
 
 ```
