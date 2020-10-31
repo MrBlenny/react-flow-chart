@@ -3,7 +3,8 @@ import { IChart } from '../../src'
 export const tooltipChart: IChart = {
   tooltipsGlobal: {
     showTooltip: true,
-    text: 'This is the global tooltip',
+    toogleOffWhenClicked: 'global',
+    text: 'This is the global tooltip and will be toggled off, when clicked',
   },
   offset: {
     x: 0,
@@ -42,7 +43,8 @@ export const tooltipChart: IChart = {
     node2: {
       tooltip: {
         showTooltip: true,
-        text: 'this is the tooltip for node2',
+        toogleOffWhenClicked: 'node',
+        text: 'this is the tooltip for node2 and will be toggled off when clicked',
       },
       id: 'node2',
       type: 'input-output',

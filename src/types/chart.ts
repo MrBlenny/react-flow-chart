@@ -79,5 +79,6 @@ export type ILink<LinkProps = undefined> = {
 
 interface ITooltipConfig {
   showTooltip: boolean,
+  toogleOffWhenClicked?: 'global' | 'node'
   text: string,
 }

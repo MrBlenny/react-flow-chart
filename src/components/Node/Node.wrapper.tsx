@@ -3,7 +3,7 @@ import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import ReactTooltip from 'react-tooltip'
 import {
-  IConfig,
+  IConfig, IDeleteTooltip,
   ILink,
   INode,
   INodeInnerDefaultProps,
@@ -23,7 +23,7 @@ import {
   IPortsDefaultProps,
   IPosition,
   ISelectedOrHovered,
-  ISize,
+  ISize, IToggletooltip,
   PortWrapper,
 } from '../../'
 import { noop } from '../../utils'
@@ -56,6 +56,8 @@ export interface INodeWrapperProps {
   onNodeSizeChange: IOnNodeSizeChange
   onNodeMouseEnter: IOnNodeMouseEnter
   onNodeMouseLeave: IOnNodeMouseLeave
+  deleteTooltip: IDeleteTooltip
+  toggleTooltip: IToggletooltip
 }
 
 export const NodeWrapper = ({
@@ -84,6 +86,8 @@ export const NodeWrapper = ({
   onLinkMove,
   onLinkComplete,
   onLinkCancel,
+  toggleTooltip,
+  deleteTooltip,
 }: INodeWrapperProps) => {
   const { zoomScale } = React.useContext(CanvasContext)
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
@@ -120,6 +124,13 @@ export const NodeWrapper = ({
         e.stopPropagation()
         if (!isDragging.current) {
           onNodeClick({ config, nodeId: node.id })
+        }
+      }
+      if (node.tooltip) {
+
+        switch (node.tooltip.toogleOffWhenClicked) {
+          case 'global': toggleTooltip({ nodeId: 'global' }); break
+          case 'node' : toggleTooltip({ nodeId: node.id }); break
         }
       }
     },

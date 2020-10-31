@@ -1,6 +1,6 @@
 import {
   IChart,
-  IConfig, IDeleteToolTip,
+  IConfig, IDeleteTooltip,
   identity,
   IOnCanvasClick,
   IOnCanvasDrop,
@@ -23,7 +23,7 @@ import {
   IOnNodeSizeChange,
   IOnPortPositionChange,
   IOnZoomCanvas,
-  IStateCallback, IToggleToolTip,
+  IStateCallback, IToggletooltip,
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -294,7 +294,7 @@ export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (chart: IChart)
   return chart
 }
 
-export const deleteTooltip: IDeleteToolTip = ({ nodeId }) => (chart: IChart): IChart => {
+export const deleteTooltip: IDeleteTooltip = ({ nodeId }) => (chart: IChart): IChart => {
   if (nodeId === 'global') {
     delete chart.tooltipsGlobal
   }
@@ -304,7 +304,7 @@ export const deleteTooltip: IDeleteToolTip = ({ nodeId }) => (chart: IChart): IC
   return chart
 }
 
-export const toggleTooltip: IToggleToolTip = ({ nodeId }) => (chart: IChart): IChart => {
+export const toggleTooltip: IToggletooltip = ({ nodeId }) => (chart: IChart): IChart => {
   if (nodeId === 'global') {
     if (chart.tooltipsGlobal) {
       chart.tooltipsGlobal.showTooltip ?

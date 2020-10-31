@@ -1,10 +1,9 @@
 import * as React from 'react'
-import {
-  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, ILink,
-  ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas,
-  IOnDragCanvasStop, IOnDragNode, IOnDragNodeStop, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter,
-  IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick, IOnNodeMouseEnter, IOnNodeMouseLeave, IOnNodeSizeChange,
-  IOnPortPositionChange, IOnZoomCanvas, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
+import {CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, IDeleteTooltip,
+  ILink, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnDragNode, IOnDragNodeStop,
+  IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick,
+  IOnNodeMouseEnter, IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IOnZoomCanvas, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered, IToggletooltip,
+  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
 } from '../../'
 import { getMatrix } from './utils/grid'
 
@@ -29,7 +28,9 @@ export interface IFlowChartCallbacks {
   onNodeMouseEnter: IOnNodeMouseEnter
   onNodeMouseLeave: IOnNodeMouseLeave
   onNodeSizeChange: IOnNodeSizeChange
-  onZoomCanvas: IOnZoomCanvas
+  onZoomCanvas: IOnZoomCanvas,
+  deleteTooltip: IDeleteTooltip,
+  toggleTooltip: IToggletooltip,
 }
 
 export interface IFlowChartComponents {
@@ -90,6 +91,8 @@ export const FlowChart = (props: IFlowChartProps) => {
       onNodeMouseLeave,
       onNodeSizeChange,
       onZoomCanvas,
+      deleteTooltip,
+      toggleTooltip,
     },
     Components: {
       CanvasOuter = CanvasOuterDefault,
@@ -106,7 +109,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
   const canvasCallbacks = { onDragCanvas, onDragCanvasStop, onCanvasClick, onDeleteKey, onCanvasDrop, onZoomCanvas }
   const linkCallbacks = { onLinkMouseEnter, onLinkMouseLeave, onLinkClick }
-  const nodeCallbacks = { onDragNode, onNodeClick, onDragNodeStop, onNodeMouseEnter, onNodeMouseLeave, onNodeSizeChange,onNodeDoubleClick }
+  const nodeCallbacks = { onDragNode, onNodeClick, onDragNodeStop, onNodeMouseEnter, onNodeMouseLeave, onNodeSizeChange,onNodeDoubleClick, deleteTooltip, toggleTooltip }
   const portCallbacks = { onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel }
 
   const nodesInView = Object.keys(nodes).filter((nodeId) => {
@@ -171,12 +174,12 @@ export const FlowChart = (props: IFlowChartProps) => {
         const selectedLink = getSelectedLinkForNode(selected, nodeId, links)
         const hoveredLink = getSelectedLinkForNode(hovered, nodeId, links)
 
-        let globalToolTipText
+        let globalToolTip
         if (chart.tooltipsGlobal && chart.tooltipsGlobal.showTooltip) {
-          globalToolTipText = chart.tooltipsGlobal.text
+          globalToolTip = chart.tooltipsGlobal
         }
-        const nodeWithGlobalToolTip = globalToolTipText ?
-            { ...nodes[nodeId], ...{ tooltip: { showTooltip: true, text: globalToolTipText } } }
+        const nodeWithGlobalToolTip = globalToolTip ?
+            { ...nodes[nodeId], ...{ tooltip: globalToolTip } }
             : undefined
 
         return (
