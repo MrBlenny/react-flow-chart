@@ -160,7 +160,10 @@ export const NodeWrapper = ({
     }
   }, [node, compRef.current, size.width, size.height])
 
-  const tooltip = node.tooltip ? (node.tooltip.showTooltip ? node.tooltip.text : '') : ''
+  let tooltip = ''
+  if (node.tooltip && node.tooltip.showTooltip) {
+    tooltip = node.tooltip.text
+  }
   const dataTip = TooltipComponent ? '' : tooltip
   const children = (
     <div
