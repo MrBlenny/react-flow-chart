@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
+import ReactTooltip from 'react-tooltip'
 import {
   IConfig,
   ILink,
@@ -33,6 +34,7 @@ export interface INodeWrapperProps {
   config: IConfig
   node: INode
   Component: React.FunctionComponent<INodeDefaultProps>
+  TooltipComponent?: React.FunctionComponent<INodeDefaultProps>
   offset: IPosition
   selected: ISelectedOrHovered | undefined
   hovered: ISelectedOrHovered | undefined
@@ -57,6 +59,7 @@ export interface INodeWrapperProps {
 }
 
 export const NodeWrapper = ({
+  TooltipComponent,
   config,
   node,
   onDragNode,
@@ -157,8 +160,14 @@ export const NodeWrapper = ({
     }
   }, [node, compRef.current, size.width, size.height])
 
+  const tooltip = node.tooltip ? (node.tooltip.showTooltip ? node.tooltip.text : '') : ''
+  const dataTip = TooltipComponent ? '' : tooltip
   const children = (
-    <div style={{ minWidth: portsSize.width, minHeight: portsSize.height }}>
+    <div
+        style={{ minWidth: portsSize.width, minHeight: portsSize.height }}
+        data-for={node.id}
+        data-tip={dataTip}
+    >
       <ResizeObserver
         onResize={(rect) => {
           const newSize = { width: rect.width, height: rect.height }
@@ -189,6 +198,7 @@ export const NodeWrapper = ({
           />
         ))}
       </Ports>
+      <ReactTooltip id={node.id}/>
     </div>
   )
 

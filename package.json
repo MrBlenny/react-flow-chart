@@ -40,6 +40,7 @@
     "pathfinding": "^0.4.18",
     "react-draggable": "^4.4.3",
     "react-resize-observer": "^1.1.1",
+    "react-tooltip": "^4.2.10",
     "react-zoom-pan-pinch": "^1.6.1",
     "uuid": "^3.3.2"
   },

@@ -1,6 +1,10 @@
 import { IChart } from '../../src'
 
 export const tooltipChart: IChart = {
+  tooltipsGlobal: {
+    showTooltip: true,
+    text: 'This is the global tooltip',
+  },
   offset: {
     x: 0,
     y: 0,
@@ -8,6 +12,10 @@ export const tooltipChart: IChart = {
   scale: 1,
   nodes: {
     node1: {
+      tooltip: {
+        showTooltip: true,
+        text: 'this is the tooltip for node1',
+      },
       id: 'node1',
       type: 'output-only',
       position: {
@@ -32,6 +40,10 @@ export const tooltipChart: IChart = {
       },
     },
     node2: {
+      tooltip: {
+        showTooltip: true,
+        text: 'this is the tooltip for node2',
+      },
       id: 'node2',
       type: 'input-output',
       position: {
@@ -50,6 +62,10 @@ export const tooltipChart: IChart = {
       },
     },
     node3: {
+      tooltip: {
+        showTooltip: false,
+        text: 'this is the tooltip for node3 but its off',
+      },
       id: 'node3',
       type: 'input-output',
       position: {
