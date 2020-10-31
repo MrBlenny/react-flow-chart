@@ -12,13 +12,14 @@ import { DragAndDropSidebar } from './DragAndDropSidebar'
 import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
 import { LinkColors } from './LinkColors'
-import { NodeReadonly } from './NodeReadonly'
 import { LinkWithArrowHead } from './LinkWithArrowHead'
+import { NodeReadonly } from './NodeReadonly'
 import { ReadonlyMode } from './ReadonlyMode'
 import { SelectableMode } from './SelectableMode'
 import { SelectedSidebar } from './SelectedSidebar'
 import { SmartRouting } from './SmartRouting'
 import { StressTestDemo } from './StressTest'
+import { Tooltips } from './Tooltips'
 import { Zoom } from './Zoom'
 
 storiesOf('State', module)
@@ -49,3 +50,4 @@ storiesOf('Other Config', module)
   .add('Zoom', () => <Zoom />)
   .add('Type-safe properties', CustomGraphTypes)
   .add('Link arrow heads',() => <LinkWithArrowHead />)
+  .add('Tooltips',() => <Tooltips />)
