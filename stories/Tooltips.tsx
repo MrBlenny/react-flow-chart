@@ -10,6 +10,7 @@ import { tooltipChart } from './misc/tooltipChartState'
  *
  * You could easily move this state to Redux or similar by creating your own callback actions.
  */
+
 export class Tooltips extends React.Component {
   public state = cloneDeep(tooltipChart)
   public render () {
@@ -18,12 +19,21 @@ export class Tooltips extends React.Component {
             (...args: any) => this.setState(func(...args))) as typeof actions
 
     return (
-        <Page>
-            <FlowChart
-                chart={chart}
-                callbacks={stateActions}
-            />
-        </Page>
+        <div>
+            <button onClick={() => stateActions.deleteTooltip({ nodeId: 'global' })}>
+                delete global tooltip
+            </button>
+
+            <button onClick={() => stateActions.deleteTooltip({ nodeId: chart.selected.id })}>
+                delete tooltip for {JSON.stringify(chart.selected.id)}
+            </button>
+            <Page>
+                <FlowChart
+                    chart={chart}
+                    callbacks={stateActions}
+                />
+            </Page>
+        </div>
     )
   }
 }

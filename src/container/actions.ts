@@ -1,6 +1,6 @@
 import {
   IChart,
-  IConfig,
+  IConfig, IDeleteToolTip,
   identity,
   IOnCanvasClick,
   IOnCanvasDrop,
@@ -291,5 +291,15 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
 export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (chart: IChart): IChart => {
   chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
   chart.scale = data.scale
+  return chart
+}
+
+export const deleteTooltip: IDeleteToolTip = ({ nodeId }) => (chart: IChart): IChart => {
+  if (nodeId === 'global') {
+    delete chart.tooltipsGlobal
+  }
+  if (nodeId && nodeId !== 'global') {
+    delete chart.nodes[nodeId].tooltip
+  }
   return chart
 }
