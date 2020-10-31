@@ -118,3 +118,5 @@ export type IOnCanvasDrop = (input: IOnCanvasDropInput) => void
 export type IOnZoomCanvas = (input: { config?: IConfig; data: any }) => void
 
 export type IDeleteToolTip = (input: { nodeId: string | undefined }) => void
+
+export type IToggleToolTip = (input: { nodeId: string | undefined }) => void

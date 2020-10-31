@@ -23,7 +23,7 @@ import {
   IOnNodeSizeChange,
   IOnPortPositionChange,
   IOnZoomCanvas,
-  IStateCallback,
+  IStateCallback, IToggleToolTip,
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -300,6 +300,27 @@ export const deleteTooltip: IDeleteToolTip = ({ nodeId }) => (chart: IChart): IC
   }
   if (nodeId && nodeId !== 'global') {
     delete chart.nodes[nodeId].tooltip
+  }
+  return chart
+}
+
+export const toggleTooltip: IToggleToolTip = ({ nodeId }) => (chart: IChart): IChart => {
+  if (nodeId === 'global') {
+    if (chart.tooltipsGlobal) {
+      chart.tooltipsGlobal.showTooltip ?
+          chart.tooltipsGlobal.showTooltip = false :
+          chart.tooltipsGlobal.showTooltip = true
+    }
+  }
+  if (nodeId && nodeId !== 'global') {
+    if (chart.nodes[nodeId].tooltip) {
+      // @ts-ignore
+      chart.nodes[nodeId].tooltip.showTooltip ?
+          // @ts-ignore
+          chart.nodes[nodeId].tooltip.showTooltip = false :
+          // @ts-ignore
+          chart.nodes[nodeId].tooltip.showTooltip = true
+    }
   }
   return chart
 }

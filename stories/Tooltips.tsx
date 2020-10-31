@@ -27,6 +27,13 @@ export class Tooltips extends React.Component {
             <button onClick={() => stateActions.deleteTooltip({ nodeId: chart.selected.id })}>
                 delete tooltip for {JSON.stringify(chart.selected.id)}
             </button>
+
+            <button onClick={() => stateActions.toggleTooltip({ nodeId: 'global' })}>
+                toggle global tooltip
+            </button>
+            <button onClick={() => stateActions.toggleTooltip({ nodeId: chart.selected.id })}>
+                toggle tooltip for {JSON.stringify(chart.selected.id)}
+            </button>
             <Page>
                 <FlowChart
                     chart={chart}
