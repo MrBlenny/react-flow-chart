@@ -3,7 +3,8 @@ import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
 import ReactTooltip from 'react-tooltip'
 import {
-  IConfig, IDeleteTooltip,
+  IConfig,
+  IDeleteTooltip,
   ILink,
   INode,
   INodeInnerDefaultProps,
@@ -23,7 +24,8 @@ import {
   IPortsDefaultProps,
   IPosition,
   ISelectedOrHovered,
-  ISize, IToggletooltip,
+  ISize,
+  IToggletooltip,
   ITooltipComponentDefaultProps,
   PortWrapper,
   TooltipComponentDefault,
@@ -130,7 +132,6 @@ export const NodeWrapper = ({
         }
       }
       if (node.tooltip && node.tooltip.showTooltip) {
-
         switch (node.tooltip.toogleOffWhenClicked) {
           case 'global': toggleTooltip({ nodeId: 'global' }); break
           case 'node' : toggleTooltip({ nodeId: node.id }); break

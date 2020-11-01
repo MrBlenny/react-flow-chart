@@ -14,9 +14,9 @@ import { tooltipChart } from './misc/tooltipChartState'
 
 const ExampleToolTipComponent = (props: ITooltipComponentDefaultProps) => {
   return (
-        <div className="ExampleToolTipComponent" style={{ width: '300px', textAlign: 'center' }}>
-            <h2 style={{ margin: 'auto' }}>{props.tooltip}</h2>
-        </div>
+    <div className="ExampleToolTipComponent" style={{ width: '300px', textAlign: 'center' }}>
+      <h2 style={{ margin: 'auto' }}>{props.tooltip}</h2>
+    </div>
   )
 }
 
@@ -25,34 +25,35 @@ export class Tooltips extends React.Component {
   public render () {
     const chart = this.state
     const stateActions = mapValues(actions, (func: any) =>
-            (...args: any) => this.setState(func(...args))) as typeof actions
+      (...args: any) => this.setState(func(...args))) as typeof actions
 
     return (
-        <div>
-            <button onClick={() => stateActions.deleteTooltip({ nodeId: 'global' })}>
-                delete global tooltip
-            </button>
+      <div>
+        <button onClick={() => stateActions.deleteTooltip({ nodeId: 'global' })}>
+          delete global tooltip
+        </button>
 
-            <button onClick={() => stateActions.deleteTooltip({ nodeId: chart.selected.id })}>
-                delete tooltip for {JSON.stringify(chart.selected.id)}
-            </button>
+        <button onClick={() => stateActions.deleteTooltip({ nodeId: chart.selected.id })}>
+          delete tooltip for {JSON.stringify(chart.selected.id)}
+        </button>
 
-            <button onClick={() => stateActions.toggleTooltip({ nodeId: 'global' })}>
-                toggle global tooltip
-            </button>
-            <button onClick={() => stateActions.toggleTooltip({ nodeId: chart.selected.id })}>
-                toggle tooltip for {JSON.stringify(chart.selected.id)}
-            </button>
-            <Page>
-                <FlowChart
-                    chart={chart}
-                    callbacks={stateActions}
-                    Components={{
-                      TooltipComponent: ExampleToolTipComponent,
-                    }}
-                />
-            </Page>
-        </div>
+        <button onClick={() => stateActions.toggleTooltip({ nodeId: 'global' })}>
+          toggle global tooltip
+        </button>
+
+        <button onClick={() => stateActions.toggleTooltip({ nodeId: chart.selected.id })}>
+          toggle tooltip for {JSON.stringify(chart.selected.id)}
+        </button>
+        <Page>
+          <FlowChart
+            chart={chart}
+            callbacks={stateActions}
+            Components={{
+              TooltipComponent: ExampleToolTipComponent,
+            }}
+          />
+        </Page>
+      </div>
     )
   }
 }
