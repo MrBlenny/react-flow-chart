@@ -295,12 +295,17 @@ export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (chart: IChart)
 }
 
 export const deleteTooltip: IDeleteTooltip = ({ nodeId }) => (chart: IChart): IChart => {
-  if (nodeId === 'global') {
-    delete chart.tooltipsGlobal
+  switch (nodeId) {
+    case 'global':
+      delete chart.tooltipsGlobal
+      break
+    case undefined:
+      break
+    default:
+      delete chart.nodes[nodeId].tooltip
+      break
   }
-  if (nodeId && nodeId !== 'global') {
-    delete chart.nodes[nodeId].tooltip
-  }
+
   return chart
 }
 
