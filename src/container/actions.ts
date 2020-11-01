@@ -318,7 +318,8 @@ export const toggleTooltip: IToggletooltip = ({ nodeId }) => (chart: IChart): IC
     }
   }
   if (nodeId && nodeId !== 'global') {
-    if (chart.nodes[nodeId].tooltip) {
+    if (chart.nodes[nodeId] && chart.nodes[nodeId].tooltip) {
+      // typescript doesn't understand, that there is a check for undefined above.
       // @ts-ignore
       chart.nodes[nodeId].tooltip.showTooltip ?
           // @ts-ignore
