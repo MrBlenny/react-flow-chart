@@ -1,9 +1,10 @@
 import * as React from 'react'
-import {CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, IDeleteTooltip,
+import {
+  CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, IConfig, IDeleteTooltip,
   ILink, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragCanvasStop, IOnDragNode, IOnDragNodeStop,
   IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeDoubleClick,
   IOnNodeMouseEnter, IOnNodeMouseLeave, IOnNodeSizeChange, IOnPortPositionChange, IOnZoomCanvas, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered, IToggletooltip,
-  LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
+  ITooltipComponentDefaultProps, LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault, TooltipComponentDefault,
 } from '../../'
 import { getMatrix } from './utils/grid'
 
@@ -41,6 +42,7 @@ export interface IFlowChartComponents {
   Port?: React.FunctionComponent<IPortDefaultProps>
   Node?: React.FunctionComponent<INodeDefaultProps>
   Link?: React.FunctionComponent<ILinkDefaultProps>
+  TooltipComponent?: React.FunctionComponent<ITooltipComponentDefaultProps>
 }
 
 export interface IFlowChartProps {
@@ -102,6 +104,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Port = PortDefault,
       Node = NodeDefault,
       Link = LinkDefault,
+      TooltipComponent = TooltipComponentDefault,
     } = {},
     config = {},
   } = props
@@ -187,6 +190,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             config={config}
             key={nodeId}
             Component={Node}
+            TooltipComponent={TooltipComponent}
             node={nodeWithGlobalToolTip ? nodeWithGlobalToolTip : nodes[nodeId]}
             offset={chart.offset}
             isSelected={isSelected}

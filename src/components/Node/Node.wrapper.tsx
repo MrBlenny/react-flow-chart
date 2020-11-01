@@ -24,17 +24,20 @@ import {
   IPosition,
   ISelectedOrHovered,
   ISize, IToggletooltip,
+  ITooltipComponentDefaultProps,
   PortWrapper,
+  TooltipComponentDefault,
 } from '../../'
 import { noop } from '../../utils'
 import CanvasContext from '../Canvas/CanvasContext'
+import { TooltipComponentWrapper } from '../TooltipComponent/TooltipComponent.Wrapper'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
   config: IConfig
   node: INode
   Component: React.FunctionComponent<INodeDefaultProps>
-  TooltipComponent?: React.FunctionComponent<INodeDefaultProps>
+  TooltipComponent?: React.FunctionComponent<ITooltipComponentDefaultProps>
   offset: IPosition
   selected: ISelectedOrHovered | undefined
   hovered: ISelectedOrHovered | undefined
@@ -61,7 +64,6 @@ export interface INodeWrapperProps {
 }
 
 export const NodeWrapper = ({
-  TooltipComponent,
   config,
   node,
   onDragNode,
@@ -70,6 +72,7 @@ export const NodeWrapper = ({
   onNodeDoubleClick,
   isSelected,
   Component = NodeDefault,
+  TooltipComponent = TooltipComponentDefault,
   onNodeSizeChange,
   onNodeMouseEnter,
   onNodeMouseLeave,
@@ -175,12 +178,11 @@ export const NodeWrapper = ({
   if (node.tooltip && node.tooltip.showTooltip) {
     tooltip = node.tooltip.text
   }
-  const dataTip = TooltipComponent ? '' : tooltip
   const children = (
     <div
         style={{ minWidth: portsSize.width, minHeight: portsSize.height }}
         data-for={node.id}
-        data-tip={dataTip}
+        data-tip=""
     >
       <ResizeObserver
         onResize={(rect) => {
@@ -212,7 +214,9 @@ export const NodeWrapper = ({
           />
         ))}
       </Ports>
-      <ReactTooltip id={node.id}/>
+      <ReactTooltip id={node.id}>
+        {tooltip && <TooltipComponentWrapper Component={TooltipComponent} tooltip={tooltip}/>}
+      </ReactTooltip>
     </div>
   )
 

@@ -1,6 +1,7 @@
 import { cloneDeep, mapValues } from 'lodash'
 import * as React from 'react'
 import { FlowChart } from '../src'
+import { ITooltipComponentDefaultProps } from '../src/components/TooltipComponent/TooltipComponent.default'
 import * as actions from '../src/container/actions'
 import { Page } from './components'
 import { tooltipChart } from './misc/tooltipChartState'
@@ -11,6 +12,15 @@ import { tooltipChart } from './misc/tooltipChartState'
  * You could easily move this state to Redux or similar by creating your own callback actions.
  */
 
+const ExampleToolTipComponent = (props: ITooltipComponentDefaultProps) => {
+  return (
+        <div className="ExampleToolTipComponent" style={{ width: '300px', textAlign: 'center' }}>
+            <h2 style={{ margin: 'auto' }}>{props.tooltip}</h2>
+        </div>
+  )
+}
+
+console.log(ExampleToolTipComponent)
 export class Tooltips extends React.Component {
   public state = cloneDeep(tooltipChart)
   public render () {
@@ -38,6 +48,9 @@ export class Tooltips extends React.Component {
                 <FlowChart
                     chart={chart}
                     callbacks={stateActions}
+                    Components={{
+                      TooltipComponent: ExampleToolTipComponent,
+                    }}
                 />
             </Page>
         </div>
