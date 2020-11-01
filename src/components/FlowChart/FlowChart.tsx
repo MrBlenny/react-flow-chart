@@ -177,13 +177,10 @@ export const FlowChart = (props: IFlowChartProps) => {
         const selectedLink = getSelectedLinkForNode(selected, nodeId, links)
         const hoveredLink = getSelectedLinkForNode(hovered, nodeId, links)
 
-        let globalToolTip
+        const nodeWithGlobalTooltip = { ...nodes[nodeId] }
         if (chart.tooltipsGlobal && chart.tooltipsGlobal.showTooltip) {
-          globalToolTip = chart.tooltipsGlobal
+          nodeWithGlobalTooltip.tooltip = chart.tooltipsGlobal
         }
-        const nodeWithGlobalToolTip = globalToolTip ?
-            { ...nodes[nodeId], ...{ tooltip: globalToolTip } }
-            : undefined
 
         return (
           <NodeWrapper
@@ -191,7 +188,7 @@ export const FlowChart = (props: IFlowChartProps) => {
             key={nodeId}
             Component={Node}
             TooltipComponent={TooltipComponent}
-            node={nodeWithGlobalToolTip ? nodeWithGlobalToolTip : nodes[nodeId]}
+            node={nodeWithGlobalTooltip}
             offset={chart.offset}
             isSelected={isSelected}
             selected={selectedLink ? selected : undefined}
