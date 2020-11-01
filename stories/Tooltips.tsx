@@ -20,7 +20,6 @@ const ExampleToolTipComponent = (props: ITooltipComponentDefaultProps) => {
   )
 }
 
-console.log(ExampleToolTipComponent)
 export class Tooltips extends React.Component {
   public state = cloneDeep(tooltipChart)
   public render () {
