@@ -129,7 +129,7 @@ export const NodeWrapper = ({
           onNodeClick({ config, nodeId: node.id })
         }
       }
-      if (node.tooltip) {
+      if (node.tooltip && node.tooltip.showTooltip) {
 
         switch (node.tooltip.toogleOffWhenClicked) {
           case 'global': toggleTooltip({ nodeId: 'global' }); break
