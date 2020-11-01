@@ -198,6 +198,79 @@ const Example = (
 ### Readonly Mode
 [stories/ReadonlyMode.tsx](./stories/ReadonlyMode.tsx)
 
+### Tooltips
+[stories/Tooltips.tsx](./stories/Tooltips.tsx)
+
+You can add tooltips by adding `tooltipsGlobal` into the chartState (`IChart`) or `tooltip` to the node objects.
+`tooltipsGlobal` will apply for all nodes and `tooltip` for individual nodes.
+
+#### Example
+
+```tsx
+
+export const tooltipChart: IChart = {
+  tooltipsGlobal: {
+    showTooltip: true,
+    toogleOffWhenClicked: 'global',
+    text: 'This is the global tooltip and will be toggled off, when clicked',
+  },
+  offset: {
+    x: 0,
+    y: 0,
+  },
+  scale: 1,
+  nodes: {
+    node1: {
+      tooltip: {
+        showTooltip: true,
+        text: 'this is the tooltip for node1',
+      },
+...
+  node2: {
+    tooltip: {
+     showTooltip: true,
+      toogleOffWhenClicked: 'node',
+      text: 'this is the tooltip for node2 and will be toggled off when clicked',
+    },
+    id: 'node2',
+... 
+  node3: {
+    tooltip: {
+     showTooltip: false,
+      text: 'this is the tooltip for node3 but its off',
+    },
+    id: 'node3',
+    type: 'input-output',
+    position: {
+     x: 100,
+      y: 600,
+    },
+...
+```
+You can also customize the tooltipComponent by adding it to Component props of flowChart:
+
+```tsx
+const ExampleToolTipComponent = (props: ITooltipComponentDefaultProps) => {
+  return (
+    <div className="ExampleToolTipComponent" style={{ width: '300px', textAlign: 'center' }}>
+       <h2 style={{ margin: 'auto' }}>{props.tooltip}</h2>
+    </div>
+  )
+}
+
+export class Tooltips extends React.Component {
+...
+  return (            
+    <Page>
+      <FlowChart
+        chart={chart}
+        callbacks={stateActions}
+        Components={{TooltipComponent: ExampleToolTipComponent}}/>
+    </Page>)
+}
+
+```
+
 ### Other Demos
 [stories/ExternalReactState.tsx](./stories)
 

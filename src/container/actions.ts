@@ -1,6 +1,6 @@
 import {
   IChart,
-  IConfig,
+  IConfig, IDeleteTooltip,
   identity,
   IOnCanvasClick,
   IOnCanvasDrop,
@@ -23,7 +23,7 @@ import {
   IOnNodeSizeChange,
   IOnPortPositionChange,
   IOnZoomCanvas,
-  IStateCallback,
+  IStateCallback, IToggletooltip,
 } from '../'
 import { rotate } from './utils/rotate'
 
@@ -291,5 +291,42 @@ export const onCanvasDrop: IStateCallback<IOnCanvasDrop> = ({
 export const onZoomCanvas: IOnZoomCanvas = ({ config, data }) => (chart: IChart): IChart => {
   chart.offset = getOffset(config, { x: data.positionX, y: data.positionY })
   chart.scale = data.scale
+  return chart
+}
+
+export const deleteTooltip: IDeleteTooltip = ({ nodeId }) => (chart: IChart): IChart => {
+  switch (nodeId) {
+    case 'global':
+      delete chart.tooltipsGlobal
+      break
+    case undefined:
+      break
+    default:
+      delete chart.nodes[nodeId].tooltip
+      break
+  }
+
+  return chart
+}
+
+export const toggleTooltip: IToggletooltip = ({ nodeId }) => (chart: IChart): IChart => {
+  if (nodeId === 'global') {
+    if (chart.tooltipsGlobal) {
+      chart.tooltipsGlobal.showTooltip ?
+          chart.tooltipsGlobal.showTooltip = false :
+          chart.tooltipsGlobal.showTooltip = true
+    }
+  }
+  if (nodeId && nodeId !== 'global') {
+    if (chart.nodes[nodeId] && chart.nodes[nodeId].tooltip) {
+      // typescript doesn't understand, that there is a check for undefined above.
+      // @ts-ignore
+      chart.nodes[nodeId].tooltip.showTooltip ?
+          // @ts-ignore
+          chart.nodes[nodeId].tooltip.showTooltip = false :
+          // @ts-ignore
+          chart.nodes[nodeId].tooltip.showTooltip = true
+    }
+  }
   return chart
 }

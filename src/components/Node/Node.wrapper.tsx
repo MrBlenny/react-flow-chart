@@ -1,8 +1,10 @@
 import * as React from 'react'
 import Draggable, { DraggableData } from 'react-draggable'
 import ResizeObserver from 'react-resize-observer'
+import ReactTooltip from 'react-tooltip'
 import {
   IConfig,
+  IDeleteTooltip,
   ILink,
   INode,
   INodeInnerDefaultProps,
@@ -23,16 +25,21 @@ import {
   IPosition,
   ISelectedOrHovered,
   ISize,
+  IToggletooltip,
+  ITooltipComponentDefaultProps,
   PortWrapper,
+  TooltipComponentDefault,
 } from '../../'
 import { noop } from '../../utils'
 import CanvasContext from '../Canvas/CanvasContext'
+import { TooltipComponentWrapper } from '../TooltipComponent/TooltipComponent.Wrapper'
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
   config: IConfig
   node: INode
   Component: React.FunctionComponent<INodeDefaultProps>
+  TooltipComponent?: React.FunctionComponent<ITooltipComponentDefaultProps>
   offset: IPosition
   selected: ISelectedOrHovered | undefined
   hovered: ISelectedOrHovered | undefined
@@ -54,6 +61,8 @@ export interface INodeWrapperProps {
   onNodeSizeChange: IOnNodeSizeChange
   onNodeMouseEnter: IOnNodeMouseEnter
   onNodeMouseLeave: IOnNodeMouseLeave
+  deleteTooltip: IDeleteTooltip
+  toggleTooltip: IToggletooltip
 }
 
 export const NodeWrapper = ({
@@ -65,6 +74,7 @@ export const NodeWrapper = ({
   onNodeDoubleClick,
   isSelected,
   Component = NodeDefault,
+  TooltipComponent = TooltipComponentDefault,
   onNodeSizeChange,
   onNodeMouseEnter,
   onNodeMouseLeave,
@@ -81,6 +91,8 @@ export const NodeWrapper = ({
   onLinkMove,
   onLinkComplete,
   onLinkCancel,
+  toggleTooltip,
+  deleteTooltip,
 }: INodeWrapperProps) => {
   const { zoomScale } = React.useContext(CanvasContext)
   const [size, setSize] = React.useState<ISize>({ width: 0, height: 0 })
@@ -117,6 +129,12 @@ export const NodeWrapper = ({
         e.stopPropagation()
         if (!isDragging.current) {
           onNodeClick({ config, nodeId: node.id })
+        }
+      }
+      if (node.tooltip && node.tooltip.showTooltip) {
+        switch (node.tooltip.toogleOffWhenClicked) {
+          case 'global': toggleTooltip({ nodeId: 'global' }); break
+          case 'node' : toggleTooltip({ nodeId: node.id }); break
         }
       }
     },
@@ -157,8 +175,16 @@ export const NodeWrapper = ({
     }
   }, [node, compRef.current, size.width, size.height])
 
+  let tooltip = ''
+  if (node.tooltip && node.tooltip.showTooltip) {
+    tooltip = node.tooltip.text
+  }
   const children = (
-    <div style={{ minWidth: portsSize.width, minHeight: portsSize.height }}>
+    <div
+        style={{ minWidth: portsSize.width, minHeight: portsSize.height }}
+        data-for={node.id}
+        data-tip=""
+    >
       <ResizeObserver
         onResize={(rect) => {
           const newSize = { width: rect.width, height: rect.height }
@@ -189,6 +215,9 @@ export const NodeWrapper = ({
           />
         ))}
       </Ports>
+      <ReactTooltip id={node.id}>
+        {tooltip && <TooltipComponentWrapper Component={TooltipComponent} tooltip={tooltip}/>}
+      </ReactTooltip>
     </div>
   )
 

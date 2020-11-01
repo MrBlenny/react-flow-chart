@@ -17,6 +17,7 @@ export type IChart<
     /** System Temp */
     selected: ISelectedOrHovered
     hovered: ISelectedOrHovered,
+    tooltipsGlobal?: ITooltipConfig,
   } & (ChartProps extends undefined ? {
     properties?: any,
   } : {
@@ -29,6 +30,7 @@ export interface ISelectedOrHovered {
 }
 
 export type INode<NodeProps = undefined, PortProps = undefined> = {
+  tooltip?: ITooltipConfig,
   id: string
   type: string
   position: IPosition
@@ -74,3 +76,9 @@ export type ILink<LinkProps = undefined> = {
 } : {
   properties: LinkProps,
 })
+
+interface ITooltipConfig {
+  showTooltip: boolean,
+  toogleOffWhenClicked?: 'global' | 'node'
+  text: string,
+}

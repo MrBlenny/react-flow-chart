@@ -37,7 +37,6 @@ export const LinkDefault = (props: ILinkDefaultProps) => {
     endPos,
     ...props,
   }
-  
   return config.showArrowHead
     ? <ArrowLink {...linkProps} />
     : <RegularLink {...linkProps} />
